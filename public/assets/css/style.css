@@ -3,92 +3,48 @@
     font-family: "Figtree", sans-serif;
 }
 
-::-moz-selection {
-    /* Code for Firefox */
+/* Code for Firefox */
+/* ::-moz-selection {
     background: #f15d4b;
-}
+} */
 
-::selection {
+/* ::selection {
     background: #f15d4b;
-}
+} */
 
-.rounded-kraf {
+.rounded-tambak {
     border-radius: 20px;
 }
 
-/* FORM CONTROL FOCUS */
-.form-control:focus {
-    border-color: rgba(241, 93, 75, 0.75);
-    box-shadow: 0 0 0 0.2rem rgba(241, 93, 75, 0.5);
+/* Sweetalert custom color */
+.colored-toast.swal2-icon-success {
+    background-color: #a5dc86 !important;
 }
 
-.btn-outline-kraf {
-    border-color: rgba(241, 93, 75, 0.75);
-    color: #f15d4b;
+.colored-toast.swal2-icon-error {
+    background-color: #f27474 !important;
 }
-.btn-outline-kraf:hover {
-    border-color: rgba(241, 93, 75, 0.75);
-    box-shadow: 0 0 0 0.2rem rgba(241, 93, 75, 0.25);
-    background-color: #f15d4b;
+
+.colored-toast.swal2-icon-warning {
+    background-color: #f8bb86 !important;
+}
+
+.colored-toast.swal2-icon-info {
+    background-color: #3fc3ee !important;
+}
+
+.colored-toast.swal2-icon-question {
+    background-color: #87adbd !important;
+}
+
+.colored-toast .swal2-title {
     color: white;
 }
-.btn-kraf {
-    border-color: rgba(241, 93, 75, 0.75);
-    background-color: rgba(241, 93, 75, 1);
-    color: #fff;
-}
-.btn-kraf:hover {
-    border-color: rgba(241, 93, 75, 0.75);
-    background-color: rgba(241, 93, 75, 0.75);
-    color: #fff;
-}
 
-.link-kraf {
-    color: #f15d4b;
-}
-.link-kraf:hover {
-    color: #ef3833;
-}
-.bg-kraf {
-    background-color: #f15d4b;
-    color: #fff;
-}
-
-/* Pagination Color */
-.pagination > li > a {
-    background-color: white;
-    color: #f15d4b;
-}
-
-.pagination > li > a:focus,
-.pagination > li > a:hover,
-.pagination > li > span:focus,
-.pagination > li > span:hover {
-    color: #000;
-    background-color: #eee;
-    box-shadow: 0 0 0 0.2rem rgba(241, 93, 75, 0.5);
-    border-color: rgba(241, 93, 75, 0.75);
-}
-.pagination > .active > a {
+.colored-toast .swal2-close {
     color: white;
-    background-color: #f15d4b !important;
-    border: solid 1px rgba(241, 93, 75, 0.75) !important;
 }
 
-.pagination > .active > a:hover,
-.pagination > .active > a:focus {
-    background-color: #f15d4b !important;
-    border: solid 1px rgba(241, 93, 75, 0.75);
-    box-shadow: 0 0 0 0.2rem rgba(241, 93, 75, 0.5);
+.colored-toast .swal2-html-container {
+    color: white;
 }
-
-/* Nav Rounded */
-.nav-tabs .rounded {
-    border-top-left-radius: 20px !important;
-}
-
-/* Sidebar */
-
-/* input {
-    background-color: #f15d4b !important;
-} */
