@@ -1,11 +1,11 @@
 {
     "name": "Tambak",
     "short_name": "Tambak",
-    "start_url": "/",
-    "background_color": "#6777ef",
+    "start_url": "https://test.madebykraf.com/",
+    "background_color": "#000000",
     "description": "Sistem Tambak",
     "display": "fullscreen",
-    "theme_color": "#6777ef",
+    "theme_color": "#000000",
     "icons": [
         {
             "src": "logo.PNG",
