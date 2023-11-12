@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Employee
+    Operator
 @endsection
 
 @push('css')
@@ -18,10 +18,10 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Employee</h1>
+                    <h1>Operator</h1>
                     <ol class="breadcrumb text-black-50">
                         <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active"><strong>Employee</strong></li>
+                        <li class="breadcrumb-item active"><strong>Operator</strong></li>
                     </ol>
                 </div>
             </div>
@@ -37,7 +37,11 @@
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <h3 class="card-title">Employee List</h3>
+                                    <h3 class="card-title">Daftar Operator</h3>
+                                </div>
+                                <div class="col-6">
+                                    <a href="{{ route('operator.create') }}"
+                                        class="btn btn-sm btn-primary rounded-tambak float-right">Tambah Operator</a>
                                 </div>
                             </div>
                         </div>
@@ -45,23 +49,20 @@
                             <table id="employeeTable" class="table table-bordered text-nowrap text-center">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width: 5%">
-                                            ID
-                                        </th>
                                         <th>
                                             Name
+                                        </th>
+                                        <th>
+                                            Phone
                                         </th>
                                         <th>
                                             Email
                                         </th>
                                         <th>
-                                            Signature
-                                        </th>
-                                        <th>
                                             Status
                                         </th>
                                         <th>
-                                            Department
+                                            Tugas
                                         </th>
                                         <th>
                                             Action
@@ -71,14 +72,9 @@
                                 <tbody>
                                     @foreach ($users as $user)
                                         <tr>
-                                            <td>{{ $user->id }}</td>
                                             <td>{{ $user->name }}</td>
+                                            <td>+62{{ $user->phone }}</td>
                                             <td>{{ $user->email }}</td>
-                                            <td>
-                                                @if ($user->sign === null)
-                                                    <span class="badge badge-dark">None</span>
-                                                @endif
-                                            </td>
                                             <td>
                                                 @if ($user->is_active === 1)
                                                     Active
@@ -87,10 +83,8 @@
                                                 @endif
                                             </td>
                                             <td>
-
                                             </td>
                                             <td>
-
                                             </td>
                                         </tr>
                                     @endforeach

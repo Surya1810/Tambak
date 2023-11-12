@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TambakController;
 use App\Http\Controllers\UserController;
+use App\Models\Tambak;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,13 +24,18 @@ Route::get('/', function () {
     return redirect('dashboard');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    // User | Employee
-    Route::resource('employee', UserController::class);
+    // User | Employee | Owner
+    Route::resource('operator', UserController::class);
+    Route::get('/owner', [UserController::class, 'owner'])->name('owner.index');
+    Route::get('/owner/create', [UserController::class, 'owner_create'])->name('owner.create');
+    Route::post('/owner/store', [UserController::class, 'owner_store'])->name('owner.store');
+
+    // Tambak
+    Route::resource('tambak', TambakController::class);
+
 
     // Profile Section
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

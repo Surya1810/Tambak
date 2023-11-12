@@ -15,7 +15,7 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicons/apple-icon-57x57.png') }}">
+    {{-- <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicons/apple-icon-57x57.png') }}">
     <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('favicons/apple-icon-60x60.png') }}">
     <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicons/apple-icon-72x72.png') }}">
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('favicons/apple-icon-76x76.png') }}">
@@ -27,11 +27,15 @@
     <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('favicons/android-icon-192x192.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicons/favicon-96x96.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicons/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('favicons/manifest.json') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicons/favicon-16x16.png') }}"> --}}
+
+    <!-- PWA  -->
+    <meta name="theme-color" content="#6777ef" />
+    <link rel="apple-touch-icon" href="{{ asset('logo.PNG') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
+    {{-- <link rel="manifest" href="{{ asset('favicons/manifest.json') }}"> --}}
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="{{ asset('favicons//ms-icon-144x144.png') }}">
-    <meta name="theme-color" content="#ffffff">
+    {{-- <meta name="msapplication-TileImage" content="{{ asset('favicons//ms-icon-144x144.png') }}"> --}}
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('assets/FontAwesome/6.2.1/css/all.min.css') }}">
@@ -63,7 +67,7 @@
             </ul>
 
             <!-- Right navbar links -->
-            <ul class="navbar-nav ml-auto">
+            {{-- <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown user-menu">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <img src="{{ asset('assets/img/profile/' . Auth::user()->avatar) }}"
@@ -93,7 +97,7 @@
                         </li>
                     </ul>
                 </li>
-            </ul>
+            </ul> --}}
         </nav>
 
         <!-- Main Sidebar Container -->
@@ -108,36 +112,117 @@
 
             <!-- Sidebar -->
             <div class="sidebar text-sm">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="{{ asset('assets/img/profile/' . Auth::user()->avatar) }}"
+                            class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="{{ route('profile.edit') }}" class="d-block">{{ Auth::user()->name }}</a>
+                    </div>
+                </div>
                 <!-- Sidebar Menu -->
                 <nav class="mt-3">
                     <ul class="nav nav-pills nav-sidebar flex-column nav-legacy nav-child-indent nav-collapse-hide-child"
                         data-widget="treeview" role="menu" data-accordion="false">
-                        {{-- <li class="nav-item">
+                        <li class="nav-item">
                             <a href="{{ route('dashboard') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
                                 </p>
                             </a>
-                        </li> --}}
-                        <li class="nav-item">
+                        </li>
+                        {{-- <li class="nav-item">
                             <a href="{{ route('dashboard') }}" class="nav-link">
                                 <i class="nav-icon fa-solid fa-house"></i>
                                 <p>
                                     Home
                                 </p>
                             </a>
+                        </li> --}}
+                        <li class="nav-header mt-3">
+                            Menu
                         </li>
-                        <li class="nav-header mt-3">Master</li>
-                        <li class="nav-item">
-                            <a href="{{ route('employee.index') }}" class="nav-link">
-                                <i class="nav-icon fa-solid fa-id-card"></i>
+
+                        @hasanyrole('super admin|admin')
+                            <li class="nav-item">
+                                <a href="{{ route('owner.index') }}" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-user"></i>
+                                    <p>
+                                        Owner
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('tambak.index') }}" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-location-dot"></i>
+                                    <p>
+                                        Tambak
+                                    </p>
+                                </a>
+                            </li>
+                        @endhasanyrole
+                        @hasrole('owner')
+                            @if (auth()->user()->tambak->count() != null)
+                                <li class="nav-item">
+                                    <a href="{{ route('operator.index') }}" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-id-card"></i>
+                                        <p>
+                                            Operator
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-id-card"></i>
+                                        <p>
+                                            Kolam
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-id-card"></i>
+                                        <p>
+                                            Supplier
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-id-card"></i>
+                                        <p>
+                                            Gudang
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-id-card"></i>
+                                        <p>
+                                            Customer
+                                        </p>
+                                    </a>
+                                </li>
+                            @endif
+                        @endhasrole
+                        <li class="nav-item mt-5">
+                            <a class="nav-link" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();">
+                                <i class="nav-icon fa-solid fa-arrow-left"></i>
                                 <p>
-                                    Employee
+                                    Logout
                                 </p>
                             </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fa-solid fa-boxes-packing"></i>
                                 <p>
@@ -165,15 +250,15 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>
-            <div class="sidebar-custom">
+            {{-- <div class="sidebar-custom">
                 <a href="{{ route('profile.edit') }}" class="btn btn-link"><i
                         class="nav-icon fa-solid fa-gear"></i></a>
-            </div>
+            </div> --}}
             <!-- /.sidebar -->
         </aside>
 
@@ -190,7 +275,7 @@
                 Tagline
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2023 <a href="https://madebykraf.com">Kraf</a>.</strong>
+            <strong>Copyright &copy; 2023 <a href="https://madebykraf.com">Tambak</a>.</strong>
             All rights
             reserved.
         </footer>
@@ -212,6 +297,25 @@
 
     <!-- AdminLTE App -->
     <script src="{{ asset('assets/adminLTE/dist/js/adminlte.min.js') }}"></script>
+
+    <!-- Service Worker -->
+    <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            // Register a service worker hosted at the root of the
+            // site using the default scope.
+            navigator.serviceWorker.register("/sw.js").then(
+                (registration) => {
+                    console.log("Service worker registration succeeded:", registration);
+                },
+                (error) => {
+                    console.error(`Service worker registration failed: ${error}`);
+                },
+            );
+        } else {
+            console.error("Service workers are not supported.");
+        }
+    </script>
 
     <script>
         /*** add active class and stay opened when selected ***/
@@ -236,7 +340,7 @@
     <script>
         const Toast = Swal.mixin({
             toast: true,
-            position: 'top-right',
+            position: 'top',
             iconColor: 'white',
             customClass: {
                 popup: 'colored-toast'
