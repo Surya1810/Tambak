@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Tambak | @yield('title')</title>
+    <title>Vaname | @yield('title')</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -56,6 +56,12 @@
 <body class="hold-transition sidebar-mini layout-navbar-fixed layout-fixed">
     <div class="wrapper">
 
+        <!-- Preloader -->
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60"
+                width="60">
+        </div>
+
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
@@ -101,7 +107,7 @@
         </nav>
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
+        <aside class="main-sidebar main-sidebar-custom sidebar-dark-orange elevation-4 bg-dark">
             <!-- Brand Logo -->
             <a href="{{ route('dashboard') }}" class="brand-link logo-switch">
                 <img src="{{ asset('assets/logo/kraf-ico.png') }}" alt="Kraf_logo"
@@ -164,50 +170,50 @@
                                 </a>
                             </li>
                         @endhasanyrole
-                        @hasrole('owner')
-                            @if (auth()->user()->tambak->count() != null)
-                                <li class="nav-item">
-                                    <a href="{{ route('operator.index') }}" class="nav-link">
-                                        <i class="nav-icon fa-solid fa-id-card"></i>
-                                        <p>
-                                            Operator
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fa-solid fa-id-card"></i>
-                                        <p>
-                                            Kolam
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fa-solid fa-id-card"></i>
-                                        <p>
-                                            Supplier
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fa-solid fa-id-card"></i>
-                                        <p>
-                                            Gudang
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fa-solid fa-id-card"></i>
-                                        <p>
-                                            Customer
-                                        </p>
-                                    </a>
-                                </li>
-                            @endif
-                        @endhasrole
+                        {{-- @hasrole('owner') --}}
+                        @if (auth()->user()->tambak->count() != null)
+                            <li class="nav-item">
+                                <a href="{{ route('operator.index') }}" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-id-card"></i>
+                                    <p>
+                                        Operator
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-id-card"></i>
+                                    <p>
+                                        Kolam
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-id-card"></i>
+                                    <p>
+                                        Supplier
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-id-card"></i>
+                                    <p>
+                                        Gudang
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-id-card"></i>
+                                    <p>
+                                        Customer
+                                    </p>
+                                </a>
+                            </li>
+                        @endif
+                        {{-- @endhasrole --}}
                         <li class="nav-item mt-5">
                             <a class="nav-link" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
@@ -255,10 +261,11 @@
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>
-            {{-- <div class="sidebar-custom">
-                <a href="{{ route('profile.edit') }}" class="btn btn-link"><i
-                        class="nav-icon fa-solid fa-gear"></i></a>
-            </div> --}}
+            <div class="sidebar-custom">
+                {{-- <a href="{{ route('profile.edit') }}" class="btn btn-link"><i
+                        class="nav-icon fa-solid fa-gear"></i></a> --}}
+                <button class="btn btn-dark hide-on-collapse pos-right" id="install" hidden>Install</button>
+            </div>
             <!-- /.sidebar -->
         </aside>
 
@@ -272,10 +279,10 @@
         <footer class="main-footer text-sm">
             <!-- To the right -->
             <div class="float-right d-none d-sm-inline">
-                Tagline
+                The Best Shrimp Farm
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2023 <a href="https://madebykraf.com">Tambak</a>.</strong>
+            <strong>Copyright &copy; 2023 <a style="color: #F15D4B" href="https://madebykraf.com">Vaname</a>.</strong>
             All rights
             reserved.
         </footer>
@@ -314,6 +321,40 @@
             );
         } else {
             console.error("Service workers are not supported.");
+        }
+    </script>
+
+    <script>
+        let installPrompt = null;
+        const installButton = document.querySelector("#install");
+
+        window.addEventListener("beforeinstallprompt", (event) => {
+            event.preventDefault();
+            installPrompt = event;
+            installButton.removeAttribute("hidden");
+        });
+
+        installButton.addEventListener("click", async () => {
+            if (!installPrompt) {
+                return;
+            }
+            const result = await installPrompt.prompt();
+            console.log(`Install prompt was: ${result.outcome}`);
+            disableInAppInstallPrompt();
+        });
+
+        function disableInAppInstallPrompt() {
+            installPrompt = null;
+            installButton.setAttribute("hidden", "");
+        }
+
+        window.addEventListener("appinstalled", () => {
+            disableInAppInstallPrompt();
+        });
+
+        function disableInAppInstallPrompt() {
+            installPrompt = null;
+            installButton.setAttribute("hidden", "");
         }
     </script>
 

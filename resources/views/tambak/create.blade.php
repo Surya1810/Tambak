@@ -37,7 +37,7 @@
     <section class="content">
         <div class="container">
             <div class="row">
-                <div class="card rounded-tambak card-outline card-primary w-100">
+                <div class="card rounded-tambak card-outline card-orange w-100">
                     <div class="card-header">
                         <h3 class="card-title">Buat Tambak</h3>
                     </div>
@@ -75,8 +75,8 @@
                                 <div class="col-12 col-lg-4">
                                     <div class="form-group">
                                         <label for="owner">Owner</label>
-                                        <select class="form-control owner select2-primary is-invalid"
-                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="owner"
+                                        <select class="form-control owner select2-orange is-invalid"
+                                            data-dropdown-css-class="select2-orange" style="width: 100%;" id="owner"
                                             name="owner">
                                             <option></option>
                                             @foreach ($users as $user)
@@ -95,7 +95,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary rounded-tambak">Buat</button>
+                            <button type="submit" class="btn btn-vaname rounded-tambak">Buat</button>
                         </div>
                     </form>
                 </div>

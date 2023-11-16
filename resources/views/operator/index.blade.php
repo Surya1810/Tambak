@@ -33,7 +33,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-outline rounded-tambak card-primary">
+                    <div class="card card-outline rounded-tambak card-orange">
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-6">
@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="col-6">
                                     <a href="{{ route('operator.create') }}"
-                                        class="btn btn-sm btn-primary rounded-tambak float-right">Tambah Operator</a>
+                                        class="btn btn-sm btn-vaname rounded-tambak float-right">Tambah Operator</a>
                                 </div>
                             </div>
                         </div>
