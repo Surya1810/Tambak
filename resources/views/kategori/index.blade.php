@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Tambak
+    Kategori
 @endsection
 
 @push('css')
@@ -18,10 +18,10 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Tambak</h1>
+                    <h1>Kategori</h1>
                     <ol class="breadcrumb text-black-50">
                         <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active"><strong>Tambak</strong></li>
+                        <li class="breadcrumb-item active"><strong>Kategori</strong></li>
                     </ol>
                 </div>
             </div>
@@ -37,41 +37,39 @@
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <h3 class="card-title">Daftar Tambak</h3>
+                                    <h3 class="card-title">Daftar Kategori</h3>
                                 </div>
                                 <div class="col-6">
-                                    <a href="{{ route('tambak.create') }}"
-                                        class="btn btn-sm btn-vaname rounded-tambak float-right">Tambah Tambak</a>
+                                    <button type="button" class="btn btn-sm btn-vaname rounded-tambak float-right"
+                                        data-toggle="modal" data-target="#addKategori">
+                                        Tambah Kategori
+                                    </button>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body table-responsive">
-                            <table id="employeeTable" class="table table-bordered text-nowrap text-center">
+                            <table id="kategoriTable" class="table table-bordered text-nowrap text-center">
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width: 20%">
-                                            Name
-                                        </th>
-                                        <th style="width: 20%">
-                                            Owner
+                                            Kode
                                         </th>
                                         <th style="width: 40%">
-                                            Alamat
+                                            Kategori
                                         </th>
-                                        <th style="width: 10%">
+                                        <th style="width: 20%">
                                             Status
                                         </th>
-                                        <th style="width: 10%">
+                                        <th style="width: 20%">
                                             Action
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($tambak as $data)
+                                    @foreach ($kategori as $data)
                                         <tr>
+                                            <td>{{ $data->code }}</td>
                                             <td>{{ $data->name }}</td>
-                                            <td>{{ $data->owner->name }}</td>
-                                            <td>{{ $data->address }}</td>
                                             <td>
                                                 @if ($data->status == true)
                                                     Active
@@ -79,16 +77,16 @@
                                                     Disabled
                                                 @endif
                                             </td>
-                                            <td>
-                                                <a class="btn btn-sm btn-warning rounded-tambak"
-                                                    href="{{ route('tambak.edit', $data->id) }}">
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-sm btn-warning rounded-tambak"
+                                                    data-toggle="modal" data-target="#editKategori{{ $data->id }}">
                                                     <i class="fas fa-pencil-alt"></i>
-                                                </a>
+                                                </button>
                                                 <button class="btn btn-sm btn-danger rounded-tambak"
-                                                    onclick="deleteTambak({{ $data->id }})"><i
+                                                    onclick="deleteKategori({{ $data->id }})"><i
                                                         class="fas fa-trash"></i></button>
                                                 <form id="delete-form-{{ $data->id }}"
-                                                    action="{{ route('tambak.destroy', $data->id) }}" method="POST"
+                                                    action="{{ route('kategori.destroy', $data->id) }}" method="POST"
                                                     style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
@@ -104,6 +102,76 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal Add Data-->
+    <div class="modal fade" id="addKategori" tabindex="-1" aria-labelledby="addKategoriLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addStepModalLabel">Tambah Kategori</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('kategori.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name" class="mb-0 form-label col-form-label-sm">Nama Kategori</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                                name="name" placeholder="Masukan nama kategori" value="{{ old('name') }}">
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-vaname rounded-tambak">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @foreach ($kategori as $data)
+        <!-- Modal Edit Step-->
+        <div class="modal fade" id="editKategori{{ $data->id }}" tabindex="-1" aria-labelledby="editKategoriLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editStepModalLabel">Ubah Kategori</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ route('kategori.update', $data->id) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="name" class="mb-0 form-label col-form-label-sm">Nama Kategori</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                    id="name" name="name" placeholder="Masukan nama kategori"
+                                    value="{{ $data->name }}">
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-vaname rounded-tambak">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
 
 @push('scripts')
@@ -123,7 +191,7 @@
 
     <script type="text/javascript">
         $(function() {
-            $('#employeeTable').DataTable({
+            $('#kategoriTable').DataTable({
                 "paging": true,
                 'processing': true,
                 "lengthChange": true,
@@ -142,7 +210,7 @@
             });
         });
 
-        function deleteTambak(id) {
+        function deleteKategori(id) {
             Swal.fire({
                 title: 'Are you sure?',
                 icon: 'warning',

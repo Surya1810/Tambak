@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Tambah Owner
+    Ubah Tambak
 @endsection
 
 @push('css')
@@ -12,12 +12,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Owner</h1>
+                    <h1>Tambak</h1>
                     <ol class="breadcrumb text-black-50">
                         <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('owner.index') }}">Owner</a>
+                        <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('tambak.index') }}">Tambak</a>
                         </li>
-                        <li class="breadcrumb-item active"><strong>Tambah</strong></li>
+                        <li class="breadcrumb-item active"><strong>Ubah</strong></li>
                     </ol>
                 </div>
             </div>
@@ -30,19 +30,20 @@
             <div class="row">
                 <div class="card rounded-tambak card-outline card-orange w-100">
                     <div class="card-header">
-                        <h3 class="card-title">Tambah Owner</h3>
+                        <h3 class="card-title">Ubah Tambak</h3>
                     </div>
-                    <form action="{{ route('owner.store') }}" method="POST" enctype="multipart/form-data"
+                    <form action="{{ route('tambak.update', $tambak->id) }}" method="POST" enctype="multipart/form-data"
                         autocomplete="off">
                         @csrf
+                        @method('PUT')
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12 col-lg-3">
+                                <div class="col-12 col-lg-4">
                                     <div class="form-group">
-                                        <label for="name">Nama</label>
+                                        <label for="name">Nama Tambak</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                            id="name" name="name" placeholder="Masukan nama owner"
-                                            value="{{ old('name') }}" autocomplete="off">
+                                            id="name" name="name" placeholder="Masukan nama tambak"
+                                            value="{{ $tambak->name }}" autocomplete="off">
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -50,39 +51,32 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3">
+                                <div class="col-12 col-lg-4">
                                     <div class="form-group">
-                                        <label for="username">Username</label>
-                                        <input type="text" class="form-control @error('username') is-invalid @enderror"
-                                            id="username" name="username" placeholder="Masukan alamat tambak"
-                                            value="{{ old('username') }}" autocomplete="off">
-                                        @error('username')
+                                        <label for="address">Alamat Tambak</label>
+                                        <input type="text" class="form-control @error('address') is-invalid @enderror"
+                                            id="address" name="address" placeholder="Masukan alamat tambak"
+                                            value="{{ $tambak->address }}" autocomplete="off">
+                                        @error('address')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-3">
+                                <div class="col-12 col-lg-4">
                                     <div class="form-group">
-                                        <label for="phone">Nomor Hp</label>
-                                        <input type="number" class="form-control @error('phone') is-invalid @enderror"
-                                            id="phone" name="phone" placeholder="Masukan alamat tambak"
-                                            value="{{ old('phone') }}" autocomplete="off">
-                                        @error('phone')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-3">
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                            id="email" name="email" placeholder="Masukan alamat tambak"
-                                            value="{{ old('email') }}" autocomplete="off">
-                                        @error('email')
+                                        <label for="owner">Owner</label>
+                                        <select class="form-control owner select2-orange is-invalid"
+                                            data-dropdown-css-class="select2-orange" style="width: 100%;" id="owner"
+                                            name="owner">
+                                            <option></option>
+                                            @foreach ($users as $user)
+                                                <option {{ $tambak->user_id == $user->id ? 'selected' : '' }}
+                                                    value="{{ $user->id }}">{{ $user->username }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('owner')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -92,7 +86,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-vaname rounded-tambak">Tambah</button>
+                            <button type="submit" class="btn btn-vaname rounded-tambak">Ubah</button>
                         </div>
                     </form>
                 </div>

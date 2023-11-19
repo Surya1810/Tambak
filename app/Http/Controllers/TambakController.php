@@ -14,7 +14,7 @@ class TambakController extends Controller
      */
     public function index()
     {
-        $tambak = Tambak::all();
+        $tambak = Tambak::where('status', '=', true)->get();
 
         return view('tambak.index', compact('tambak'));
     }
@@ -47,7 +47,7 @@ class TambakController extends Controller
         $project->user_id = $request->owner;
         $project->save();
 
-        return redirect()->route('tambak.index')->with(['pesan' => 'Tambak berhasil dibuat', 'level-alert' => 'alert-success']);
+        return redirect()->route('tambak.index')->with(['pesan' => 'Tambak berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }
 
     /**
@@ -61,24 +61,43 @@ class TambakController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tambak $tambak)
+    public function edit($id)
     {
-        //
+        $tambak = Tambak::find($id);
+        $users = User::role('owner')->get();
+        return view('tambak.edit', compact('users', 'tambak'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tambak $tambak)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'bail|required',
+            'address' => 'bail|required',
+            'owner' => 'bail|required',
+        ]);
+
+        $project = Tambak::find($id);
+        $project->name = $request->name;
+        $project->address = $request->address;
+        $project->user_id = $request->owner;
+        $project->update();
+
+        return redirect()->route('tambak.index')->with(['pesan' => 'Tambak berhasil diubah', 'level-alert' => 'alert-warning']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tambak $tambak)
+    public function destroy($id)
     {
-        //
+        $data = Tambak::find($id);
+        $data->status = false;
+        $data->update();
+        // $data->delete();
+
+        return redirect()->route('tambak.index')->with(['pesan' => 'Tambak berhasil dihapus', 'level-alert' => 'alert-danger']);
     }
 }

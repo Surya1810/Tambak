@@ -75,7 +75,7 @@
                                             <td>{{ $data->name }}</td>
                                             <td>{{ $data->username }}</td>
                                             <td>{{ $data->email }}</td>
-                                            <td>{{ $data->phone }}</td>
+                                            <td>+62{{ $data->phone }}</td>
                                             <td>
                                                 @if ($data->is_active == true)
                                                     Active
@@ -84,7 +84,19 @@
                                                 @endif
                                             </td>
                                             <td>
-
+                                                <a class="btn btn-sm btn-warning rounded-tambak"
+                                                    href="{{ route('owner.edit', $data->id) }}">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
+                                                <button class="btn btn-sm btn-danger rounded-tambak"
+                                                    onclick="deleteOwner({{ $data->id }})"><i
+                                                        class="fas fa-trash"></i></button>
+                                                <form id="delete-form-{{ $data->id }}"
+                                                    action="{{ route('owner.destroy', $data->id) }}" method="POST"
+                                                    style="display: none;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -133,5 +145,28 @@
                 // }]
             });
         });
+
+        function deleteOwner(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Delete'
+            }).then((result) => {
+                if (result.value) {
+                    event.preventDefault();
+                    document.getElementById('delete-form-' + id).submit();
+                } else if (
+                    result.dismiss === swal.DismissReason.cancel
+                ) {
+                    swal(
+                        'Cancelled',
+                        'Your data is safe !',
+                        'error'
+                    )
+                }
+            })
+        }
     </script>
 @endpush

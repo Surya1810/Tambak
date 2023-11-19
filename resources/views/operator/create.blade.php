@@ -5,15 +5,6 @@
 @endsection
 
 @push('css')
-    <script src="https://cdn.tiny.cloud/1/s7h48tmpx44zenjzuehfwzluynm7n5cv1ty3v2u1suxy4vqv/tinymce/6/tinymce.min.js"
-        referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: 'textarea#body',
-            plugins: 'powerpaste advcode table lists checklist',
-            toolbar: 'undo redo | blocks| bold italic | bullist numlist checklist | code | table | alignleft aligncenter alignright alignjustify | outdent indent'
-        });
-    </script>
 @endpush
 
 @section('content')
@@ -21,10 +12,10 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Owner</h1>
+                    <h1>Operator</h1>
                     <ol class="breadcrumb text-black-50">
                         <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('owner.index') }}">Owner</a>
+                        <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('operator.index') }}">Operator</a>
                         </li>
                         <li class="breadcrumb-item active"><strong>Buat</strong></li>
                     </ol>
@@ -39,7 +30,7 @@
             <div class="row">
                 <div class="card rounded-tambak card-outline card-orange w-100">
                     <div class="card-header">
-                        <h3 class="card-title">Tambah Owner</h3>
+                        <h3 class="card-title">Tambah Operator</h3>
                     </div>
                     <form action="{{ route('operator.store') }}" method="POST" enctype="multipart/form-data"
                         autocomplete="off">
@@ -50,7 +41,7 @@
                                     <div class="form-group">
                                         <label for="name">Nama</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                            id="name" name="name" placeholder="Masukan nama owner"
+                                            id="name" name="name" placeholder="Masukan nama operator"
                                             value="{{ old('name') }}" autocomplete="off">
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -63,7 +54,7 @@
                                     <div class="form-group">
                                         <label for="username">Username</label>
                                         <input type="text" class="form-control @error('username') is-invalid @enderror"
-                                            id="username" name="username" placeholder="Masukan alamat tambak"
+                                            id="username" name="username" placeholder="Masukan username operator"
                                             value="{{ old('username') }}" autocomplete="off">
                                         @error('username')
                                             <span class="invalid-feedback" role="alert">
@@ -76,7 +67,7 @@
                                     <div class="form-group">
                                         <label for="phone">Nomor Hp</label>
                                         <input type="number" class="form-control @error('phone') is-invalid @enderror"
-                                            id="phone" name="phone" placeholder="Masukan alamat tambak"
+                                            id="phone" name="phone" placeholder="Masukan nomor operator"
                                             value="{{ old('phone') }}" autocomplete="off">
                                         @error('phone')
                                             <span class="invalid-feedback" role="alert">
@@ -89,7 +80,7 @@
                                     <div class="form-group">
                                         <label for="email">Email</label>
                                         <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                            id="email" name="email" placeholder="Masukan alamat tambak"
+                                            id="email" name="email" placeholder="Masukan email operator"
                                             value="{{ old('email') }}" autocomplete="off">
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">

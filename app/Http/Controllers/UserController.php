@@ -21,7 +21,7 @@ class UserController extends Controller
 
     public function owner()
     {
-        $users = User::role('owner')->get();
+        $users = User::role('owner')->where('is_active', '=', true)->where('deleted_at', '=', null)->get();
         return view('owner.index', compact('users'));
     }
 
@@ -104,6 +104,12 @@ class UserController extends Controller
     {
         //
     }
+    public function owner_edit($id)
+    {
+        $owner = User::find($id);
+
+        return view('owner.edit', compact('owner'));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -112,12 +118,39 @@ class UserController extends Controller
     {
         //
     }
+    public function owner_update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'bail|required',
+            'username' => 'bail|required|unique:users,username',
+            'email' => 'bail|required',
+            'phone' => 'bail|required',
+        ]);
+
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->update();
+
+        return redirect()->route('owner.index')->with(['pesan' => 'Owner berhasil diubah', 'level-alert' => 'alert-warning']);
+    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+    }
+    public function owner_destroy($id)
+    {
+        $data = User::find($id);
+        $data->is_active = false;
+        $data->update();
+
+        $data->delete();
+
+        return redirect()->route('owner.index')->with(['pesan' => 'Owner berhasil dihapus', 'level-alert' => 'alert-danger']);
     }
 }

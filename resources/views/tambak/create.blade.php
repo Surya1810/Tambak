@@ -1,19 +1,10 @@
 @extends('layouts.admin')
 
 @section('title')
-    Buat Tambak
+    Tambah Tambak
 @endsection
 
 @push('css')
-    <script src="https://cdn.tiny.cloud/1/s7h48tmpx44zenjzuehfwzluynm7n5cv1ty3v2u1suxy4vqv/tinymce/6/tinymce.min.js"
-        referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: 'textarea#body',
-            plugins: 'powerpaste advcode table lists checklist',
-            toolbar: 'undo redo | blocks| bold italic | bullist numlist checklist | code | table | alignleft aligncenter alignright alignjustify | outdent indent'
-        });
-    </script>
 @endpush
 
 @section('content')
@@ -26,7 +17,7 @@
                         <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('dashboard') }}">Home</a></li>
                         <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('tambak.index') }}">Tambak</a>
                         </li>
-                        <li class="breadcrumb-item active"><strong>Buat</strong></li>
+                        <li class="breadcrumb-item active"><strong>Tambah</strong></li>
                     </ol>
                 </div>
             </div>
@@ -39,7 +30,7 @@
             <div class="row">
                 <div class="card rounded-tambak card-outline card-orange w-100">
                     <div class="card-header">
-                        <h3 class="card-title">Buat Tambak</h3>
+                        <h3 class="card-title">Tambah Tambak</h3>
                     </div>
                     <form action="{{ route('tambak.store') }}" method="POST" enctype="multipart/form-data"
                         autocomplete="off">
@@ -95,7 +86,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-vaname rounded-tambak">Buat</button>
+                            <button type="submit" class="btn btn-vaname rounded-tambak">Tambah</button>
                         </div>
                     </form>
                 </div>

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Tambah Owner
+    Ubah Owner
 @endsection
 
 @push('css')
@@ -17,7 +17,7 @@
                         <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('dashboard') }}">Home</a></li>
                         <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('owner.index') }}">Owner</a>
                         </li>
-                        <li class="breadcrumb-item active"><strong>Tambah</strong></li>
+                        <li class="breadcrumb-item active"><strong>Ubah</strong></li>
                     </ol>
                 </div>
             </div>
@@ -30,9 +30,9 @@
             <div class="row">
                 <div class="card rounded-tambak card-outline card-orange w-100">
                     <div class="card-header">
-                        <h3 class="card-title">Tambah Owner</h3>
+                        <h3 class="card-title">Ubah Owner</h3>
                     </div>
-                    <form action="{{ route('owner.store') }}" method="POST" enctype="multipart/form-data"
+                    <form action="{{ route('owner.update', $owner->id) }}" method="POST" enctype="multipart/form-data"
                         autocomplete="off">
                         @csrf
                         <div class="card-body">
@@ -42,7 +42,7 @@
                                         <label for="name">Nama</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
                                             id="name" name="name" placeholder="Masukan nama owner"
-                                            value="{{ old('name') }}" autocomplete="off">
+                                            value="{{ $owner->name }}" autocomplete="off">
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -55,7 +55,7 @@
                                         <label for="username">Username</label>
                                         <input type="text" class="form-control @error('username') is-invalid @enderror"
                                             id="username" name="username" placeholder="Masukan alamat tambak"
-                                            value="{{ old('username') }}" autocomplete="off">
+                                            value="{{ $owner->username }}" autocomplete="off">
                                         @error('username')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -68,7 +68,7 @@
                                         <label for="phone">Nomor Hp</label>
                                         <input type="number" class="form-control @error('phone') is-invalid @enderror"
                                             id="phone" name="phone" placeholder="Masukan alamat tambak"
-                                            value="{{ old('phone') }}" autocomplete="off">
+                                            value="{{ $owner->phone }}" autocomplete="off">
                                         @error('phone')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -81,7 +81,7 @@
                                         <label for="email">Email</label>
                                         <input type="email" class="form-control @error('email') is-invalid @enderror"
                                             id="email" name="email" placeholder="Masukan alamat tambak"
-                                            value="{{ old('email') }}" autocomplete="off">
+                                            value="{{ $owner->email }}" autocomplete="off">
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -92,7 +92,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-vaname rounded-tambak">Tambah</button>
+                            <button type="submit" class="btn btn-vaname rounded-tambak">Ubah</button>
                         </div>
                     </form>
                 </div>

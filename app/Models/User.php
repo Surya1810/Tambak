@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Tambak::class);
     }
+
+    public function gudang(): HasMany
+    {
+        return $this->hasMany(Gudang::class);
+    }
 }

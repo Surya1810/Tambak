@@ -1,9 +1,15 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GudangController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SatuanController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TambakController;
 use App\Http\Controllers\UserController;
+use App\Models\Supplier;
 use App\Models\Tambak;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -31,11 +37,24 @@ Route::middleware('auth')->group(function () {
     Route::resource('operator', UserController::class);
     Route::get('/owner', [UserController::class, 'owner'])->name('owner.index');
     Route::get('/owner/create', [UserController::class, 'owner_create'])->name('owner.create');
+    Route::get('/owner/edit/{id}', [UserController::class, 'owner_edit'])->name('owner.edit');
     Route::post('/owner/store', [UserController::class, 'owner_store'])->name('owner.store');
+    Route::post('/owner/update/{id}', [UserController::class, 'owner_update'])->name('owner.update');
+    Route::delete('/owner/delete/{id}', [UserController::class, 'owner_destroy'])->name('owner.destroy');
 
     // Tambak
     Route::resource('tambak', TambakController::class);
 
+    // Satuan
+    Route::resource('satuan', SatuanController::class);
+    // Gudang
+    Route::resource('gudang', GudangController::class);
+    // Kategori
+    Route::resource('kategori', KategoriController::class);
+    // Supplier
+    Route::resource('supplier', SupplierController::class);
+    // Customer
+    Route::resource('customer', CustomerController::class);
 
     // Profile Section
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
