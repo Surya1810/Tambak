@@ -67,20 +67,23 @@
                                 <div class="col-12 col-lg-4">
                                     <div class="form-group">
                                         <label for="owner">Owner</label>
-                                        <select class="form-control owner select2-orange is-invalid"
-                                            data-dropdown-css-class="select2-orange" style="width: 100%;" id="owner"
-                                            name="owner">
-                                            <option></option>
-                                            @foreach ($users as $user)
-                                                <option {{ $tambak->user_id == $user->id ? 'selected' : '' }}
-                                                    value="{{ $user->id }}">{{ $user->username }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('owner')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                        <div class="select2-orange">
+                                            <select class="form-control owner select2 @error('owner') is-invalid @enderror"
+                                                multiple="multiple" data-dropdown-css-class="select2-orange"
+                                                style="width: 100%;" id="owner" name="owner[]">
+                                                @foreach ($users as $user)
+                                                    <option
+                                                        @foreach ($tambak->owner as $team)
+                                                    {{ $team->id == $user->id ? 'selected' : '' }} @endforeach
+                                                        value="{{ $user->id }}">{{ $user->username }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('owner')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                             </div>

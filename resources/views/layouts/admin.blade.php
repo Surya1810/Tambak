@@ -189,6 +189,12 @@
                                             <p>Kategori</p>
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Akun</p>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         @endhasanyrole
@@ -275,57 +281,19 @@
                             </li>
                         @endif
                         {{-- @endhasrole --}}
-
-                        <li class="nav-item mt-5">
-                            <a class="nav-link" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
-                                <i class="nav-icon fa-solid fa-arrow-left"></i>
-                                <p>
-                                    Logout
-                                </p>
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </li>
-                        {{-- <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fa-solid fa-boxes-packing"></i>
-                                <p>
-                                    Product
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Catalog</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Reports</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Inventory</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li> --}}
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>
             <div class="sidebar-custom">
-                {{-- <a href="{{ route('profile.edit') }}" class="btn btn-link"><i
-                        class="nav-icon fa-solid fa-gear"></i></a> --}}
+                <a class="btn btn-danger rounded-tambak" href="{{ route('logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="fa-solid fa-power-off"></i>
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
                 <button class="btn btn-dark hide-on-collapse pos-right" id="install" hidden>Install</button>
             </div>
             <!-- /.sidebar -->

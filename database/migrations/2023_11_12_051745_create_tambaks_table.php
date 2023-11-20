@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('address');
-            $table->integer('user_id');
+            // $table->integer('user_id');
             $table->boolean('status')->default(true);
             $table->softDeletes();
             $table->timestamps();

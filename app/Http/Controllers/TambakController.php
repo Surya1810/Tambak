@@ -44,8 +44,9 @@ class TambakController extends Controller
         $project = new Tambak();
         $project->name = $request->name;
         $project->address = $request->address;
-        $project->user_id = $request->owner;
+        // $project->user_id = $request->owner;
         $project->save();
+        $project->owner()->attach($request->owner);
 
         return redirect()->route('tambak.index')->with(['pesan' => 'Tambak berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }
@@ -82,8 +83,10 @@ class TambakController extends Controller
         $project = Tambak::find($id);
         $project->name = $request->name;
         $project->address = $request->address;
-        $project->user_id = $request->owner;
+        // $project->user_id = $request->owner;
         $project->update();
+        $project->owner()->sync($request->owner);
+
 
         return redirect()->route('tambak.index')->with(['pesan' => 'Tambak berhasil diubah', 'level-alert' => 'alert-warning']);
     }

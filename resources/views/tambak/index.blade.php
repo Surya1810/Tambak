@@ -70,7 +70,11 @@
                                     @foreach ($tambak as $data)
                                         <tr>
                                             <td>{{ $data->name }}</td>
-                                            <td>{{ $data->owner->name }}</td>
+                                            <td>
+                                                @foreach ($data->owner as $owner)
+                                                    {{ $owner->name }}
+                                                @endforeach
+                                            </td>
                                             <td>{{ $data->address }}</td>
                                             <td>
                                                 @if ($data->status == true)
