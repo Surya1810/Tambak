@@ -52,9 +52,11 @@
                                         <th style="width: 20%">
                                             Name
                                         </th>
-                                        <th style="width: 20%">
-                                            Owner
-                                        </th>
+                                        @role('Super Admin | Admin')
+                                            <th style="width: 20%">
+                                                Owner
+                                            </th>
+                                        @endrole
                                         <th style="width: 40%">
                                             Alamat
                                         </th>
@@ -70,11 +72,13 @@
                                     @foreach ($tambak as $data)
                                         <tr>
                                             <td>{{ $data->name }}</td>
-                                            <td>
-                                                @foreach ($data->owner as $owner)
-                                                    {{ $owner->name }}
-                                                @endforeach
-                                            </td>
+                                            @role('Super Admin | Admin')
+                                                <td>
+                                                    @foreach ($data->owner as $owner)
+                                                        {{ $owner->name }}
+                                                    @endforeach
+                                                </td>
+                                            @endrole
                                             <td>{{ $data->address }}</td>
                                             <td>
                                                 @if ($data->status == true)
@@ -84,19 +88,27 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a class="btn btn-sm btn-warning rounded-tambak"
-                                                    href="{{ route('tambak.edit', $data->id) }}">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
-                                                <button class="btn btn-sm btn-danger rounded-tambak"
-                                                    onclick="deleteTambak({{ $data->id }})"><i
-                                                        class="fas fa-trash"></i></button>
-                                                <form id="delete-form-{{ $data->id }}"
-                                                    action="{{ route('tambak.destroy', $data->id) }}" method="POST"
-                                                    style="display: none;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                </form>
+                                                @role('Super Admin | Admin')
+                                                    <a class="btn btn-sm btn-warning rounded-tambak"
+                                                        href="{{ route('tambak.edit', $data->id) }}">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </a>
+                                                    <button class="btn btn-sm btn-danger rounded-tambak"
+                                                        onclick="deleteTambak({{ $data->id }})"><i
+                                                            class="fas fa-trash"></i></button>
+                                                    <form id="delete-form-{{ $data->id }}"
+                                                        action="{{ route('tambak.destroy', $data->id) }}" method="POST"
+                                                        style="display: none;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                @endrole
+                                                @role('Owner')
+                                                    <a class="btn btn-sm btn-info rounded-tambak"
+                                                        href="{{ route('kolam.index', $data->id) }}">
+                                                        <i class="fas fa-pencil-alt"></i>Lihat Kolam
+                                                    </a>
+                                                @endrole
                                             </td>
                                         </tr>
                                     @endforeach

@@ -37,11 +37,13 @@
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <h3 class="card-title">Daftar Customer</h3>
+                                    <h3 class="card-title">Buku Kas</h3>
                                 </div>
                                 <div class="col-6">
-                                    <a href="{{ route('akun.create') }}"
-                                        class="btn btn-sm btn-vaname rounded-tambak float-right">Tambah Customer</a>
+                                    <button type="button" class="btn btn-sm btn-vaname rounded-tambak float-right"
+                                        data-toggle="modal" data-target="#addSatuan">
+                                        Tambah
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -49,39 +51,34 @@
                             <table id="akunTable" class="table table-bordered text-nowrap text-center">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width: 10%">
-                                            Kode
-                                        </th>
                                         <th style="width: 20%">
-                                            Name
+                                            No
                                         </th>
                                         <th style="width: 30%">
-                                            Alamat
+                                            Nama
                                         </th>
+                                        {{-- <th style="width: 30%">
+                                            Kredit
+                                        </th>
+                                        <th style="width: 30%">
+                                            Debit
+                                        </th> --}}
                                         <th style="width: 20%">
-                                            Phone
+                                            Aktivitas
                                         </th>
-                                        <th style="width: 10%">
-                                            Tempo
-                                        </th>
-                                        <th style="width: 10%">
-                                            Action
+                                        <th style="width: 30%">
+                                            Jenis
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($akun as $data)
                                         <tr>
-                                            <td>{{ $data->code }}</td>
-                                            <td>{{ $data->name }}</td>
-                                            <td>{{ $data->address }}</td>
-                                            <td>+62{{ $data->phone }} / {{ $data->contact }}</td>
-                                            <td>{{ $data->tempo }}</td>
+                                            <td>{{ $data->nomor }}</td>
+                                            <td>{{ $data->nama }}</td>
+                                            <td>{{ $data->aktivitas }}</td>
+                                            <td>{{ $data->jenis }}</td>
                                             <td class="text-center">
-                                                <a class="btn btn-sm btn-warning rounded-tambak"
-                                                    href="{{ route('akun.edit', $data->id) }}">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
                                                 <button class="btn btn-sm btn-danger rounded-tambak"
                                                     onclick="deleteAkun({{ $data->id }})"><i
                                                         class="fas fa-trash"></i></button>
@@ -102,6 +99,72 @@
             </div>
         </div>
     </section>
+    <!-- Modal Add Data-->
+    <div class="modal fade" id="addSatuan" tabindex="-1" aria-labelledby="addSatuanLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addStepModalLabel">Tambah Akun</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('akun.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name" class="mb-0 form-label col-form-label-sm">Nama Akun</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                                name="name" placeholder="Masukan nama akun" value="{{ old('name') }}">
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="aktivitas">Aktivitas</label>
+                            <select class="form-control aktivitas select2-orange is-invalid"
+                                data-dropdown-css-class="select2-orange" style="width: 100%;" id="aktivitas"
+                                name="aktivitas">
+                                <option></option>
+                                <option value="Kredit" {{ old('status') == 'Kredit' ? 'selected' : '' }}>
+                                    Kredit</option>
+                                <option value="Debit" {{ old('status') == 'Debit' ? 'selected' : '' }}>
+                                    Debit</option>
+                            </select>
+                            @error('aktivitas')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="jenis">Jenis</label>
+                            <select class="form-control jenis select2-orange is-invalid"
+                                data-dropdown-css-class="select2-orange" style="width: 100%;" id="jenis" name="jenis">
+                                <option></option>
+                                <option value="Pendapatan" {{ old('status') == 'Pendapatan' ? 'selected' : '' }}>
+                                    Pendapatan</option>
+                                <option value="Beban" {{ old('status') == 'Beban' ? 'selected' : '' }}>
+                                    Beban</option>
+                                <option value="Harta" {{ old('status') == 'Harta' ? 'selected' : '' }}>
+                                    Harta</option>
+                            </select>
+                            @error('jenis')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-vaname rounded-tambak">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
@@ -162,5 +225,16 @@
                 }
             })
         }
+
+        $('.aktivitas').select2({
+            placeholder: "Select status",
+            minimumResultsForSearch: -1,
+            allowClear: true,
+        })
+        $('.jenis').select2({
+            placeholder: "Select status",
+            minimumResultsForSearch: -1,
+            allowClear: true,
+        })
     </script>
 @endpush

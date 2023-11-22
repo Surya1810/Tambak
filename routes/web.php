@@ -47,7 +47,6 @@ Route::middleware('auth')->group(function () {
 
     // Tambak
     Route::resource('tambak', TambakController::class);
-
     // Satuan
     Route::resource('satuan', SatuanController::class);
     // Gudang

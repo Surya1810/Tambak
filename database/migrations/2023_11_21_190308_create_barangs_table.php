@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('barangs', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->bigInteger('gudang_id')->constrained()->cascadeOnDelete();
+            $table->bigInteger('supplier_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

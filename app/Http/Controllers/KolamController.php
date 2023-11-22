@@ -33,7 +33,26 @@ class KolamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'bail|required',
+            'panjang' => 'bail|required',
+            'lebar' => 'bail|required',
+            'dalam' => 'bail|required',
+            'anco' => 'bail|required',
+        ]);
+
+        $old = session()->getOldInput();
+
+        $project = new Kolam();
+        $project->tambak_id = $request->tambak_id;
+        $project->name = $request->name;
+        $project->panjang = $request->panjang;
+        $project->lebar = $request->lebar;
+        $project->dalam = $request->dalam;
+        $project->anco = $request->anco;
+        $project->save();
+
+        return redirect()->route('kolam.index')->with(['pesan' => 'Kolam berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }
 
     /**

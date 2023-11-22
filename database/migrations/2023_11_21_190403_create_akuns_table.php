@@ -15,8 +15,10 @@ return new class extends Migration
             $table->increments('id');
             $table->string('nomor');
             $table->string('nama');
-            $table->string('status');
+            $table->string('aktivitas');
+            // $table->string('status');
             $table->string('jenis');
+            $table->string('owner_id');
             $table->timestamps();
         });
     }

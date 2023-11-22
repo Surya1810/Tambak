@@ -14,9 +14,20 @@ class TambakController extends Controller
      */
     public function index()
     {
-        $tambak = Tambak::where('status', '=', true)->get();
+        if (auth()->user()->hasRole('owner')) {
+            $tambak = Auth::user()->tambak;
+        } else {
+            $tambak = Tambak::where('status', '=', true)->get();
+        }
 
         return view('tambak.index', compact('tambak'));
+    }
+
+    public function user()
+    {
+        $tambak = Tambak::where('status', '=', true)->get();
+
+        return view('tambak.user', compact('tambak'));
     }
 
     /**
