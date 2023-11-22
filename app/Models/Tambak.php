@@ -27,4 +27,9 @@ class Tambak extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function kolam(): HasMany
+    {
+        return $this->hasMany(Kolam::class,);
+    }
 }

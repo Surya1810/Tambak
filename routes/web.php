@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\AkunController;
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\KolamController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
@@ -55,6 +58,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('supplier', SupplierController::class);
     // Customer
     Route::resource('customer', CustomerController::class);
+    // Akun
+    Route::resource('akun', AkunController::class);
+    // Barang
+    Route::resource('barang', BarangController::class);
+    // Kolam    
+    Route::resource('kolam', KolamController::class);
 
     // Profile Section
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

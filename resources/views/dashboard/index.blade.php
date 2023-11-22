@@ -61,20 +61,23 @@
                         </div>
                     @else
                         @foreach ($tambak as $data)
-                            <div class="col-lg-3 col-6">
-                                <div class="small-box bg-vaname">
-                                    <div class="inner">
-                                        <h3></h3>
-
-                                        <p>{{ $data->name }}</p>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="ion ion-bag"></i>
-                                    </div>
-                                    <a href="#" class="small-box-footer">More info <i
-                                            class="fas fa-arrow-circle-right"></i></a>
-                                </div>
+                            <div class="col-12 text-center">
+                                <h5 class="text-center"><strong>{{ $data->name }}</strong></h5>
                             </div>
+                            @if (count($data->kolam) == null)
+                                <div class="col-12 text-center">
+                                    <h6>Belum Memiliki Kolam</h6>
+                                </div>
+                            @else
+                                @foreach ($data->kolam as $kolam)
+                                    <div class="col-lg-3 col-6">
+                                        <div class="card">
+                                            <div class="card-title">{{ $kolam->name }}</div>
+                                            <div class="card-body"></div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
                         @endforeach
                     @endif
                 </div>

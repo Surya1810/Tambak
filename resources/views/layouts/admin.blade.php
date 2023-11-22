@@ -140,64 +140,50 @@
                                 </p>
                             </a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a href="{{ route('dashboard') }}" class="nav-link">
-                                <i class="nav-icon fa-solid fa-house"></i>
+                        {{-- @hasanyrole('super admin|admin') --}}
+                        <li class="nav-header mt-3">
+                            Administrasi
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('owner.index') }}" class="nav-link">
+                                <i class="nav-icon fa-solid fa-user"></i>
                                 <p>
-                                    Home
+                                    Owner
                                 </p>
                             </a>
-                        </li> --}}
-                        @hasanyrole('super admin|admin')
-                            <li class="nav-header mt-3">
-                                Administrasi
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('owner.index') }}" class="nav-link">
-                                    <i class="nav-icon fa-solid fa-user"></i>
-                                    <p>
-                                        Owner
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('tambak.index') }}" class="nav-link">
-                                    <i class="nav-icon fa-solid fa-location-dot"></i>
-                                    <p>
-                                        Tambak
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fa-solid fa-database"></i>
-                                    <p>
-                                        Master
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{ route('satuan.index') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Satuan</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('kategori.index') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Kategori</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Akun</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endhasanyrole
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('tambak.index') }}" class="nav-link">
+                                <i class="nav-icon fa-solid fa-location-dot"></i>
+                                <p>
+                                    Tambak
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa-solid fa-database"></i>
+                                <p>
+                                    Master
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('satuan.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Satuan</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('kategori.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Kategori</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        {{-- @endhasanyrole --}}
                         {{-- @hasrole('owner') --}}
                         @if (auth()->user()->tambak->count() != null)
                             <li class="nav-header mt-3">
@@ -250,7 +236,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{ route('kolam.index') }}" class="nav-link">
                                     <i class="nav-icon fa-solid fa-shrimp"></i>
                                     <p>Kolam</p>
                                 </a>
@@ -272,9 +258,98 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">
+                                        <a href="{{ route('barang.index') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Barang</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-header mt-3">
+                                Finance
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('akun.index') }}" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-shrimp"></i>
+                                    <p>Buku Kas</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-shrimp"></i>
+                                    <p>Jurnal</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-shrimp"></i>
+                                    <p>Hutang</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-shrimp"></i>
+                                    <p>Pembelian</p>
+                                </a>
+                            </li>
+                            <li class="nav-header mt-3">
+                                Operasional
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-warehouse"></i>
+                                    <p>
+                                        Gudang
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('gudang.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Mutasi Stok</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('barang.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p></p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-warehouse"></i>
+                                    <p>
+                                        Kolam
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('gudang.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Cek Anco</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('barang.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Pemakaian Pakan</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('barang.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Sampling</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('barang.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Tebar</p>
                                         </a>
                                     </li>
                                 </ul>
