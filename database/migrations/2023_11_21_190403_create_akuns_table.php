@@ -19,6 +19,7 @@ return new class extends Migration
             // $table->string('status');
             $table->string('jenis');
             $table->string('owner_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

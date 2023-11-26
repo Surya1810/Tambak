@@ -63,6 +63,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('barang', BarangController::class);
     // Kolam    
     Route::resource('kolam', KolamController::class);
+    Route::get('/tambak/kolam/{id}', [KolamController::class, 'kolam'])->name('kolam');
+
 
     // Profile Section
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

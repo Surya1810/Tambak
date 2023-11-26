@@ -86,8 +86,11 @@ class AkunController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Akun $akun)
+    public function destroy($id)
     {
-        //
+        $data = Akun::find($id);
+        $data->delete();
+
+        return redirect()->route('akun.index')->with(['pesan' => 'Akun berhasil dihapus', 'level-alert' => 'alert-danger']);
     }
 }

@@ -57,17 +57,14 @@
                                         <th style="width: 30%">
                                             Nama
                                         </th>
-                                        {{-- <th style="width: 30%">
-                                            Kredit
-                                        </th>
-                                        <th style="width: 30%">
-                                            Debit
-                                        </th> --}}
                                         <th style="width: 20%">
                                             Aktivitas
                                         </th>
-                                        <th style="width: 30%">
+                                        <th style="width: 20%">
                                             Jenis
+                                        </th>
+                                        <th style="width: 10%">
+                                            Action
                                         </th>
                                     </tr>
                                 </thead>
@@ -123,7 +120,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="aktivitas">Aktivitas</label>
+                            <label for="aktivitas" class="mb-0 form-label col-form-label-sm">Aktivitas</label>
                             <select class="form-control aktivitas select2-orange is-invalid"
                                 data-dropdown-css-class="select2-orange" style="width: 100%;" id="aktivitas"
                                 name="aktivitas">
@@ -140,7 +137,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="jenis">Jenis</label>
+                            <label for="jenis" class="mb-0 form-label col-form-label-sm">Jenis</label>
                             <select class="form-control jenis select2-orange is-invalid"
                                 data-dropdown-css-class="select2-orange" style="width: 100%;" id="jenis" name="jenis">
                                 <option></option>

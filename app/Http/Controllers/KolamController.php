@@ -11,11 +11,18 @@ class KolamController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $kolam = Kolam::where('tambak_id')->get();
+    // public function index($id)
+    // {
+    //     $kolam = Kolam::where('tambak_id', $id)->get();
 
-        return view('kolam.index', compact('kolam'));
+    //     return view('kolam.index', compact('kolam'));
+    // }
+    public function kolam($id)
+    {
+        $kolam = Kolam::where('tambak_id', $id)->get();
+        $tambak_id = $id;
+
+        return view('kolam.index', compact('kolam', 'tambak_id'));
     }
 
     /**
@@ -48,11 +55,12 @@ class KolamController extends Controller
         $project->name = $request->name;
         $project->panjang = $request->panjang;
         $project->lebar = $request->lebar;
-        $project->dalam = $request->dalam;
+        $project->kedalaman = $request->dalam;
         $project->anco = $request->anco;
+        $project->luas = $request->panjang * $request->lebar;;
         $project->save();
 
-        return redirect()->route('kolam.index')->with(['pesan' => 'Kolam berhasil ditambahkan', 'level-alert' => 'alert-success']);
+        return redirect()->route('kolam', $request->tambak_id)->with(['pesan' => 'Kolam berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }
 
     /**

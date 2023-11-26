@@ -12,7 +12,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Kolam</h1>
+                    <h1>Data Kolam</h1>
                     <ol class="breadcrumb text-black-50">
                         <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('dashboard') }}">Home</a></li>
                         <li class="breadcrumb-item active"><strong>Kolam</strong></li>
@@ -32,22 +32,32 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                @foreach ($kolam as $data)
-                    <div class="col-6 col-md-3">
-                        <div class="card card-outline rounded-tambak card-orange">
-                            <div class="card-header">
-                                <div class="row align-items-center">
-                                    <h3 class="card-title">{{ $data->nama }}</h3>
+                @if ($kolam == null)
+                    <h1>Belum Memiliki Kolam</h1>
+                @else
+                    @foreach ($kolam as $data)
+                        <div class="col-6 col-md-3">
+                            <div class="card card-outline rounded-tambak card-orange">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <h3 class="card-title">{{ $data->name }}</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6">{{ $data->panjang }}m</div>
+                                        <div class="col-6">{{ $data->lebar }}m</div>
+                                        <div class="col-6">{{ $data->luas }}m</div>
+                                        <div class="col-6">{{ $data->anco }}m</div>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button class="btn btn-sm btn-secondary rounded-tambak">Lihat Detail</button>
                                 </div>
                             </div>
-                            <div class="card-body">
-                            </div>
-                            <div class="card-footer">
-                                <button class="btn btn-sm btn-secondary rounded-vaname">Lihat Detail</button>
-                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
             </div>
         </div>
     </section>
@@ -56,12 +66,12 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addStepModalLabel">Tambah Akun</h5>
+                    <h5 class="modal-title" id="addStepModalLabel">Tambah Kolam</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('akun.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('kolam.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -100,7 +110,7 @@
                                     <label for="panjang" class="mb-0 form-label col-form-label-sm">Panjang</label>
                                     <div class="input-group mb-2">
                                         <input type="number" class="form-control @error('panjang') is-invalid @enderror"
-                                            id="panjang" name="name" required>
+                                            id="panjang" name="panjang" required>
                                         <div class="input-group-append">
                                             <div class="input-group-text">m</div>
                                         </div>
@@ -143,6 +153,7 @@
                                     @enderror
                                 </div>
                             </div>
+                            <input type="hidden" id="tambak_id" name="tambak_id" value="{{ $tambak_id }}">
                         </div>
 
                     </div>

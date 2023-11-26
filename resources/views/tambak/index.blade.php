@@ -39,10 +39,12 @@
                                 <div class="col-6">
                                     <h3 class="card-title">Daftar Tambak</h3>
                                 </div>
-                                <div class="col-6">
-                                    <a href="{{ route('tambak.create') }}"
-                                        class="btn btn-sm btn-vaname rounded-tambak float-right">Tambah Tambak</a>
-                                </div>
+                                @role('super admin | admin')
+                                    <div class="col-6">
+                                        <a href="{{ route('tambak.create') }}"
+                                            class="btn btn-sm btn-vaname rounded-tambak float-right">Tambah Tambak</a>
+                                    </div>
+                                @endrole
                             </div>
                         </div>
                         <div class="card-body table-responsive">
@@ -52,7 +54,7 @@
                                         <th style="width: 20%">
                                             Name
                                         </th>
-                                        @role('Super Admin | Admin')
+                                        @role('super admin | admin')
                                             <th style="width: 20%">
                                                 Owner
                                             </th>
@@ -72,7 +74,7 @@
                                     @foreach ($tambak as $data)
                                         <tr>
                                             <td>{{ $data->name }}</td>
-                                            @role('Super Admin | Admin')
+                                            @role('super admin | admin')
                                                 <td>
                                                     @foreach ($data->owner as $owner)
                                                         {{ $owner->name }}
@@ -88,7 +90,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                @role('Super Admin | Admin')
+                                                @role('super admin | admin')
                                                     <a class="btn btn-sm btn-warning rounded-tambak"
                                                         href="{{ route('tambak.edit', $data->id) }}">
                                                         <i class="fas fa-pencil-alt"></i>
@@ -103,10 +105,10 @@
                                                         @method('DELETE')
                                                     </form>
                                                 @endrole
-                                                @role('Owner')
+                                                @role('owner')
                                                     <a class="btn btn-sm btn-info rounded-tambak"
-                                                        href="{{ route('kolam.index', $data->id) }}">
-                                                        <i class="fas fa-pencil-alt"></i>Lihat Kolam
+                                                        href="{{ route('kolam', $data->id) }}">
+                                                        <i class="fas fa-eye"></i> Lihat Kolam
                                                     </a>
                                                 @endrole
                                             </td>

@@ -71,9 +71,23 @@
                             @else
                                 @foreach ($data->kolam as $kolam)
                                     <div class="col-lg-3 col-6">
-                                        <div class="card">
-                                            <div class="card-title">{{ $kolam->name }}</div>
-                                            <div class="card-body"></div>
+                                        <div class="card card-outline rounded-tambak card-orange">
+                                            <div class="card-header">
+                                                <div class="row align-items-center">
+                                                    <h3 class="card-title">{{ $kolam->name }}</h3>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-6">{{ $kolam->panjang }}m</div>
+                                                    <div class="col-6">{{ $kolam->lebar }}m</div>
+                                                    <div class="col-6">{{ $kolam->luas }}m</div>
+                                                    <div class="col-6">{{ $kolam->anco }}m</div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer text-center">
+                                                <button class="btn btn-sm btn-secondary rounded-tambak">Lihat Detail</button>
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach
