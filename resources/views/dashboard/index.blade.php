@@ -74,8 +74,8 @@
                                     <div class="col-lg-3 col-6">
                                         <div class="card card-outline rounded-tambak card-orange">
                                             <div class="card-header">
-                                                <div class="row align-items-center">
-                                                    <h3 class="card-title">{{ $kolam->name }}</h3>
+                                                <div class="row align-items-center ">
+                                                    <h3 class="card-title"><b>{{ $kolam->name }}</b></h3>
                                                 </div>
                                             </div>
                                             <div class="card-body">

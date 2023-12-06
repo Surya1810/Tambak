@@ -43,7 +43,7 @@
                                 <div class="card-header">
                                     <div class="row align-items-center">
                                         <div class="col-6">
-                                            <h3 class="card-title">{{ $data->name }}</h3>
+                                            <h3 class="card-title"><b>{{ $data->name }}</b></h3>
                                         </div>
                                         <div class="col-6">
                                             <button type="button" class="btn float-right" did="dropdownMenuButton"
@@ -64,16 +64,12 @@
                                                 <tr>
                                                     <td>Panjang :</td>
                                                     <td class="float-right"><b>{{ $data->panjang }}m</b></td>
-                                                </tr>
-                                                <tr>
                                                     <td>Lebar :</td>
                                                     <td class="float-right"><b>{{ $data->lebar }}m</b></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Luas :</td>
                                                     <td class="float-right"><b>{{ $data->luas }}m</b></td>
-                                                </tr>
-                                                <tr>
                                                     <td>Anco :</td>
                                                     <td class="float-right"><b>{{ $data->anco }}</b></td>
                                                 </tr>
