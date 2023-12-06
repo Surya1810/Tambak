@@ -32,23 +32,53 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                @if ($kolam == null)
-                    <h1>Belum Memiliki Kolam</h1>
+                @if (count($kolam) == null)
+                    <div class="col-12 text-center">
+                        <h6>Belum Memiliki Kolam</h6>
+                    </div>
                 @else
                     @foreach ($kolam as $data)
                         <div class="col-6 col-md-3">
                             <div class="card card-outline rounded-tambak card-orange">
                                 <div class="card-header">
                                     <div class="row align-items-center">
-                                        <h3 class="card-title">{{ $data->name }}</h3>
+                                        <div class="col-6">
+                                            <h3 class="card-title">{{ $data->name }}</h3>
+                                        </div>
+                                        <div class="col-6">
+                                            <button type="button" class="btn float-right" did="dropdownMenuButton"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item" href="#">Check Anco</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-6">{{ $data->panjang }}m</div>
-                                        <div class="col-6">{{ $data->lebar }}m</div>
-                                        <div class="col-6">{{ $data->luas }}m</div>
-                                        <div class="col-6">{{ $data->anco }}m</div>
+                                        <table class="table table-sm table-borderless text-sm">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Panjang :</td>
+                                                    <td class="float-right"><b>{{ $data->panjang }}m</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Lebar :</td>
+                                                    <td class="float-right"><b>{{ $data->lebar }}m</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Luas :</td>
+                                                    <td class="float-right"><b>{{ $data->luas }}m</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Anco :</td>
+                                                    <td class="float-right"><b>{{ $data->anco }}</b></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                                 <div class="card-footer text-center">
