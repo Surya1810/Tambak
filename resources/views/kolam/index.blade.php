@@ -11,7 +11,7 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
+                <div class="col-6">
                     <h1>Data Kolam</h1>
                     <ol class="breadcrumb text-black-50">
                         <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('dashboard') }}">Home</a></li>
@@ -59,22 +59,28 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <table class="table table-sm table-borderless text-sm">
-                                            <tbody>
-                                                <tr>
-                                                    <td>Panjang :</td>
-                                                    <td class="float-right"><b>{{ $data->panjang }}m</b></td>
-                                                    <td>Lebar :</td>
-                                                    <td class="float-right"><b>{{ $data->lebar }}m</b></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Luas :</td>
-                                                    <td class="float-right"><b>{{ $data->luas }}m</b></td>
-                                                    <td>Anco :</td>
-                                                    <td class="float-right"><b>{{ $data->anco }}</b></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <div class="col-12">
+                                            <table class="table table-sm table-borderless text-sm w-100">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Panjang :</td>
+                                                        <td class="float-right"><b>{{ $data->panjang }}m</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Lebar :</td>
+                                                        <td class="float-right"><b>{{ $data->lebar }}m</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Luas :</td>
+                                                        <td class="float-right"><b>{{ $data->luas }}m</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Anco :</td>
+                                                        <td class="float-right"><b>{{ $data->anco }}</b></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-footer text-center">

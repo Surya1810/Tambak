@@ -71,7 +71,7 @@
                                 </div>
                             @else
                                 @foreach ($data->kolam as $kolam)
-                                    <div class="col-lg-3 col-6">
+                                    <div class="col-lg-3 col-12">
                                         <div class="card card-outline rounded-tambak card-orange">
                                             <div class="card-header">
                                                 <div class="row align-items-center ">
@@ -98,6 +98,10 @@
                                                                     <td class="float-right"><b>0,01</b></td>
                                                                 </tr>
                                                                 <tr>
+                                                                    <td>ADG :</td>
+                                                                    <td class="float-right"><b>0,01</b></td>
+                                                                </tr>
+                                                                <tr>
                                                                     <td>SR :</td>
                                                                     <td class="float-right"><b>0,01</b></td>
                                                                 </tr>
@@ -106,11 +110,19 @@
                                                                     <td class="float-right"><b>0,01</b></td>
                                                                 </tr>
                                                                 <tr>
+                                                                    <td>Size :</td>
+                                                                    <td class="float-right"><b>0,01</b></td>
+                                                                </tr>
+                                                                <tr>
                                                                     <td>Total Pakan :</td>
                                                                     <td class="float-right"><b>0,01</b></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Panen Kumulatif :</td>
+                                                                    <td class="float-right"><b>0,01</b></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Biomassa :</td>
                                                                     <td class="float-right"><b>0,01</b></td>
                                                                 </tr>
                                                             </tbody>
