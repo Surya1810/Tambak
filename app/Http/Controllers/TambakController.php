@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kolam;
 use App\Models\Tambak;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,23 +13,26 @@ class TambakController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        if (auth()->user()->hasRole('owner')) {
-            $tambak = Auth::user()->tambak;
-        } else {
-            $tambak = Tambak::where('status', '=', true)->get();
-        }
-
-        return view('tambak.index', compact('tambak'));
-    }
-
-    public function user()
+    public function admin()
     {
         $tambak = Tambak::where('status', '=', true)->get();
 
-        return view('tambak.user', compact('tambak'));
+        return view('tambak.admin', compact('tambak'));
     }
+
+    public function owner()
+    {
+        $tambak = Auth::user()->tambak->where('status', '=', true);
+
+        return view('tambak.owner', compact('tambak'));
+    }
+
+    // public function user()
+    // {
+    //     $tambak = Tambak::where('status', '=', true)->get();
+
+    //     return view('tambak.user', compact('tambak'));
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -59,7 +63,7 @@ class TambakController extends Controller
         $project->save();
         $project->owner()->attach($request->owner);
 
-        return redirect()->route('tambak.index')->with(['pesan' => 'Tambak berhasil ditambahkan', 'level-alert' => 'alert-success']);
+        return redirect()->route('tambak.admin')->with(['pesan' => 'Tambak berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }
 
     /**
@@ -99,7 +103,7 @@ class TambakController extends Controller
         $project->owner()->sync($request->owner);
 
 
-        return redirect()->route('tambak.index')->with(['pesan' => 'Tambak berhasil diubah', 'level-alert' => 'alert-warning']);
+        return redirect()->route('tambak.admin')->with(['pesan' => 'Tambak berhasil diubah', 'level-alert' => 'alert-warning']);
     }
 
     /**
@@ -112,6 +116,6 @@ class TambakController extends Controller
         $data->update();
         // $data->delete();
 
-        return redirect()->route('tambak.index')->with(['pesan' => 'Tambak berhasil dihapus', 'level-alert' => 'alert-danger']);
+        return redirect()->route('tambak.admin')->with(['pesan' => 'Tambak berhasil dihapus', 'level-alert' => 'alert-danger']);
     }
 }

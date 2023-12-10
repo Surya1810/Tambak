@@ -105,12 +105,6 @@
                                                         @method('DELETE')
                                                     </form>
                                                 @endrole
-                                                @role('owner')
-                                                    <a class="btn btn-sm btn-info rounded-tambak"
-                                                        href="{{ route('kolam', $data->id) }}">
-                                                        <i class="fas fa-eye"></i> Lihat Kolam
-                                                    </a>
-                                                @endrole
                                             </td>
                                         </tr>
                                     @endforeach

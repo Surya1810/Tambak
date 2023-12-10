@@ -9,19 +9,19 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    function dashboard()
+    function admin()
     {
-        if (auth()->user()->hasRole('super admin|admin')) {
-            $owner = User::role('owner')->count();
-            $tambak = Tambak::all()->count();
+        $owner = User::role('owner')->count();
+        $tambak = Tambak::where('status', '=', true)->count();
 
-            return view('dashboard.index', compact('owner', 'tambak'));
-        } elseif (auth()->user()->hasRole('owner')) {
-            $tambak = Auth::user()->tambak;
+        return view('dashboard.admin', compact('owner', 'tambak'));
+    }
 
-            return view('dashboard.index', compact('tambak'));
-        } else {
-            return view('dashboard.index');
-        }
+    function owner()
+    {
+        $tambak = Auth::user()->tambak->where('status', '=', true);
+        $karyawans = User::where('created_by', Auth::user()->id)->role('operator')->get();
+
+        return view('dashboard.owner', compact('tambak', 'karyawans'));
     }
 }

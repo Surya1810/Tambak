@@ -1,13 +1,18 @@
 <?php
 
 use App\Http\Controllers\AkunController;
+use App\Http\Controllers\AncoController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BibitController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GudangController;
+use App\Http\Controllers\HargaController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KolamController;
+use App\Http\Controllers\PakanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SamplingController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TambakController;
@@ -30,42 +35,83 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('dashboard');
+    return redirect()->route('dashboard');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+// Dashboard
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+    Route::get('/dashboard', [DashboardController::class, 'owner'])->name('dashboard');
+});
 
-Route::middleware('auth')->group(function () {
-    // User | Employee | Owner
-    Route::resource('operator', UserController::class);
+Route::group(['prefix' => 'owner', 'middleware' => 'auth'], function () {
+    Route::get('/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
+});
+
+// Admin
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+    // Owner
     Route::get('/owner', [UserController::class, 'owner'])->name('owner.index');
     Route::get('/owner/create', [UserController::class, 'owner_create'])->name('owner.create');
     Route::get('/owner/edit/{id}', [UserController::class, 'owner_edit'])->name('owner.edit');
     Route::post('/owner/store', [UserController::class, 'owner_store'])->name('owner.store');
     Route::post('/owner/update/{id}', [UserController::class, 'owner_update'])->name('owner.update');
     Route::delete('/owner/delete/{id}', [UserController::class, 'owner_destroy'])->name('owner.destroy');
-
     // Tambak
-    Route::resource('tambak', TambakController::class);
+    Route::resource('tambak', TambakController::class)->except([
+        'index'
+    ]);
+    Route::get('/tambak', [TambakController::class, 'admin'])->name('tambak.admin');
+
     // Satuan
     Route::resource('satuan', SatuanController::class);
-    // Gudang
-    Route::resource('gudang', GudangController::class);
     // Kategori
     Route::resource('kategori', KategoriController::class);
+});
+
+// Owner
+Route::group(['prefix' => 'owner', 'middleware' => 'auth'], function () {
+
+    // Tambak
+    Route::get('/tambak', [TambakController::class, 'owner'])->name('tambak.owner');
+
+    // User | Employee
+    Route::resource('operator', UserController::class);
+
     // Supplier
     Route::resource('supplier', SupplierController::class);
     // Customer
     Route::resource('customer', CustomerController::class);
-    // Akun
-    Route::resource('akun', AkunController::class);
-    // Barang
-    Route::resource('barang', BarangController::class);
+
     // Kolam    
     Route::resource('kolam', KolamController::class);
-    Route::get('/tambak/kolam/{id}', [KolamController::class, 'kolam'])->name('kolam');
+});
 
+// Operator
+Route::group(['prefix' => 'owner', 'middleware' => 'auth'], function () {
+    // Data Pakan
+    Route::resource('pakan', PakanController::class);
+    // Data Sampling
+    Route::resource('sampling', SamplingController::class);
+    // Data Bibit
+    Route::resource('bibit', BibitController::class);
+    // Data Anco
+    Route::resource('anco', AncoController::class);
+    // Data Harga
+    Route::resource('harga', HargaController::class);
 
+    // Gudang
+    Route::resource('gudang', GudangController::class);
+    // Barang
+    Route::resource('barang', BarangController::class);
+});
+
+// Akuntan
+Route::group(['prefix' => 'owner', 'middleware' => 'auth'], function () {
+    // Akun
+    Route::resource('akun', AkunController::class);
+});
+
+Route::middleware('auth')->group(function () {
     // Profile Section
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update/{id}', [ProfileController::class, 'update'])->name('profile.update');

@@ -11,18 +11,9 @@ class KolamController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function index($id)
-    // {
-    //     $kolam = Kolam::where('tambak_id', $id)->get();
-
-    //     return view('kolam.index', compact('kolam'));
-    // }
-    public function kolam($id)
+    public function index($id)
     {
-        $kolam = Kolam::where('tambak_id', $id)->get();
-        $tambak_id = $id;
-
-        return view('kolam.index', compact('kolam', 'tambak_id'));
+        // 
     }
 
     /**
@@ -60,7 +51,7 @@ class KolamController extends Controller
         $project->luas = $request->panjang * $request->lebar;;
         $project->save();
 
-        return redirect()->route('kolam', $request->tambak_id)->with(['pesan' => 'Kolam berhasil ditambahkan', 'level-alert' => 'alert-success']);
+        return redirect()->route('tambak.owner')->with(['pesan' => 'Kolam berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }
 
     /**
@@ -82,16 +73,40 @@ class KolamController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kolam $kolam)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'bail|required',
+            'panjang' => 'bail|required',
+            'lebar' => 'bail|required',
+            'dalam' => 'bail|required',
+            'anco' => 'bail|required',
+        ]);
+
+        $old = session()->getOldInput();
+
+        $project = Kolam::find($id);;
+        $project->name = $request->name;
+        $project->panjang = $request->panjang;
+        $project->lebar = $request->lebar;
+        $project->kedalaman = $request->dalam;
+        $project->anco = $request->anco;
+        $project->luas = $request->panjang * $request->lebar;;
+        $project->update();
+
+        return redirect()->route('kolam', $request->tambak_id)->with(['pesan' => 'Kolam berhasil diubah', 'level-alert' => 'alert-warning']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Kolam $kolam)
+    public function destroy($id)
     {
-        //
+        $data = Kolam::find($id);
+        $data->status = false;
+        $data->update();
+        // $data->delete();
+
+        return redirect()->back()->with(['pesan' => 'Kolam berhasil dihapus', 'level-alert' => 'alert-danger']);
     }
 }

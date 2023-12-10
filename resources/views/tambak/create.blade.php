@@ -15,7 +15,7 @@
                     <h1>Tambak</h1>
                     <ol class="breadcrumb text-black-50">
                         <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('tambak.index') }}">Tambak</a>
+                        <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('tambak.admin') }}">Tambak</a>
                         </li>
                         <li class="breadcrumb-item active"><strong>Tambah</strong></li>
                     </ol>

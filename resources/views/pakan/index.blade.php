@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Barang
+    Data Pakan
 @endsection
 
 @push('css')
@@ -18,10 +18,10 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Barang</h1>
+                    <h1>Data Pakan</h1>
                     <ol class="breadcrumb text-black-50">
                         <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active"><strong>Barang</strong></li>
+                        <li class="breadcrumb-item active"><strong>Data Pakan</strong></li>
                     </ol>
                 </div>
             </div>
@@ -37,58 +37,58 @@
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <h3 class="card-title">Barang</h3>
+                                    <h3 class="card-title">Data Pakan</h3>
                                 </div>
                                 <div class="col-6">
                                     <button type="button" class="btn btn-sm btn-vaname rounded-tambak float-right"
-                                        data-toggle="modal" data-target="#addBarang">
+                                        data-toggle="modal" data-target="#addPakan">
                                         Tambah
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body table-responsive">
-                            <table id="barangTable" class="table table-bordered text-nowrap text-center">
+                            <table id="pakanTable" class="table table-bordered text-nowrap text-center">
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width: 10%">
-                                            Kode
-                                        </th>
-                                        <th style="width: 10%">
-                                            Kategori
+                                            Kolam
                                         </th>
                                         <th style="width: 20%">
-                                            Nama
+                                            Tanggal
                                         </th>
                                         <th style="width: 20%">
-                                            Supplier
+                                            Waktu
                                         </th>
-                                        <th style="width: 15%">
-                                            Harga beli
+                                        <th style="width: 20%">
+                                            Jumlah
+                                        </th>
+                                        <th style="width: 20%">
+                                            Catatan
                                         </th>
                                         <th style="width: 10%">
-                                            Satuan
-                                        </th>
-                                        <th style="width: 15%">
                                             Action
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($barang as $data)
+                                    @foreach ($pakan as $data)
                                         <tr>
-                                            <td>{{ $data->kode }}</td>
-                                            <td>{{ $data->kategori }}</td>
-                                            <td>{{ $data->nama }}</td>
-                                            <td>{{ $data->supplier->name }}</td>
-                                            <td>{{ $data->harga }}</td>
-                                            <td>{{ $data->satuan }}</td>
+                                            <td>{{ $data->kolam()->name }}</td>
+                                            <td>{{ $data->tanggal }}</td>
+                                            <td>{{ $data->waktu }}</td>
+                                            <td>{{ $data->jenis }}</td>
+                                            <td>{{ $data->jumlah }}Kg</td>
                                             <td class="text-center">
+                                                <a class="btn btn-sm btn-warning rounded-tambak"
+                                                    href="{{ route('pakan.edit', $data->id) }}">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
                                                 <button class="btn btn-sm btn-danger rounded-tambak"
-                                                    onclick="deleteAkun({{ $data->id }})"><i
+                                                    onclick="deletePakan({{ $data->id }})"><i
                                                         class="fas fa-trash"></i></button>
                                                 <form id="delete-form-{{ $data->id }}"
-                                                    action="{{ route('akun.destroy', $data->id) }}" method="POST"
+                                                    action="{{ route('pakan.destroy', $data->id) }}" method="POST"
                                                     style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
@@ -106,7 +106,7 @@
     </section>
 
     <!-- Modal Add Data-->
-    <div class="modal fade" id="addBarang" tabindex="-1" aria-labelledby="addBarangLabel" aria-hidden="true">
+    <div class="modal fade" id="addPakan" tabindex="-1" aria-labelledby="addPakanLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -115,86 +115,95 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('barang.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('pakan.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="name" class="mb-0 form-label col-form-label-sm">Nama Barang</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                        id="name" name="name" placeholder="Masukan nama barang"
-                                        value="{{ old('name') }}">
-                                    @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="kategori" class="mb-0 form-label col-form-label-sm">Kategori</label>
-                                    <select class="form-control kategori select2-orange is-invalid"
-                                        data-dropdown-css-class="select2-orange" style="width: 100%;" id="kategori"
-                                        name="kategori">
+                                    <label for="kolam" class="mb-0 form-label col-form-label-sm">Kolam</label>
+                                    <select class="form-control kolam select2-orange is-invalid"
+                                        data-dropdown-css-class="select2-orange" style="width: 100%;" id="kolam"
+                                        name="kolam">
                                         <option></option>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->name }}"
-                                                {{ old('kategori') == $category->name ? 'selected' : '' }}>
-                                                {{ $category->name }}</option>
-                                        @endforeach
+                                        {{-- @foreach ($kolams as $kolam)
+                                                <option value="{{ $kolam->name }}"
+                                                    {{ old('kolam') == $kolam->name ? 'selected' : '' }}>{{ $tambak->name }} - 
+                                                    {{ $kolam->name }}</option>
+                                            @endforeach --}}
                                     </select>
-                                    @error('kategori')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="supplier" class="mb-0 form-label col-form-label-sm">Supplier Utama</label>
-                                    <select class="form-control supplier select2-orange is-invalid"
-                                        data-dropdown-css-class="select2-orange" style="width: 100%;" id="supplier"
-                                        name="supplier">
-                                        <option></option>
-                                        @foreach ($suppliers as $supplier)
-                                            <option value="{{ $supplier->name }}"
-                                                {{ old('kategori') == $supplier->name ? 'selected' : '' }}>
-                                                {{ $supplier->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('supplier')
+                                    @error('kolam')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 col-lg-6">
                                 <div class="form-group">
-                                    <label for="name" class="mb-0 form-label col-form-label-sm">Harga Beli</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                        id="name" name="name" placeholder="Masukan harga beli"
-                                        value="{{ old('name') }}">
-                                    @error('name')
+                                    <label for="tanggal" class="mb-0 form-label col-form-label-sm">Tanggal</label>
+                                    <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
+                                        id="tanggal" name="tanggal" placeholder="Pilih Tanggal"
+                                        value="{{ old('tanggal') }}" autocomplete="off">
+                                    @error('tanggal')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 col-lg-6">
                                 <div class="form-group">
-                                    <label for="satuan" class="mb-0 form-label col-form-label-sm">Satuan</label>
-                                    <select class="form-control satuan select2-orange is-invalid"
-                                        data-dropdown-css-class="select2-orange" style="width: 100%;" id="satuan"
-                                        name="satuan">
+                                    <label for="Waktu" class="mb-0 form-label col-form-label-sm">Waktu</label>
+                                    <input type="time" class="form-control @error('Waktu') is-invalid @enderror"
+                                        id="Waktu" name="Waktu" placeholder="Masukan alamat tambak"
+                                        value="{{ old('Waktu') }}" autocomplete="off">
+                                    @error('Waktu')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-8 col-lg-8">
+                                <div class="form-group">
+                                    <label for="pakan" class="mb-0 form-label col-form-label-sm">Jenis Pakan</label>
+                                    <select class="form-control pakan select2-orange is-invalid"
+                                        data-dropdown-css-class="select2-orange" style="width: 100%;" id="pakan"
+                                        name="pakan">
                                         <option></option>
-                                        @foreach ($satuans as $satuan)
-                                            <option value="{{ $satuan->name }}"
-                                                {{ old('kategori') == $satuan->name ? 'selected' : '' }}>
-                                                {{ $satuan->name }}</option>
-                                        @endforeach
+                                        {{-- @foreach ($kolams as $kolam)
+                                                <option value="{{ $kolam->name }}"
+                                                    {{ old('kolam') == $kolam->name ? 'selected' : '' }}>
+                                                    {{ $kolam->name }}</option>
+                                            @endforeach --}}
                                     </select>
-                                    @error('satuan')
+                                    @error('pakan')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-4 col-lg-4">
+                                <div class="form-group">
+                                    <label for="jumlah" class="mb-0 form-label col-form-label-sm">Jumlah (kg)</label>
+                                    <input type="number" class="form-control @error('jumlah') is-invalid @enderror"
+                                        id="jumlah" name="jumlah" placeholder="Masukan jumlah pakan"
+                                        value="{{ old('jumlah') }}" autocomplete="off">
+                                    @error('jumlah')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="catatan" class="mb-0 form-label col-form-label-sm">Catatan</label>
+                                    <textarea class="form-control @error('catatan') is-invalid @enderror" rows="3"
+                                        placeholder="Tulis catatan bila ada..." id="catatan" name="catatan">{{ old('catatan') }}</textarea>
+                                    @error('catatan')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -229,7 +238,7 @@
 
     <script type="text/javascript">
         $(function() {
-            $('#barangTable').DataTable({
+            $('#pakanTable').DataTable({
                 "paging": true,
                 'processing': true,
                 "lengthChange": true,
@@ -248,7 +257,7 @@
             });
         });
 
-        function deleteAkun(id) {
+        function deletePakan(id) {
             Swal.fire({
                 title: 'Are you sure?',
                 icon: 'warning',
@@ -270,17 +279,5 @@
                 }
             })
         }
-
-        $('.satuan').select2({
-            placeholder: "Pilih satuan",
-            minimumResultsForSearch: -1,
-        })
-        $('.supplier').select2({
-            placeholder: "Pilih supplier",
-        })
-        $('.kategori').select2({
-            placeholder: "Pilih kategori",
-            minimumResultsForSearch: -1,
-        })
     </script>
 @endpush
