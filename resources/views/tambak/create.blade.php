@@ -28,7 +28,7 @@
     <section class="content">
         <div class="container">
             <div class="row">
-                <div class="card rounded-tambak card-outline card-orange w-100">
+                <div class="card rounded-tambak card-outline card-primary w-100">
                     <div class="card-header">
                         <h3 class="card-title">Tambah Tambak</h3>
                     </div>
@@ -66,33 +66,30 @@
                                 <div class="col-12 col-lg-4">
                                     <div class="form-group">
                                         <label for="owner">Owner</label>
-                                        <div class="select2-orange">
-
-                                            <select class="form-control owner select2 @error('owner') is-invalid @enderror"
-                                                multiple="multiple" data-dropdown-css-class="select2-orange"
-                                                style="width: 100%;" id="owner" name="owner[]">
-                                                @foreach ($users as $user)
-                                                    @if (old('owner'))
-                                                        <option value="{{ $user->id }}"
-                                                            {{ in_array($user->id, old('owner')) ? 'selected' : '' }}>
-                                                            {{ $user->username }}</option>
-                                                    @else
-                                                        <option value="{{ $user->id }}">{{ $user->username }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                            @error('owner')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
+                                        <select class="form-control owner select2 @error('owner') is-invalid @enderror"
+                                            multiple="multiple" data-dropdown-css-class="select2-primary"
+                                            style="width: 100%;" id="owner" name="owner[]">
+                                            @foreach ($users as $user)
+                                                @if (old('owner'))
+                                                    <option value="{{ $user->id }}"
+                                                        {{ in_array($user->id, old('owner')) ? 'selected' : '' }}>
+                                                        {{ $user->username }}</option>
+                                                @else
+                                                    <option value="{{ $user->id }}">{{ $user->username }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                        @error('owner')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-vaname rounded-tambak">Tambah</button>
+                            <button type="submit" class="btn btn-primary rounded-tambak">Tambah</button>
                         </div>
                     </form>
                 </div>

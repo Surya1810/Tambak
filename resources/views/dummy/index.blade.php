@@ -13,7 +13,7 @@
         <div class="container">
             <div class="row">
                 {{-- Tambah Data Sampling --}}
-                <div class="card rounded-tambak card-outline card-orange w-100">
+                <div class="card rounded-tambak card-outline card-primary w-100">
                     <div class="card-header">
                         <h3 class="card-title">Tambah Data Sampling</h3>
                     </div>
@@ -24,8 +24,8 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="kolam" class="mb-0 form-label col-form-label-sm">Kolam</label>
-                                        <select class="form-control kolam select2-orange is-invalid"
-                                            data-dropdown-css-class="select2-orange" style="width: 100%;" id="kolam"
+                                        <select class="form-control kolam select2-primary is-invalid"
+                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="kolam"
                                             name="kolam">
                                             <option></option>
                                             {{-- @foreach ($kolams as $kolam)
@@ -82,13 +82,13 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-vaname rounded-tambak">Tambah</button>
+                            <button type="submit" class="btn btn-primary rounded-tambak">Tambah</button>
                         </div>
                     </form>
                 </div>
 
                 {{-- Input Data Tebar Bibit --}}
-                <div class="card rounded-tambak card-outline card-orange w-100">
+                <div class="card rounded-tambak card-outline card-primary w-100">
                     <div class="card-header">
                         <h3 class="card-title">Data Tebar Bibit</h3>
                     </div>
@@ -100,8 +100,8 @@
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
                                         <label for="kolam" class="mb-0 form-label col-form-label-sm">Kolam</label>
-                                        <select class="form-control kolam select2-orange is-invalid"
-                                            data-dropdown-css-class="select2-orange" style="width: 100%;" id="kolam"
+                                        <select class="form-control kolam select2-primary is-invalid"
+                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="kolam"
                                             name="kolam">
                                             <option></option>
                                             {{-- @foreach ($kolams as $kolam)
@@ -120,8 +120,8 @@
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
                                         <label for="supplier" class="mb-0 form-label col-form-label-sm">Hatchery</label>
-                                        <select class="form-control supplier select2-orange is-invalid"
-                                            data-dropdown-css-class="select2-orange" style="width: 100%;" id="col-lg-6"
+                                        <select class="form-control supplier select2-primary is-invalid"
+                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="col-lg-6"
                                             name="col-lg-6">
                                             <option></option>
                                             {{-- @foreach ($kolams as $kolam)
@@ -167,7 +167,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-vaname rounded-tambak">Tambah</button>
+                            <button type="submit" class="btn btn-primary rounded-tambak">Tambah</button>
                         </div>
                     </form>
                 </div>

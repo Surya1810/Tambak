@@ -30,7 +30,7 @@
             <div class="row">
                 @if (auth()->user()->tambak->count() != null)
                     <div class="col-12 col-lg-6">
-                        <div class="card card-outline rounded-tambak card-orange">
+                        <div class="card card-outline rounded-tambak card-primary">
                             <div class="card-header">
                                 <div class="row align-items-center">
                                     <div class="col-6">
@@ -57,8 +57,8 @@
                                         @foreach ($karyawans as $key => $karyawan)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
-                                                <td>{{ $karyawan->nama }}</td>
-                                                <td>{{ $karyawan->getRoleNames() }}</td>
+                                                <td>{{ $karyawan->name }}</td>
+                                                <td>{{ $karyawan->getRoleNames()->first() }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

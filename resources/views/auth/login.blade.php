@@ -10,7 +10,7 @@
             <div class="d-flex align-items-center justify-content-center" style="height: 100svh;">
                 <div class="col-lg-3">
                     <div class="d-flex justify-content-center mb-4">
-                        <img src="{{ asset('assets/logo/logo-dark.png') }}" alt="Kraf_logo" width="128px">
+                        <img src="{{ asset('assets/logo/Icon.png') }}" alt="Kraf_logo" width="128px">
                     </div>
                     <div class="card login_card rounded-4">
                         <div class="card-body">

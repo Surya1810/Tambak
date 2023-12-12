@@ -33,14 +33,14 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-outline rounded-tambak card-orange">
+                    <div class="card card-outline rounded-tambak card-primary">
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-6">
                                     <h3 class="card-title">Barang</h3>
                                 </div>
                                 <div class="col-6">
-                                    <button type="button" class="btn btn-sm btn-vaname rounded-tambak float-right"
+                                    <button type="button" class="btn btn-sm btn-primary rounded-tambak float-right"
                                         data-toggle="modal" data-target="#addBarang">
                                         Tambah
                                     </button>
@@ -133,8 +133,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="kategori" class="mb-0 form-label col-form-label-sm">Kategori</label>
-                                    <select class="form-control kategori select2-orange is-invalid"
-                                        data-dropdown-css-class="select2-orange" style="width: 100%;" id="kategori"
+                                    <select class="form-control kategori select2-primary is-invalid"
+                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="kategori"
                                         name="kategori">
                                         <option></option>
                                         @foreach ($categories as $category)
@@ -151,8 +151,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="supplier" class="mb-0 form-label col-form-label-sm">Supplier Utama</label>
-                                    <select class="form-control supplier select2-orange is-invalid"
-                                        data-dropdown-css-class="select2-orange" style="width: 100%;" id="supplier"
+                                    <select class="form-control supplier select2-primary is-invalid"
+                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="supplier"
                                         name="supplier">
                                         <option></option>
                                         @foreach ($suppliers as $supplier)
@@ -184,8 +184,8 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="satuan" class="mb-0 form-label col-form-label-sm">Satuan</label>
-                                    <select class="form-control satuan select2-orange is-invalid"
-                                        data-dropdown-css-class="select2-orange" style="width: 100%;" id="satuan"
+                                    <select class="form-control satuan select2-primary is-invalid"
+                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="satuan"
                                         name="satuan">
                                         <option></option>
                                         @foreach ($satuans as $satuan)
@@ -204,7 +204,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-vaname rounded-tambak">Tambah</button>
+                        <button type="submit" class="btn btn-primary rounded-tambak">Tambah</button>
                     </div>
                 </form>
             </div>

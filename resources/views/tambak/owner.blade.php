@@ -152,7 +152,7 @@
 
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-vaname rounded-tambak">Tambah</button>
+                                            <button type="submit" class="btn btn-primary rounded-tambak">Tambah</button>
                                         </div>
                                     </form>
                                 </div>
@@ -166,7 +166,7 @@
                         @else
                             @foreach ($data->kolam as $kolam)
                                 <div class="col-6 col-md-3">
-                                    <div class="card card-outline rounded-tambak card-orange">
+                                    <div class="card card-outline rounded-tambak card-primary">
                                         <div class="card-header">
                                             <div class="row align-items-center">
                                                 <div class="col-6">
@@ -244,8 +244,7 @@
                                                                 DoC
                                                                 <span class="float-right"><b>1/400</b></span>
                                                                 <div class="progress progress-sm">
-                                                                    <div class="progress-bar bg-vaname"
-                                                                        style="width: 75%"></div>
+                                                                    <div class="progress-bar" style="width: 75%"></div>
                                                                 </div>
                                                                 <small>Tebaran:</small>
                                                                 <small class="float-right"><b>300.000</b></small>
@@ -293,7 +292,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit"
-                                                        class="btn btn-vaname rounded-tambak">Tambah</button>
+                                                        class="btn btn-primary rounded-tambak">Tambah</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -302,7 +301,7 @@
                             @endforeach
                         @endif
                         <div class="col-12 text-center mb-5">
-                            <button type="button" class="btn btn-vaname rounded-tambak" data-toggle="modal"
+                            <button type="button" class="btn btn-primary rounded-tambak" data-toggle="modal"
                                 data-target="#addKolam{{ $data->id }}">
                                 Tambah Kolam
                             </button>

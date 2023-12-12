@@ -15,22 +15,15 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Favicons -->
-    {{-- <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicons/apple-icon-57x57.png') }}">
-    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('favicons/apple-icon-60x60.png') }}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicons/apple-icon-72x72.png') }}">
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('favicons/apple-icon-76x76.png') }}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicons/apple-icon-114x114.png') }}">
-    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('favicons/apple-icon-120x120.png') }}">
-    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('favicons/apple-icon-144x144.png') }}">
-    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('favicons/apple-icon-152x152.png') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicons/apple-icon-180x180.png') }}">
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('favicons/android-icon-192x192.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicons/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicons/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicons/favicon-96x96.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicons/favicon-16x16.png') }}"> --}}
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicons/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('favicons/site.webmanifest') }}">
+    <link rel="mask-icon" href="{{ asset('favicons/safari-pinned-tab.svg') }}" color="#ffffff">
+    <meta name="msapplication-TileColor" content="#ffffff">
 
     <!-- PWA  -->
-    <meta name="theme-color" content="#6777ef" />
+    <meta name="theme-color" content="#ffffff">
     <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
     {{-- <link rel="manifest" href="{{ asset('favicons/manifest.json') }}"> --}}
@@ -107,13 +100,12 @@
         </nav>
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar main-sidebar-custom sidebar-dark-orange elevation-4 bg-dark">
+        <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4 bg-dark">
             <!-- Brand Logo -->
             <a href="{{ route('dashboard') }}" class="brand-link logo-switch">
-                <img src="{{ asset('assets/logo/kraf-ico.png') }}" alt="Kraf_logo"
-                    class="brand-image-xl logo-xs text-sm">
-                <img src="{{ asset('assets/logo/logo-light.png') }}" alt="Kraf_logo"
-                    class="brand-image-xs logo-xl text-sm" style="left: 14px">
+                <img src="{{ asset('assets/logo/Icon.png') }}" alt="Kraf_logo" class="brand-image-xl logo-xs text-sm">
+                <img src="{{ asset('assets/logo/Icon.png') }}" alt="Kraf_logo" class="brand-image-xs logo-xl text-sm"
+                    style="left: 14px">
             </a>
 
             <!-- Sidebar -->
@@ -266,28 +258,26 @@
                                     </p>
                                 </a>
                             </li>
-                            @if (auth()->user()->tambak->count() != null)
-                                <li class="nav-header mt-3">
-                                    Finance
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fa-solid fa-shrimp"></i>
-                                        <p>
-                                            Data
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="{{ route('pakan.index') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Harga</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            @endif
+                            <li class="nav-header mt-3">
+                                Finance
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-shrimp"></i>
+                                    <p>
+                                        Data
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('pakan.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Harga</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                         @endhasrole
                         @hasrole('operator')
                             <li class="nav-item">
@@ -298,110 +288,108 @@
                                     </p>
                                 </a>
                             </li>
-                            @if (auth()->user()->tambak->count() != null)
-                                <li class="nav-header mt-3">
-                                    Operasional
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fa-solid fa-shrimp"></i>
-                                        <p>
-                                            Kolam
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="{{ route('pakan.index') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Data Cek Anco</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ route('pakan.index') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Data Pakan</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ route('barang.index') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Data Sampling</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Data Tebar Bibit</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fa-solid fa-magnifying-glass-chart"></i>
-                                        <p>
-                                            Data
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Panen</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Kematian Udang</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('customer.index') }}" class="nav-link">
-                                        <i class="nav-icon fa-solid fa-users-viewfinder"></i>
-                                        <p>Customer </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('supplier.index') }}" class="nav-link">
-                                        <i class="nav-icon fa-solid fa-truck"></i>
-                                        <p>Supplier</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fa-solid fa-warehouse"></i>
-                                        <p>
-                                            Penyimpanan
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="{{ route('gudang.index') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Data Gudang</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ route('barang.index') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Data Barang</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Transaksi Stok</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            @endif
+                            <li class="nav-header mt-3">
+                                Operasional
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-shrimp"></i>
+                                    <p>
+                                        Kolam
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('pakan.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Data Cek Anco</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('pakan.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Data Pakan</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('barang.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Data Sampling</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Data Tebar Bibit</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-magnifying-glass-chart"></i>
+                                    <p>
+                                        Data
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Panen</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Kematian Udang</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('customer.index') }}" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-users-viewfinder"></i>
+                                    <p>Customer </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('supplier.index') }}" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-truck"></i>
+                                    <p>Supplier</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-warehouse"></i>
+                                    <p>
+                                        Penyimpanan
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('gudang.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Data Gudang</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('barang.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Data Barang</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Transaksi Stok</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                         @endhasrole
                     </ul>
                 </nav>
@@ -434,7 +422,7 @@
                 The Best Shrimp Farm
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2023 <a style="color: #F15D4B" href="https://madebykraf.com">Vaname</a>.</strong>
+            <strong>Copyright &copy; 2023 <a href="https://madebykraf.com">Vaname</a>.</strong>
             All rights
             reserved.
         </footer>

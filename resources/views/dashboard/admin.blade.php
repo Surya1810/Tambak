@@ -23,7 +23,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-6">
-                    <div class="small-box bg-vaname">
+                    <div class="small-box bg-primary">
                         <div class="inner">
                             <h3>{{ $owner }}</h3>
 
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-6">
-                    <div class="small-box bg-vaname">
+                    <div class="small-box bg-primary">
                         <div class="inner">
                             <h3>{{ $tambak }}</h3>
 

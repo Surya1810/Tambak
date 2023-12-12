@@ -28,7 +28,7 @@
     <section class="content">
         <div class="container">
             <div class="row">
-                <div class="card rounded-tambak card-outline card-orange w-100">
+                <div class="card rounded-tambak card-outline card-primary w-100">
                     <div class="card-header">
                         <h3 class="card-title">Ubah Tambak</h3>
                     </div>
@@ -67,9 +67,9 @@
                                 <div class="col-12 col-lg-4">
                                     <div class="form-group">
                                         <label for="owner">Owner</label>
-                                        <div class="select2-orange">
+                                        <div class="select2-primary">
                                             <select class="form-control owner select2 @error('owner') is-invalid @enderror"
-                                                multiple="multiple" data-dropdown-css-class="select2-orange"
+                                                multiple="multiple" data-dropdown-css-class="select2-primary"
                                                 style="width: 100%;" id="owner" name="owner[]">
                                                 @foreach ($users as $user)
                                                     <option
@@ -89,7 +89,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-vaname rounded-tambak">Ubah</button>
+                            <button type="submit" class="btn btn-primary rounded-tambak">Ubah</button>
                         </div>
                     </form>
                 </div>

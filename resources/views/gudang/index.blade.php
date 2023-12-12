@@ -33,14 +33,14 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-outline rounded-tambak card-orange">
+                    <div class="card card-outline rounded-tambak card-primary">
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-6">
                                     <h3 class="card-title">Data Gudang</h3>
                                 </div>
                                 <div class="col-6">
-                                    <button type="button" class="btn btn-sm btn-vaname rounded-tambak float-right"
+                                    <button type="button" class="btn btn-sm btn-primary rounded-tambak float-right"
                                         data-toggle="modal" data-target="#addGudang">
                                         Tambah Gudang
                                     </button>
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-vaname rounded-tambak">Tambah</button>
+                        <button type="submit" class="btn btn-primary rounded-tambak">Tambah</button>
                     </div>
                 </form>
             </div>
@@ -189,7 +189,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-vaname rounded-tambak">Update</button>
+                            <button type="submit" class="btn btn-primary rounded-tambak">Update</button>
                         </div>
                     </form>
                 </div>

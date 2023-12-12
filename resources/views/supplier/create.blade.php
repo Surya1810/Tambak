@@ -28,7 +28,7 @@
     <section class="content">
         <div class="container">
             <div class="row">
-                <div class="card rounded-tambak card-outline card-orange w-100">
+                <div class="card rounded-tambak card-outline card-primary w-100">
                     <div class="card-header">
                         <h3 class="card-title">Tambah Supplier</h3>
                     </div>
@@ -105,7 +105,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-vaname rounded-tambak">Buat</button>
+                            <button type="submit" class="btn btn-primary rounded-tambak">Buat</button>
                         </div>
                     </form>
                 </div>

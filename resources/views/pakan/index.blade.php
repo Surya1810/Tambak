@@ -33,14 +33,14 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-outline rounded-tambak card-orange">
+                    <div class="card card-outline rounded-tambak card-primary">
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-6">
                                     <h3 class="card-title">Data Pakan</h3>
                                 </div>
                                 <div class="col-6">
-                                    <button type="button" class="btn btn-sm btn-vaname rounded-tambak float-right"
+                                    <button type="button" class="btn btn-sm btn-primary rounded-tambak float-right"
                                         data-toggle="modal" data-target="#addPakan">
                                         Tambah
                                     </button>
@@ -122,8 +122,8 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="kolam" class="mb-0 form-label col-form-label-sm">Kolam</label>
-                                    <select class="form-control kolam select2-orange is-invalid"
-                                        data-dropdown-css-class="select2-orange" style="width: 100%;" id="kolam"
+                                    <select class="form-control kolam select2-primary is-invalid"
+                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="kolam"
                                         name="kolam">
                                         <option></option>
                                         {{-- @foreach ($kolams as $kolam)
@@ -168,8 +168,8 @@
                             <div class="col-8 col-lg-8">
                                 <div class="form-group">
                                     <label for="pakan" class="mb-0 form-label col-form-label-sm">Jenis Pakan</label>
-                                    <select class="form-control pakan select2-orange is-invalid"
-                                        data-dropdown-css-class="select2-orange" style="width: 100%;" id="pakan"
+                                    <select class="form-control pakan select2-primary is-invalid"
+                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="pakan"
                                         name="pakan">
                                         <option></option>
                                         {{-- @foreach ($kolams as $kolam)
@@ -213,7 +213,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-vaname rounded-tambak">Tambah</button>
+                        <button type="submit" class="btn btn-primary rounded-tambak">Tambah</button>
                     </div>
                 </form>
             </div>
