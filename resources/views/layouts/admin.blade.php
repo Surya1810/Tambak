@@ -18,7 +18,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicons/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicons/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('favicons/site.webmanifest') }}">
     <link rel="mask-icon" href="{{ asset('favicons/safari-pinned-tab.svg') }}" color="#ffffff">
     <meta name="msapplication-TileColor" content="#ffffff">
 
@@ -51,8 +50,8 @@
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60"
-                width="60">
+            <img class="animation__shake" src="{{ asset('assets/logo/Logo_alt.png') }}" alt="AdminLTELogo"
+                height="60" width="60">
         </div>
 
         <!-- Navbar -->
@@ -104,8 +103,8 @@
             <!-- Brand Logo -->
             <a href="{{ route('dashboard') }}" class="brand-link logo-switch">
                 <img src="{{ asset('assets/logo/Icon.png') }}" alt="Kraf_logo" class="brand-image-xl logo-xs text-sm">
-                <img src="{{ asset('assets/logo/Icon.png') }}" alt="Kraf_logo" class="brand-image-xs logo-xl text-sm"
-                    style="left: 14px">
+                <img src="{{ asset('assets/logo/Logo_alt.png') }}" alt="Kraf_logo"
+                    class="brand-image-xs logo-xxl text-sm" style="left: 14px">
             </a>
 
             <!-- Sidebar -->
@@ -186,25 +185,15 @@
                                 </a>
                             </li>
                             @if (auth()->user()->tambak->count() != null)
-                                <li class="nav-header mt-3">
+                                {{-- <li class="nav-header mt-3">
                                     Data
-                                </li>
+                                </li> --}}
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('operator.index') }}" class="nav-link">
                                         <i class="nav-icon fa-solid fa-id-card"></i>
-                                        <p>
-                                            Karyawan
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
+
+                                        <p>Karyawan</p>
                                     </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="{{ route('operator.index') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Operator</p>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('tambak.owner') }}" class="nav-link">
