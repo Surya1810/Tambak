@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Bibit;
 use App\Models\Kolam;
 use App\Models\Pakan;
+use App\Models\Tambak;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,11 +17,10 @@ class PakanController extends Controller
      */
     public function index()
     {
-        $input_by = Auth::user()->id;
-        $pakan = Pakan::where('user_id', '=', $input_by)->get();
-        $kolams = Kolam::where('user_id', '=', $input_by)->get();
+        $kolams = Auth::user()->tambak->first()->kolam->where('status', true);
+        $pakan = Pakan::whereIn('kolam_id', $kolams->pluck('id'))->whereMonth('created_at', Carbon::now()->month)->get();
 
-        return view('pakan.index', compact('pakan', 'Kolam'));
+        return view('pakan.index', compact('kolams', 'pakan'));
     }
 
     /**
@@ -46,7 +47,7 @@ class PakanController extends Controller
         $old = session()->getOldInput();
 
         $project = new Bibit();
-        $project->kolam_id = $request->kolam_id;
+        $project->kolam_id = $request->kolam;
         $project->user_id = Auth::user()->id;
         $project->tanggal = $request->tanggal;
         $project->waktu = $request->waktu;

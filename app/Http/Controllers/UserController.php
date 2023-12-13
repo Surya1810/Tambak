@@ -31,7 +31,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('operator.create');
+        $owner_id = Auth::user()->created_by;
+        $tambaks = Auth::user()->tambak->where('status', true);
+
+        return view('operator.create', compact('tambaks'));
     }
 
     public function owner_create()
@@ -48,7 +51,9 @@ class UserController extends Controller
             'name' => 'bail|required',
             'username' => 'bail|required|unique:users,username',
             'email' => 'bail|required|unique:users,email',
-            'phone' => 'bail|required',
+            'phone' => 'bail|required|regex:/^([0-9\s\-\+\(\)]*)$/',
+            'role' => 'bail|required',
+            'tambak' => 'bail|required',
         ]);
 
         $old = session()->getOldInput();
@@ -57,21 +62,23 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->username = $request->username;
         $user->email = $request->email;
-        $user->phone = $request->phone;
+        $user->phone = (int)$request->phone;
         $user->created_by = Auth::user()->id;
         $user->password = bcrypt('password');
-        $user->assignRole('operator');
+        $user->assignRole($request->role);
         $user->save();
+        $user->tambak()->attach($request->tambak);
 
-        return redirect()->route('operator.index')->with(['pesan' => 'Operator berhasil ditambahkan', 'level-alert' => 'alert-success']);
+        return redirect()->route('operator.index')->with(['pesan' => 'Karyawan berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }
+
     public function owner_store(Request $request)
     {
         $request->validate([
             'name' => 'bail|required',
             'username' => 'bail|required|unique:users,username',
-            'email' => 'bail|required',
-            'phone' => 'bail|required',
+            'email' => 'bail|required|unique:users,email',
+            'phone' => 'bail|required|regex:/^([0-9\s\-\+\(\)]*)$/',
         ]);
 
         $old = session()->getOldInput();
@@ -80,7 +87,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->username = $request->username;
         $user->email = $request->email;
-        $user->phone = $request->phone;
+        $user->phone = (int)$request->phone;
         $user->created_by = Auth::user()->id;
         $user->password = bcrypt('password');
         $user->assignRole('owner');
@@ -102,7 +109,12 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $owner_id = Auth::user()->created_by;
+        $tambaks = Auth::user()->tambak->where('status', true);
+
+        $karyawan = User::find($id);
+
+        return view('operator.edit', compact('tambaks', 'karyawan'));
     }
     public function owner_edit($id)
     {
@@ -114,24 +126,44 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
-    }
-    public function owner_update(Request $request, $id)
-    {
+        $user = User::find($id);
         $request->validate([
             'name' => 'bail|required',
-            'username' => 'bail|required|unique:users,username',
-            'email' => 'bail|required',
-            'phone' => 'bail|required',
+            'username' => 'bail|required|unique:users,username,' . $user->id,
+            'email' => 'bail|required|unique:users,email,' . $user->id,
+            'phone' => 'bail|required|regex:/^([0-9\s\-\+\(\)]*)$/',
+            'role' => 'bail|required',
+            'tambak' => 'bail|required',
         ]);
 
-        $user = User::find($id);
+        $old = session()->getOldInput();
+
         $user->name = $request->name;
         $user->username = $request->username;
         $user->email = $request->email;
-        $user->phone = $request->phone;
+        $user->phone = (int)$request->phone;
+        $user->assignRole($request->role);
+        $user->update();
+        $user->tambak()->sync($request->tambak);
+
+        return redirect()->route('operator.index')->with(['pesan' => 'Karyawan berhasil diubah', 'level-alert' => 'alert-warning']);
+    }
+    public function owner_update(Request $request, $id)
+    {
+        $user = User::find($id);
+        $request->validate([
+            'name' => 'bail|required',
+            'username' => 'bail|required|unique:users,username,' . $user->id,
+            'email' => 'bail|required|unique:users,email,' . $user->id,
+            'phone' => 'bail|required|regex:/^([0-9\s\-\+\(\)]*)$/',
+        ]);
+
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->phone = (int)$request->phone;
         $user->update();
 
         return redirect()->route('owner.index')->with(['pesan' => 'Owner berhasil diubah', 'level-alert' => 'alert-warning']);
@@ -142,6 +174,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $data = User::find($id);
+        $data->is_active = false;
+        $data->update();
+
+        $data->delete();
+
+        return redirect()->route('operator.index')->with(['pesan' => 'Karyawan berhasil dihapus', 'level-alert' => 'alert-danger']);
     }
     public function owner_destroy($id)
     {

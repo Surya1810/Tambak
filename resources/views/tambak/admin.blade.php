@@ -39,27 +39,23 @@
                                 <div class="col-6">
                                     <h3 class="card-title">Daftar Tambak</h3>
                                 </div>
-                                @role('super admin|admin')
-                                    <div class="col-6">
-                                        <a href="{{ route('tambak.create') }}"
-                                            class="btn btn-sm btn-primary rounded-tambak float-right">Tambah Tambak</a>
-                                    </div>
-                                @endrole
+                                <div class="col-6">
+                                    <a href="{{ route('tambak.create') }}"
+                                        class="btn btn-sm btn-primary rounded-tambak float-right">Tambah Tambak</a>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body table-responsive">
-                            <table id="employeeTable" class="table table-bordered text-nowrap text-center">
+                            <table id="employeeTable" class="table table-bordered text-nowrap text-center text-sm">
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width: 20%">
                                             Name
                                         </th>
-                                        @role('super admin|admin')
-                                            <th style="width: 20%">
-                                                Owner
-                                            </th>
-                                        @endrole
-                                        <th style="width: 40%">
+                                        <th style="width: 30%">
+                                            Owner
+                                        </th>
+                                        <th style="width: 30%">
                                             Alamat
                                         </th>
                                         <th style="width: 10%">
@@ -74,13 +70,13 @@
                                     @foreach ($tambak as $data)
                                         <tr>
                                             <td>{{ $data->name }}</td>
-                                            @role('super admin|admin')
-                                                <td>
-                                                    @foreach ($data->owner as $owner)
+                                            <td>
+                                                @foreach ($data->owner as $owner)
+                                                    @if ($owner->getRoleNames()->first() == 'owner')
                                                         {{ $owner->name }}
-                                                    @endforeach
-                                                </td>
-                                            @endrole
+                                                    @endif
+                                                @endforeach
+                                            </td>
                                             <td>{{ $data->address }}</td>
                                             <td>
                                                 @if ($data->status == true)
@@ -90,21 +86,19 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                @role('super admin|admin')
-                                                    <a class="btn btn-sm btn-warning rounded-tambak"
-                                                        href="{{ route('tambak.edit', $data->id) }}">
-                                                        <i class="fas fa-pencil-alt"></i>
-                                                    </a>
-                                                    <button class="btn btn-sm btn-danger rounded-tambak"
-                                                        onclick="deleteTambak({{ $data->id }})"><i
-                                                            class="fas fa-trash"></i></button>
-                                                    <form id="delete-form-{{ $data->id }}"
-                                                        action="{{ route('tambak.destroy', $data->id) }}" method="POST"
-                                                        style="display: none;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                    </form>
-                                                @endrole
+                                                <a class="btn btn-sm btn-warning rounded-tambak"
+                                                    href="{{ route('tambak.edit', $data->id) }}">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
+                                                <button class="btn btn-sm btn-danger rounded-tambak"
+                                                    onclick="deleteTambak({{ $data->id }})"><i
+                                                        class="fas fa-trash"></i></button>
+                                                <form id="delete-form-{{ $data->id }}"
+                                                    action="{{ route('tambak.destroy', $data->id) }}" method="POST"
+                                                    style="display: none;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

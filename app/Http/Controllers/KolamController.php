@@ -83,8 +83,6 @@ class KolamController extends Controller
             'anco' => 'bail|required',
         ]);
 
-        $old = session()->getOldInput();
-
         $project = Kolam::find($id);;
         $project->name = $request->name;
         $project->panjang = $request->panjang;
@@ -94,7 +92,7 @@ class KolamController extends Controller
         $project->luas = $request->panjang * $request->lebar;;
         $project->update();
 
-        return redirect()->route('kolam', $request->tambak_id)->with(['pesan' => 'Kolam berhasil diubah', 'level-alert' => 'alert-warning']);
+        return redirect()->route('tambak.owner')->with(['pesan' => 'Kolam berhasil diubah', 'level-alert' => 'alert-warning']);
     }
 
     /**

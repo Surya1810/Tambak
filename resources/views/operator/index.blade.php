@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Operator
+    Karyawan
 @endsection
 
 @push('css')
@@ -18,10 +18,10 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Operator</h1>
+                    <h1>Karyawan</h1>
                     <ol class="breadcrumb text-black-50">
                         <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active"><strong>Operator</strong></li>
+                        <li class="breadcrumb-item active"><strong>Karyawan</strong></li>
                     </ol>
                 </div>
             </div>
@@ -37,34 +37,37 @@
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <h3 class="card-title">Daftar Operator</h3>
+                                    <h3 class="card-title">Daftar Karyawan</h3>
                                 </div>
                                 <div class="col-6">
                                     <a href="{{ route('operator.create') }}"
-                                        class="btn btn-sm btn-primary rounded-tambak float-right">Tambah Operator</a>
+                                        class="btn btn-sm btn-primary rounded-tambak float-right">Tambah Karyawan</a>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body table-responsive">
-                            <table id="employeeTable" class="table table-bordered text-nowrap text-center">
+                            <table id="employeeTable" class="table table-bordered text-nowrap text-center text-sm">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>
+                                        <th style="width: 20%">
                                             Name
                                         </th>
-                                        <th>
+                                        <th style="width: 20%">
                                             Phone
                                         </th>
-                                        <th>
+                                        <th style="width: 20%">
                                             Email
                                         </th>
-                                        <th>
+                                        <th style="width: 10%">
+                                            Posisi
+                                        </th>
+                                        <th style="width: 20%">
+                                            Tambak
+                                        </th>
+                                        <th style="width: 10%">
                                             Status
                                         </th>
-                                        {{-- <th>
-                                            Tugas
-                                        </th> --}}
-                                        <th>
+                                        <th style="width: 20%">
                                             Action
                                         </th>
                                     </tr>
@@ -75,27 +78,22 @@
                                             <td>{{ $user->name }}</td>
                                             <td>+62{{ $user->phone }}</td>
                                             <td>{{ $user->email }}</td>
+                                            <td>{{ $user->getRoleNames()->first() }}</td>
+                                            <td>{{ $user->tambak()->first()->name }}</td>
                                             <td>
                                                 @if ($user->is_active == true)
                                                     Active
                                                 @else
-                                                    Disabled
+                                                    Inactive
                                                 @endif
                                             </td>
-                                            {{-- <td>
-                                                @if ($user->tambak == null)
-                                                    <button class="btn btn-success">Tugaskan</button>
-                                                @else
-                                                    {{ $user->tambak }}
-                                                @endif
-                                            </td> --}}
                                             <td>
                                                 <a class="btn btn-sm btn-warning rounded-tambak"
                                                     href="{{ route('operator.edit', $user->id) }}">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
                                                 <button class="btn btn-sm btn-danger rounded-tambak"
-                                                    onclick="deleteCustomer({{ $user->id }})"><i
+                                                    onclick="deleteKaryawan({{ $user->id }})"><i
                                                         class="fas fa-trash"></i></button>
                                                 <form id="delete-form-{{ $user->id }}"
                                                     action="{{ route('operator.destroy', $user->id) }}" method="POST"
@@ -151,5 +149,28 @@
                 // }]
             });
         });
+
+        function deleteKaryawan(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Delete'
+            }).then((result) => {
+                if (result.value) {
+                    event.preventDefault();
+                    document.getElementById('delete-form-' + id).submit();
+                } else if (
+                    result.dismiss === swal.DismissReason.cancel
+                ) {
+                    swal(
+                        'Cancelled',
+                        'Your data is safe !',
+                        'error'
+                    )
+                }
+            })
+        }
     </script>
 @endpush

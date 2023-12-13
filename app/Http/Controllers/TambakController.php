@@ -27,13 +27,6 @@ class TambakController extends Controller
         return view('tambak.owner', compact('tambak'));
     }
 
-    // public function user()
-    // {
-    //     $tambak = Tambak::where('status', '=', true)->get();
-
-    //     return view('tambak.user', compact('tambak'));
-    // }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -59,7 +52,6 @@ class TambakController extends Controller
         $project = new Tambak();
         $project->name = $request->name;
         $project->address = $request->address;
-        // $project->user_id = $request->owner;
         $project->save();
         $project->owner()->attach($request->owner);
 

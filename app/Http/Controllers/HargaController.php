@@ -13,7 +13,7 @@ class HargaController extends Controller
      */
     public function index()
     {
-        $harga = Harga::all();
+        $harga = Harga::where('owner_id', Auth::user()->created_by)->get();
 
         return view('harga.index', compact('harga'));
     }

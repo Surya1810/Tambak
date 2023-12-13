@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sampling;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,7 +14,10 @@ class SamplingController extends Controller
      */
     public function index()
     {
-        //
+        $kolams = Auth::user()->tambak->first()->kolam->where('status', true);
+        $sampling = Sampling::whereIn('kolam_id', $kolams->pluck('id'))->whereMonth('created_at', Carbon::now()->month)->get();
+
+        return view('sampling.index', compact('kolams', 'sampling'));
     }
 
     /**
@@ -38,14 +42,14 @@ class SamplingController extends Controller
         $old = session()->getOldInput();
 
         $project = new Sampling();
-        $project->kolam_id = $request->kolam_id;
+        $project->kolam_id = $request->kolam;
         $project->user_id = Auth::user()->id;
         $project->tanggal = $request->tanggal;
         $project->mbw = $request->mbw;
         $project->catatan = $request->catatan;
         $project->save();
 
-        return redirect()->route('kolam', $request->tambak_id)->with(['pesan' => 'Data sampling berhasil ditambahkan', 'level-alert' => 'alert-success']);
+        return redirect()->route('sampling.index', $request->tambak_id)->with(['pesan' => 'Data sampling berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }
 
     /**
@@ -75,8 +79,11 @@ class SamplingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Sampling $sampling)
+    public function destroy($id)
     {
-        //
+        $data = Sampling::find($id);
+        $data->delete();
+
+        return redirect()->route('sampling.index')->with(['pesan' => 'Data Sampling berhasil dihapus', 'level-alert' => 'alert-danger']);
     }
 }

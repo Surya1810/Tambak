@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anco;
+use App\Models\Pakan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AncoController extends Controller
 {
@@ -12,7 +15,11 @@ class AncoController extends Controller
      */
     public function index()
     {
-        //
+        $kolams = Auth::user()->tambak->first()->kolam->where('status', true);
+        $pakans = Pakan::all();
+        $anco = Anco::whereIn('kolam_id', $kolams->pluck('id'))->whereMonth('created_at', Carbon::now()->month)->get();
+
+        return view('anco.index', compact('kolams', 'anco', 'pakans'));
     }
 
     /**
@@ -28,7 +35,24 @@ class AncoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'kolam' => 'bail|required',
+            'tanggal' => 'bail|required',
+            'total' => 'bail|required',
+        ]);
+
+        $old = session()->getOldInput();
+
+        $project = new Anco();
+        $project->kolam_id = $request->kolam;
+        $project->user_id = Auth::user()->id;
+        // If supplier dipilih
+        $project->supplier_id = $request->supplier;
+        $project->tanggal = $request->tanggal;
+        $project->total = $request->total;
+        $project->save();
+
+        return redirect()->route('bibit.index', $request->tambak_id)->with(['pesan' => 'Data tebar bibit berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }
 
     /**
@@ -58,8 +82,11 @@ class AncoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Anco $anco)
+    public function destroy($id)
     {
-        //
+        $data = Anco::find($id);
+        $data->delete();
+
+        return redirect()->route('anco.index')->with(['pesan' => 'Data anco berhasil dihapus', 'level-alert' => 'alert-danger']);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bibit;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,7 +14,10 @@ class BibitController extends Controller
      */
     public function index()
     {
-        //
+        $kolams = Auth::user()->tambak->first()->kolam->where('status', true);
+        $bibit = Bibit::whereIn('kolam_id', $kolams->pluck('id'))->whereMonth('created_at', Carbon::now()->month)->get();
+
+        return view('bibit.index', compact('kolams', 'bibit'));
     }
 
     /**
@@ -38,7 +42,7 @@ class BibitController extends Controller
         $old = session()->getOldInput();
 
         $project = new Bibit();
-        $project->kolam_id = $request->kolam_id;
+        $project->kolam_id = $request->kolam;
         $project->user_id = Auth::user()->id;
         // If supplier dipilih
         $project->supplier_id = $request->supplier;
@@ -46,7 +50,7 @@ class BibitController extends Controller
         $project->total = $request->total;
         $project->save();
 
-        return redirect()->route('kolam', $request->tambak_id)->with(['pesan' => 'Data tebar bibit berhasil ditambahkan', 'level-alert' => 'alert-success']);
+        return redirect()->route('bibit.index', $request->tambak_id)->with(['pesan' => 'Data tebar bibit berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }
 
     /**
@@ -76,8 +80,11 @@ class BibitController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Bibit $bibit)
+    public function destroy($id)
     {
-        //
+        $data = Bibit::find($id);
+        $data->delete();
+
+        return redirect()->route('bibit.index')->with(['pesan' => 'Data tebar bibit berhasil dihapus', 'level-alert' => 'alert-danger']);
     }
 }

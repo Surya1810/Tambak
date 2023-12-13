@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('supplier_id')->constrained()->cascadeOnDelete()->nullable();
             $table->bigInteger('total');
             $table->date('tanggal');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

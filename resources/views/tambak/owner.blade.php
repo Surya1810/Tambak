@@ -39,8 +39,7 @@
                 @else
                     @foreach ($tambak as $data)
                         <div class="col-12 text-center mb-3">
-                            <h5 class="text-center"><strong>{{ $data->name }}</strong></h5>
-                            <hr>
+                            <h5 class="text-center"><strong><u>{{ $data->name }}</u></strong></h5>
                         </div>
                         <!-- Modal Add Data-->
                         <div class="modal fade" id="addKolam{{ $data->id }}" tabindex="-1"
@@ -158,15 +157,21 @@
                                 </div>
                             </div>
                         </div>
-                        @if (count($data->kolam) == null)
+                        @if (count($data->kolam->where('status', true)) == null)
                             <div class="col-12 text-center">
                                 <h6>Belum Memiliki Kolam</h6>
-                                <hr>
+                            </div>
+                            <div class="col-12 text-center mb-5">
+                                <button type="button" data-toggle="modal" data-target="#addKolam{{ $data->id }}"
+                                    class="btn btn-primary">
+                                    <i class="fa-solid fa-plus"></i><br>
+                                    Tambah Kolam
+                                </button>
                             </div>
                         @else
-                            @foreach ($data->kolam as $kolam)
-                                <div class="col-6 col-md-3">
-                                    <div class="card card-outline rounded-tambak card-primary">
+                            @foreach ($data->kolam->where('status', true) as $kolam)
+                                <div class="col-6 col-md-3 my-2">
+                                    <div class="card card-outline rounded-tambak card-primary h-100">
                                         <div class="card-header">
                                             <div class="row align-items-center">
                                                 <div class="col-6">
@@ -179,9 +184,16 @@
                                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <a class="dropdown-item" href="#">Edit</a>
-                                                        <a class="dropdown-item" href="#">Hapus</a>
-                                                        <a class="dropdown-item" href="#">Check Anco</a>
+                                                        <button class="dropdown-item" type="button" data-toggle="modal"
+                                                            data-target="#editKolam{{ $kolam->id }}">Edit</button>
+                                                        <button class="dropdown-item"
+                                                            onclick="deleteKolam({{ $kolam->id }})">Hapus</button>
+                                                        <form id="delete-form-{{ $kolam->id }}"
+                                                            action="{{ route('kolam.destroy', $kolam->id) }}"
+                                                            method="POST" style="display: none;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -220,7 +232,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Modal Add Data-->
+                                <!-- Modal Status-->
                                 <div class="modal fade" id="detailKolam{{ $kolam->id }}" tabindex="-1"
                                     aria-labelledby="addKolamLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
@@ -234,79 +246,201 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form action="{{ route('kolam.store') }}" method="POST"
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="progress-group">
+                                                            DoC
+                                                            <span class="float-right"><b>1/400</b></span>
+                                                            <div class="progress progress-sm">
+                                                                <div class="progress-bar" style="width: 75%"></div>
+                                                            </div>
+                                                            <small>Tebaran:</small>
+                                                            <small class="float-right"><b>300.000</b></small>
+                                                        </div>
+                                                        <strong>Estimasi Pertumbuhan</strong>
+                                                        <table
+                                                            class="table table-sm table-striped table-borderless text-sm">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>FCR :</td>
+                                                                    <td class="float-right"><b>0,01</b></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>ADG :</td>
+                                                                    <td class="float-right"><b>0,01</b></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>SR :</td>
+                                                                    <td class="float-right"><b>0,01</b></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>MBW :</td>
+                                                                    <td class="float-right"><b>0,01</b></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Size :</td>
+                                                                    <td class="float-right"><b>0,01</b></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Total Pakan :</td>
+                                                                    <td class="float-right"><b>0,01</b></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Panen Kumulatif :</td>
+                                                                    <td class="float-right"><b>0,01</b></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Biomassa :</td>
+                                                                    <td class="float-right"><b>0,01</b></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal Edit Data-->
+                                <div class="modal fade" id="editKolam{{ $kolam->id }}" tabindex="-1"
+                                    aria-labelledby="editKolamLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editKolamModalLabel">Edit Kolam</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form action="{{ route('kolam.update', $kolam->id) }}" method="POST"
                                                 enctype="multipart/form-data">
                                                 @csrf
+                                                @method('PUT')
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col-12">
-                                                            <div class="progress-group">
-                                                                DoC
-                                                                <span class="float-right"><b>1/400</b></span>
-                                                                <div class="progress progress-sm">
-                                                                    <div class="progress-bar" style="width: 75%"></div>
-                                                                </div>
-                                                                <small>Tebaran:</small>
-                                                                <small class="float-right"><b>300.000</b></small>
+                                                            <div class="form-group">
+                                                                <label for="name"
+                                                                    class="mb-0 form-label col-form-label-sm">Nama
+                                                                    Kolam</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('name') is-invalid @enderror"
+                                                                    id="name" name="name"
+                                                                    placeholder="Masukan nama kolam"
+                                                                    value="{{ $kolam->name }}" required>
+                                                                @error('name')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                @enderror
                                                             </div>
-                                                            <strong>Estimasi Pertumbuhan</strong>
-                                                            <table
-                                                                class="table table-sm table-striped table-borderless text-sm">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>FCR :</td>
-                                                                        <td class="float-right"><b>0,01</b></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>ADG :</td>
-                                                                        <td class="float-right"><b>0,01</b></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>SR :</td>
-                                                                        <td class="float-right"><b>0,01</b></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>MBW :</td>
-                                                                        <td class="float-right"><b>0,01</b></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Size :</td>
-                                                                        <td class="float-right"><b>0,01</b></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Total Pakan :</td>
-                                                                        <td class="float-right"><b>0,01</b></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Panen Kumulatif :</td>
-                                                                        <td class="float-right"><b>0,01</b></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Biomassa :</td>
-                                                                        <td class="float-right"><b>0,01</b></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="dalam"
+                                                                    class="mb-0 form-label col-form-label-sm">Kedalaman</label>
+                                                                <div class="input-group mb-2">
+                                                                    <input type="number"
+                                                                        class="form-control @error('dalam') is-invalid @enderror"
+                                                                        id="dalam" name="dalam"
+                                                                        value="{{ $kolam->kedalaman }}" required>
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">m</div>
+                                                                    </div>
+                                                                </div>
+                                                                @error('dalam')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="panjang"
+                                                                    class="mb-0 form-label col-form-label-sm">Panjang</label>
+                                                                <div class="input-group mb-2">
+                                                                    <input type="number"
+                                                                        class="form-control @error('panjang') is-invalid @enderror"
+                                                                        id="panjang" name="panjang"
+                                                                        value="{{ $kolam->panjang }}" required>
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">m</div>
+                                                                    </div>
+                                                                </div>
+                                                                @error('panjang')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+                                                                <label for="lebar"
+                                                                    class="mb-0 form-label col-form-label-sm">Lebar</label>
+                                                                <div class="input-group mb-2">
+                                                                    <input type="number"
+                                                                        class="form-control @error('lebar') is-invalid @enderror"
+                                                                        id="lebar" name="lebar"
+                                                                        value="{{ $kolam->lebar }}" required>
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">m</div>
+                                                                    </div>
+                                                                </div>
+                                                                @error('lebar')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="anco"
+                                                                    class="mb-0 form-label col-form-label-sm">Jumlah
+                                                                    Anco</label>
+                                                                <div class="input-group mb-2">
+                                                                    <input type="number"
+                                                                        class="form-control @error('anco') is-invalid @enderror"
+                                                                        id="anco" name="anco"
+                                                                        placeholder="Masukan jumlah anco"
+                                                                        value="{{ $kolam->anco }}" required>
+                                                                </div>
+                                                                @error('anco')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                @enderror
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit"
-                                                        class="btn btn-primary rounded-tambak">Tambah</button>
+                                                        class="btn btn-primary rounded-tambak">Ubah</button>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             @endforeach
+                            <div class="col-6 col-md-3 my-2">
+                                <div class="card card-outline rounded-tambak card-primary h-100">
+                                    <button type="button" data-toggle="modal"
+                                        data-target="#addKolam{{ $data->id }}" class="btn w-100 h-100 text-primary">
+                                        <i class="fa-solid fa-plus"></i><br>
+                                        Tambah Kolam
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <hr>
+                            </div>
                         @endif
-                        <div class="col-12 text-center mb-5">
-                            <button type="button" class="btn btn-primary rounded-tambak" data-toggle="modal"
-                                data-target="#addKolam{{ $data->id }}">
-                                Tambah Kolam
-                            </button>
-                            <hr>
-                        </div>
                     @endforeach
                 @endif
             </div>

@@ -17,7 +17,8 @@ return new class extends Migration
             $table->bigInteger('kolam_id')->constrained()->cascadeOnDelete();
             $table->date('tanggal');
             $table->time('waktu');
-            $table->text('catatan');
+            $table->text('catatan')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

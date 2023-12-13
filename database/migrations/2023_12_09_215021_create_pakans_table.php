@@ -19,7 +19,8 @@ return new class extends Migration
             $table->date('tanggal');
             $table->time('waktu');
             $table->bigInteger('jumlah');
-            $table->text('catatan');
+            $table->text('catatan')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

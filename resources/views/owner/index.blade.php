@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="card-body table-responsive">
-                            <table id="employeeTable" class="table table-bordered text-nowrap text-center">
+                            <table id="employeeTable" class="table table-bordered text-nowrap text-center text-sm">
                                 <thead class="table-dark">
                                     <tr>
                                         <th>

@@ -78,12 +78,12 @@
                                             <td>{{ $data->tanggal }}</td>
                                             <td>{{ $data->waktu }}</td>
                                             <td>{{ $data->jenis }}</td>
-                                            <td>{{ $data->jumlah }}Kg</td>
+                                            <td>{{ $data->jumlah }} Kg</td>
                                             <td class="text-center">
-                                                <a class="btn btn-sm btn-warning rounded-tambak"
+                                                {{-- <a class="btn btn-sm btn-warning rounded-tambak"
                                                     href="{{ route('pakan.edit', $data->id) }}">
                                                     <i class="fas fa-pencil-alt"></i>
-                                                </a>
+                                                </a> --}}
                                                 <button class="btn btn-sm btn-danger rounded-tambak"
                                                     onclick="deletePakan({{ $data->id }})"><i
                                                         class="fas fa-trash"></i></button>
@@ -110,7 +110,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addStepModalLabel">Tambah Akun</h5>
+                    <h5 class="modal-title" id="addStepModalLabel">Tambah Pakan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -124,13 +124,14 @@
                                     <label for="kolam" class="mb-0 form-label col-form-label-sm">Kolam</label>
                                     <select class="form-control kolam select2-primary is-invalid"
                                         data-dropdown-css-class="select2-primary" style="width: 100%;" id="kolam"
-                                        name="kolam">
+                                        name="kolam" required>
                                         <option></option>
-                                        {{-- @foreach ($kolams as $kolam)
-                                                <option value="{{ $kolam->name }}"
-                                                    {{ old('kolam') == $kolam->name ? 'selected' : '' }}>{{ $tambak->name }} - 
-                                                    {{ $kolam->name }}</option>
-                                            @endforeach --}}
+                                        @foreach ($kolams as $kolam)
+                                            <option value="{{ $kolam->id }}"
+                                                {{ old('kolam') == $kolam->id ? 'selected' : '' }}>
+                                                {{ $kolam->tambak->name }} -
+                                                {{ $kolam->name }}</option>
+                                        @endforeach
                                     </select>
                                     @error('kolam')
                                         <span class="invalid-feedback" role="alert">
@@ -144,7 +145,7 @@
                                     <label for="tanggal" class="mb-0 form-label col-form-label-sm">Tanggal</label>
                                     <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
                                         id="tanggal" name="tanggal" placeholder="Pilih Tanggal"
-                                        value="{{ old('tanggal') }}" autocomplete="off">
+                                        value="{{ old('tanggal') }}" autocomplete="off" required>
                                     @error('tanggal')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -157,7 +158,7 @@
                                     <label for="Waktu" class="mb-0 form-label col-form-label-sm">Waktu</label>
                                     <input type="time" class="form-control @error('Waktu') is-invalid @enderror"
                                         id="Waktu" name="Waktu" placeholder="Masukan alamat tambak"
-                                        value="{{ old('Waktu') }}" autocomplete="off">
+                                        value="{{ old('Waktu') }}" autocomplete="off" required>
                                     @error('Waktu')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -190,7 +191,7 @@
                                     <label for="jumlah" class="mb-0 form-label col-form-label-sm">Jumlah (kg)</label>
                                     <input type="number" class="form-control @error('jumlah') is-invalid @enderror"
                                         id="jumlah" name="jumlah" placeholder="Masukan jumlah pakan"
-                                        value="{{ old('jumlah') }}" autocomplete="off">
+                                        value="{{ old('jumlah') }}" autocomplete="off" required>
                                     @error('jumlah')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -279,5 +280,12 @@
                 }
             })
         }
+
+        $('.kolam').select2({
+            placeholder: "Pilih kolam",
+        })
+        $('.pakan').select2({
+            placeholder: "Pilih jenis pakan",
+        })
     </script>
 @endpush

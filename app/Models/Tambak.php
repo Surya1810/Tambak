@@ -30,6 +30,6 @@ class Tambak extends Model
 
     public function kolam(): HasMany
     {
-        return $this->hasMany(Kolam::class,);
+        return $this->hasMany(Kolam::class)->orderBy('name', 'asc');
     }
 }

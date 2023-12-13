@@ -5,12 +5,6 @@
 @endsection
 
 @push('css')
-    <!-- DataTables -->
-    <link rel="stylesheet" href="{{ asset('assets/adminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('assets/adminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/adminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/adminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 @endpush
 
 @section('content')
@@ -27,6 +21,98 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 text-center mb-2">
+                    <h4><b>Status Kolam</b></h4>
+                </div>
+                @if (count($tambak) == null)
+                    <div class="col-12 text-center">
+                        <h6>Belum Memiliki Tambak</h6>
+                    </div>
+                @else
+                    @foreach ($tambak as $data)
+                        <div class="col-12 text-center mb-3">
+                            <h5 class="text-center"><strong><u>{{ $data->name }}</u></strong></h5>
+                        </div>
+                        @if (count($data->kolam) == null)
+                            <div class="col-12 text-center mb-5">
+                                <h6>Belum Memiliki Kolam</h6>
+                                <hr>
+                            </div>
+                        @else
+                            @foreach ($data->kolam as $kolam)
+                                <div class="col-lg-3 col-12">
+                                    <div class="card card-outline rounded-tambak card-primary">
+                                        <div class="card-header">
+                                            <div class="row align-items-center ">
+                                                <h3 class="card-title"><b>{{ $kolam->name }}</b></h3>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="progress-group">
+                                                        DoC
+                                                        <span class="float-right"><b>1/400</b></span>
+                                                        <div class="progress progress-sm">
+                                                            <div class="progress-bar bg-vaname" style="width: 75%"></div>
+                                                        </div>
+                                                        <small>Tebaran:</small>
+                                                        <small class="float-right"><b>300.000</b></small>
+                                                    </div>
+                                                    <strong>Estimasi Pertumbuhan</strong>
+                                                    <table class="table table-sm table-striped table-borderless text-sm">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>FCR :</td>
+                                                                <td class="float-right"><b>0,01</b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>ADG :</td>
+                                                                <td class="float-right"><b>0,01</b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>SR :</td>
+                                                                <td class="float-right"><b>0,01</b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>MBW :</td>
+                                                                <td class="float-right"><b>0,01</b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Size :</td>
+                                                                <td class="float-right"><b>0,01</b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Total Pakan :</td>
+                                                                <td class="float-right"><b>0,01</b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Panen Kumulatif :</td>
+                                                                <td class="float-right"><b>0,01</b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Biomassa :</td>
+                                                                <td class="float-right"><b>0,01</b></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-center rounded-tambak">
+                                            <button class="btn btn-sm btn-secondary rounded-tambak">Konsultasi</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                        <div class="col-12 mb-3">
+                            <hr>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
             <div class="row">
                 @if (auth()->user()->tambak->count() != null)
                     <div class="col-12 col-lg-6">
@@ -78,20 +164,6 @@
 @endsection
 
 @push('scripts')
-    <!-- DataTables  & Plugins -->
-    <script src="{{ asset('assets/adminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/adminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/adminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('assets/adminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/adminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('assets/adminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/adminLTE/plugins/jszip/jszip.min.js') }}"></script>
-    {{-- <script src="{{ asset('assets/adminLTE/plugins/pdfmake/pdfmake.min.js') }}"></script> --}}
-    {{-- <script src="{{ asset('assets/adminLTE/plugins/pdfmake/vfs_fonts.js') }}"></script> --}}
-    <script src="{{ asset('assets/adminLTE/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('assets/adminLTE/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('assets/adminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
     <script type="text/javascript">
         $(function() {
             $('#karyawanTable').DataTable({
