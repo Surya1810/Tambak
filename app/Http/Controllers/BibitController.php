@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bibit;
+use App\Models\Supplier;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,10 +15,11 @@ class BibitController extends Controller
      */
     public function index()
     {
+        $suppliers = Supplier::where('owner_id', Auth::user()->created_by)->where('status', true)->get();
         $kolams = Auth::user()->tambak->first()->kolam->where('status', true);
         $bibit = Bibit::whereIn('kolam_id', $kolams->pluck('id'))->whereMonth('created_at', Carbon::now()->month)->get();
 
-        return view('bibit.index', compact('kolams', 'bibit'));
+        return view('bibit.index', compact('kolams', 'bibit', 'suppliers'));
     }
 
     /**

@@ -14,7 +14,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customer = Customer::where('owner_id', Auth::user()->id)->where('status', '=', true)->get();
+        $customer = Customer::where('owner_id', Auth::user()->created_by)->where('status', '=', true)->get();
 
         return view('customer.index', compact('customer'));
     }
@@ -43,7 +43,7 @@ class CustomerController extends Controller
         $old = session()->getOldInput();
 
         $project = new Customer();
-        $project->owner_id = Auth::user()->id;
+        $project->owner_id = Auth::user()->created_by;
         $project->code = 'GD-' . Str::random(5);
         $project->name = $request->name;
         $project->address = $request->address;

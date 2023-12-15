@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hargas', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('size');
-            $table->bigInteger('harga');
-            $table->bigInteger('owner_id')->constrained()->cascadeOnDelete();
+        Schema::create('panens', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
         });
     }
@@ -25,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('hargas');
+        Schema::dropIfExists('panens');
     }
 };

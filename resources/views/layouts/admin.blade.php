@@ -273,13 +273,13 @@
                                     </a>
                                     <ul class="nav nav-treeview">
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link">
+                                            <a href="{{ route('panen.index') }}" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
-                                                <p>Panen</p>
+                                                <p>Panen Udang</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link">
+                                            <a href="{{ route('kematian.index') }}" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
                                                 <p>Kematian Udang</p>
                                             </a>
@@ -335,8 +335,14 @@
                                     Finance
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ route('akun.index') }}" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-book"></i>
+                                        <p>Akun</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="nav-icon fa-solid fa-shrimp"></i>
+                                        <i class="nav-icon fa-solid fa-file-pen"></i>
                                         <p>
                                             Data
                                             <i class="right fas fa-angle-left"></i>
@@ -344,9 +350,50 @@
                                     </a>
                                     <ul class="nav nav-treeview">
                                         <li class="nav-item">
-                                            <a href="{{ route('pakan.index') }}" class="nav-link">
+                                            <a href="#" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Jurnal Umum</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Pembelian</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Purchase Order</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ route('harga.index') }}" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
                                                 <p>Harga</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-file-pen"></i>
+                                        <p>
+                                            Hutang
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Pembayaran</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Penerimaan</p>
                                             </a>
                                         </li>
                                     </ul>

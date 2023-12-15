@@ -42,7 +42,7 @@
                                 <div class="col-6">
                                     <button type="button" class="btn btn-sm btn-primary rounded-tambak float-right"
                                         data-toggle="modal" data-target="#addBarang">
-                                        Tambah
+                                        Tambah Barang
                                     </button>
                                 </div>
                             </div>
@@ -110,7 +110,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addStepModalLabel">Tambah Akun</h5>
+                    <h5 class="modal-title" id="addStepModalLabel">Tambah Barang</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -170,11 +170,11 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="name" class="mb-0 form-label col-form-label-sm">Harga Beli</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                        id="name" name="name" placeholder="Masukan harga beli"
-                                        value="{{ old('name') }}">
-                                    @error('name')
+                                    <label for="harga" class="mb-0 form-label col-form-label-sm">Harga Beli</label>
+                                    <input type="text" class="price form-control @error('harga') is-invalid @enderror"
+                                        id="harga" name="harga" placeholder="Masukan harga beli"
+                                        value="{{ old('harga') }}">
+                                    @error('harga')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -227,6 +227,8 @@
     <script src="{{ asset('assets/adminLTE/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/adminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
+    <script src="{{ asset('assets/adminLTE/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
+
     <script type="text/javascript">
         $(function() {
             $('#barangTable').DataTable({
@@ -245,6 +247,16 @@
                 //     orderable: false,
                 //     targets: -8
                 // }]
+            });
+
+            $('.price').inputmask({
+                alias: 'numeric',
+                prefix: 'Rp',
+                digits: 0,
+                groupSeparator: '.',
+                autoGroup: true,
+                removeMaskOnSubmit: true,
+                rightAlign: false
             });
         });
 

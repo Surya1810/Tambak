@@ -73,7 +73,7 @@
                                             <td>
                                                 @foreach ($data->owner as $owner)
                                                     @if ($owner->getRoleNames()->first() == 'owner')
-                                                        {{ $owner->name }}
+                                                        <span class="badge badge-secondary">{{ $owner->name }}</span>
                                                     @endif
                                                 @endforeach
                                             </td>

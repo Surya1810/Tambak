@@ -9,17 +9,16 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\HargaController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\KematianController;
 use App\Http\Controllers\KolamController;
 use App\Http\Controllers\PakanController;
+use App\Http\Controllers\PanenController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SamplingController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TambakController;
 use App\Http\Controllers\UserController;
-use App\Models\Supplier;
-use App\Models\Tambak;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -87,7 +86,7 @@ Route::group(['prefix' => 'owner', 'middleware' => 'auth'], function () {
 });
 
 // Operator
-Route::group(['prefix' => 'owner', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'operator', 'middleware' => 'auth'], function () {
     // Data Pakan
     Route::resource('pakan', PakanController::class);
     // Data Sampling
@@ -96,8 +95,12 @@ Route::group(['prefix' => 'owner', 'middleware' => 'auth'], function () {
     Route::resource('bibit', BibitController::class);
     // Data Anco
     Route::resource('anco', AncoController::class);
-    // Data Harga
-    Route::resource('harga', HargaController::class);
+
+    // Data Bibit
+    Route::resource('panen', PanenController::class);
+    // Data Anco
+    Route::resource('kematian', KematianController::class);
+
 
     // Gudang
     Route::resource('gudang', GudangController::class);
@@ -106,9 +109,12 @@ Route::group(['prefix' => 'owner', 'middleware' => 'auth'], function () {
 });
 
 // Akuntan
-Route::group(['prefix' => 'owner', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'akuntan', 'middleware' => 'auth'], function () {
     // Akun
     Route::resource('akun', AkunController::class);
+
+    // Data Harga
+    Route::resource('harga', HargaController::class);
 });
 
 Route::middleware('auth')->group(function () {

@@ -113,7 +113,7 @@
                     @endforeach
                 @endif
             </div>
-            <div class="row">
+            {{-- <div class="row">
                 @if (auth()->user()->tambak->count() != null)
                     <div class="col-12 col-lg-6">
                         <div class="card card-outline rounded-tambak card-primary">
@@ -158,7 +158,7 @@
                         </div>
                     </div>
                 @endif
-            </div>
+            </div> --}}
         </div>
     </section>
 @endsection

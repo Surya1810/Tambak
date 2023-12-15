@@ -91,6 +91,6 @@ class HargaController extends Controller
         $data = Harga::find($id);
         $data->delete();
 
-        return redirect()->route('pakan.index')->with(['pesan' => 'Data pakan berhasil dihapus', 'level-alert' => 'alert-danger']);
+        return redirect()->route('harga.index')->with(['pesan' => 'Data harga berhasil dihapus', 'level-alert' => 'alert-danger']);
     }
 }

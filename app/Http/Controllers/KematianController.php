@@ -2,27 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Barang;
-use App\Models\Kategori;
-use App\Models\Satuan;
-use App\Models\Supplier;
+use App\Models\Kematian;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class BarangController extends Controller
+class KematianController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $barang = Barang::all();
-
-        $categories = Kategori::all();
-        $satuans = Satuan::all();
-        $suppliers = Supplier::where('owner_id', Auth::user()->created_by)->where('status', true)->get();
-
-        return view('barang.index', compact('barang', 'satuans', 'categories', 'suppliers'));
+        $kematian = Kematian::where()->get();
+        return view('kematian.index', compact('kematian'));
     }
 
     /**
@@ -30,6 +21,7 @@ class BarangController extends Controller
      */
     public function create()
     {
+        //
     }
 
     /**
@@ -43,7 +35,7 @@ class BarangController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Barang $barang)
+    public function show(Kematian $kematian)
     {
         //
     }
@@ -51,7 +43,7 @@ class BarangController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Barang $barang)
+    public function edit(Kematian $kematian)
     {
         //
     }
@@ -59,7 +51,7 @@ class BarangController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Barang $barang)
+    public function update(Request $request, Kematian $kematian)
     {
         //
     }
@@ -67,7 +59,7 @@ class BarangController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Barang $barang)
+    public function destroy(Kematian $kematian)
     {
         //
     }

@@ -14,7 +14,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $supplier = Supplier::where('owner_id', Auth::user()->id)->where('status', '=', true)->get();
+        $supplier = Supplier::where('owner_id', Auth::user()->created_by)->where('status', '=', true)->get();
 
         return view('supplier.index', compact('supplier'));
     }
@@ -43,7 +43,7 @@ class SupplierController extends Controller
         $old = session()->getOldInput();
 
         $project = new Supplier();
-        $project->owner_id = Auth::user()->id;
+        $project->owner_id = Auth::user()->created_by;
         $project->code = 'GD-' . Str::random(5);
         $project->name = $request->name;
         $project->address = $request->address;

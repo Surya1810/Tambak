@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('created_by', Auth::user()->id)->role('operator')->get();
+        $users = User::where('created_by', Auth::user()->id)->Role(['operator', 'akuntan'])->get();
         return view('operator.index', compact('users'));
     }
 
@@ -144,7 +144,7 @@ class UserController extends Controller
         $user->username = $request->username;
         $user->email = $request->email;
         $user->phone = (int)$request->phone;
-        $user->assignRole($request->role);
+        $user->syncRoles($request->role);
         $user->update();
         $user->tambak()->sync($request->tambak);
 

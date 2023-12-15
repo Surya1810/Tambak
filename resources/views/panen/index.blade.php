@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Data Tebar Bibit
+    Data Panen
 @endsection
 
 @push('css')
@@ -18,10 +18,10 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Data Tebar Bibit</h1>
+                    <h1>Data Panen</h1>
                     <ol class="breadcrumb text-black-50">
                         <li class="breadcrumb-item"><a class="text-black-50" href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active"><strong>Data Tebar Bibit</strong></li>
+                        <li class="breadcrumb-item active"><strong>Data Panen</strong></li>
                     </ol>
                 </div>
             </div>
@@ -37,31 +37,28 @@
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-6">
-                                    <h3 class="card-title">Data Tebar Bibit</h3>
+                                    <h3 class="card-title">Data Panen</h3>
                                 </div>
                                 <div class="col-6">
                                     <button type="button" class="btn btn-sm btn-primary rounded-tambak float-right"
-                                        data-toggle="modal" data-target="#addBibit">
-                                        Tambah Tebar Bibit
+                                        data-toggle="modal" data-target="#addPanen">
+                                        Tambah Data Panen
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body table-responsive">
-                            <table id="bibitTable" class="table table-bordered text-nowrap text-center">
+                            <table id="hargaTable" class="table table-bordered text-nowrap text-center">
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width: 20%">
-                                            Kolam
+                                            Size
                                         </th>
                                         <th style="width: 20%">
-                                            Tanggal
-                                        </th>
-                                        <th style="width: 20%">
-                                            Total
+                                            Harga
                                         </th>
                                         <th style="width: 30%">
-                                            Hatchery
+                                            Periode
                                         </th>
                                         <th style="width: 10%">
                                             Action
@@ -69,24 +66,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($bibit as $data)
+                                    @foreach ($panen as $data)
                                         <tr>
-                                            <td>{{ $data->kolam->tambak->name }} - {{ $data->kolam->name }}</td>
-                                            <td>{{ $data->tanggal }}</td>
-                                            <td>{{ $data->total }} ekor</td>
-                                            <td>
-                                                @if ($data->supplier == null)
-                                                    -
-                                                @else
-                                                    {{ $data->supplier->name }}
-                                                @endif
-                                            </td>
+                                            <td>{{ $data->size }}</td>
+                                            <td>{{ formatRupiah($data->harga) }}</td>
+                                            <td></td>
                                             <td class="text-center">
+                                                <a class="btn btn-sm btn-warning rounded-tambak" type="button"
+                                                    data-toggle="modal" data-target="#editHarga{{ $data->id }}">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
                                                 <button class="btn btn-sm btn-danger rounded-tambak"
-                                                    onclick="deleteBibit({{ $data->id }})"><i
+                                                    onclick="deletePanen({{ $data->id }})"><i
                                                         class="fas fa-trash"></i></button>
                                                 <form id="delete-form-{{ $data->id }}"
-                                                    action="{{ route('bibit.destroy', $data->id) }}" method="POST"
+                                                    action="{{ route('harga.destroy', $data->id) }}" method="POST"
                                                     style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
@@ -104,54 +98,26 @@
     </section>
 
     <!-- Modal Add Data-->
-    <div class="modal fade" id="addBibit" tabindex="-1" aria-labelledby="addBibitLabel" aria-hidden="true">
+    <div class="modal fade" id="addPanen" tabindex="-1" aria-labelledby="addPanenLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addStepModalLabel">Tambah Data Tebar Bibit</h5>
+                    <h5 class="modal-title" id="addStepModalLabel">Tambah Data Harga Panen</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('bibit.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('panen.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-12 col-lg-6">
+                            <div class="col-6 col-lg-6">
                                 <div class="form-group">
-                                    <label for="kolam" class="mb-0 form-label col-form-label-sm">Kolam</label>
-                                    <select class="form-control kolam select2-primary is-invalid"
-                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="kolam"
-                                        name="kolam" required>
-                                        <option></option>
-                                        @foreach ($kolams as $kolam)
-                                            <option value="{{ $kolam->id }}"
-                                                {{ old('kolam') == $kolam->id ? 'selected' : '' }}>
-                                                {{ $kolam->tambak->name }} -
-                                                {{ $kolam->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('kolam')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                                <div class="form-group">
-                                    <label for="supplier" class="mb-0 form-label col-form-label-sm">Hatchery</label>
-                                    <select class="form-control supplier select2-primary is-invalid"
-                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="supplier"
-                                        name="supplier">
-                                        <option></option>
-                                        @foreach ($suppliers as $supplier)
-                                            <option value="{{ $supplier->id }}"
-                                                {{ old('supplier') == $supplier->id ? 'selected' : '' }}>
-                                                {{ $supplier->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('col-lg-6')
+                                    <label for="size" class="mb-0 form-label col-form-label-sm">Size</label>
+                                    <input type="number" class="form-control @error('size') is-invalid @enderror"
+                                        id="size" name="size" placeholder="Masukan size"
+                                        value="{{ old('size') }}" autocomplete="off" required>
+                                    @error('size')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -160,25 +126,11 @@
                             </div>
                             <div class="col-6 col-lg-6">
                                 <div class="form-group">
-                                    <label for="tanggal" class="mb-0 form-label col-form-label-sm">Tanggal</label>
-                                    <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
-                                        id="tanggal" name="tanggal" placeholder="Pilih Tanggal"
-                                        value="{{ old('tanggal') }}" autocomplete="off" required>
-                                    @error('tanggal')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-6 col-lg-6">
-                                <div class="form-group">
-                                    <label for="total" class="mb-0 form-label col-form-label-sm">Total Tebar
-                                        (ekor)</label>
-                                    <input type="number" class="form-control @error('total') is-invalid @enderror"
-                                        id="total" name="total" placeholder="Masukan total pakan"
-                                        value="{{ old('total') }}" autocomplete="off" required>
-                                    @error('total')
+                                    <label for="harga" class="mb-0 form-label col-form-label-sm">Harga</label>
+                                    <input type="number" class="form-control @error('harga') is-invalid @enderror"
+                                        id="harga" name="harga" placeholder="Masukan harga"
+                                        value="{{ old('harga') }}" autocomplete="off" required>
+                                    @error('harga')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -194,6 +146,60 @@
             </div>
         </div>
     </div>
+
+    @foreach ($panen as $data)
+        <!-- Modal Add Data-->
+        <div class="modal fade" id="editHarga{{ $data->id }}" tabindex="-1" aria-labelledby="editHargaLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addStepModalLabel">Ubah Harga</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ route('harga.update', $data->id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="size" class="mb-0 form-label col-form-label-sm">Size</label>
+                                        <input type="number" class="form-control @error('size') is-invalid @enderror"
+                                            id="size" name="size" placeholder="Masukan size"
+                                            value="{{ $data->size }}" autocomplete="off" required>
+                                        @error('size')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="harga" class="mb-0 form-label col-form-label-sm">Harga</label>
+                                        <input type="number" class="form-control @error('harga') is-invalid @enderror"
+                                            id="harga" name="harga" placeholder="Masukan harga"
+                                            value="{{ $data->harga }}" autocomplete="off" required>
+                                        @error('harga')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary rounded-tambak">Ubah</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
 
 @push('scripts')
@@ -213,7 +219,7 @@
 
     <script type="text/javascript">
         $(function() {
-            $('#bibitTable').DataTable({
+            $('#panenTable').DataTable({
                 "paging": true,
                 'processing': true,
                 "lengthChange": true,
@@ -232,7 +238,7 @@
             });
         });
 
-        function deleteBibit(id) {
+        function deletePanen(id) {
             Swal.fire({
                 title: 'Are you sure?',
                 icon: 'warning',
@@ -258,8 +264,17 @@
         $('.kolam').select2({
             placeholder: "Pilih kolam",
         })
-        $('.supplier').select2({
-            placeholder: "Pilih hatchery (opsional)",
+
+        $(function() {
+            $('.price').inputmask({
+                alias: 'numeric',
+                prefix: 'Rp',
+                digits: 0,
+                groupSeparator: '.',
+                autoGroup: true,
+                removeMaskOnSubmit: true,
+                rightAlign: false
+            });
         })
     </script>
 @endpush
