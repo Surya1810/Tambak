@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bibit;
-use App\Models\Kolam;
+use App\Models\Barang;
+use App\Models\Kategori;
 use App\Models\Pakan;
-use App\Models\Tambak;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,8 +18,10 @@ class PakanController extends Controller
     {
         $kolams = Auth::user()->tambak->first()->kolam->where('status', true);
         $pakan = Pakan::whereIn('kolam_id', $kolams->pluck('id'))->whereMonth('created_at', Carbon::now()->month)->get();
+        $kategori = Kategori::where('name', 'Pakan')->pluck('id')->first();
+        $jenis = Barang::where('owner_id', Auth::user()->created_by)->where('kategori_id', $kategori)->get();
 
-        return view('pakan.index', compact('kolams', 'pakan'));
+        return view('pakan.index', compact('kolams', 'pakan', 'jenis'));
     }
 
     /**
@@ -40,18 +41,18 @@ class PakanController extends Controller
             'kolam' => 'bail|required',
             'tanggal' => 'bail|required',
             'waktu' => 'bail|required',
-            'jenis' => 'bail|required',
+            'pakan' => 'bail|required',
             'jumlah' => 'bail|required',
         ]);
 
         $old = session()->getOldInput();
 
-        $project = new Bibit();
+        $project = new Pakan();
         $project->kolam_id = $request->kolam;
         $project->user_id = Auth::user()->id;
         $project->tanggal = $request->tanggal;
         $project->waktu = $request->waktu;
-        $project->jenis = $request->jenis;
+        $project->jenis_id = $request->pakan;
         $project->jumlah = $request->jumlah;
         $project->catatan = $request->catatan;
         $project->save();
@@ -90,11 +91,12 @@ class PakanController extends Controller
 
         $old = session()->getOldInput();
 
-        $project = Bibit::find($id);
+        $project = Pakan::find($id);
+        $project->kolam_id = $request->kolam;
         $project->user_id = Auth::user()->id;
         $project->tanggal = $request->tanggal;
         $project->waktu = $request->waktu;
-        $project->jenis = $request->jenis;
+        $project->jenis_id = $request->pakan;
         $project->jumlah = $request->jumlah;
         $project->catatan = $request->catatan;
         $project->update();

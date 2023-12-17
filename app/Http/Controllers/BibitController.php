@@ -16,6 +16,7 @@ class BibitController extends Controller
     public function index()
     {
         $suppliers = Supplier::where('owner_id', Auth::user()->created_by)->where('status', true)->get();
+
         $kolams = Auth::user()->tambak->first()->kolam->where('status', true);
         $bibit = Bibit::whereIn('kolam_id', $kolams->pluck('id'))->whereMonth('created_at', Carbon::now()->month)->get();
 
@@ -52,7 +53,7 @@ class BibitController extends Controller
         $project->total = $request->total;
         $project->save();
 
-        return redirect()->route('bibit.index', $request->tambak_id)->with(['pesan' => 'Data tebar bibit berhasil ditambahkan', 'level-alert' => 'alert-success']);
+        return redirect()->route('bibit.index')->with(['pesan' => 'Data tebar bibit berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }
 
     /**

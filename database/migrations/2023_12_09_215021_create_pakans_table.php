@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->bigInteger('user_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('kolam_id')->constrained()->cascadeOnDelete();
-            $table->string('pakan');
+            $table->bigInteger('jenis_id')->constrained()->cascadeOnDelete();
             $table->date('tanggal');
             $table->time('waktu');
             $table->bigInteger('jumlah');

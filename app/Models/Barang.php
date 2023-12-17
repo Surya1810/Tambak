@@ -16,6 +16,18 @@ class Barang extends Model
     }
     public function supplier(): BelongsTo
     {
-        return $this->belongsTo(gudang::class, 'gudang_id');
+        return $this->belongsTo(supplier::class, 'supplier_id');
+    }
+    public function kategori(): BelongsTo
+    {
+        return $this->belongsTo(kategori::class, 'kategori_id');
+    }
+    public function satuan(): BelongsTo
+    {
+        return $this->belongsTo(satuan::class, 'satuan_id');
+    }
+    public function owner(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'owner_id');
     }
 }

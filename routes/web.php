@@ -39,11 +39,11 @@ Route::get('/', function () {
 
 // Dashboard
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
-    Route::get('/dashboard', [DashboardController::class, 'owner'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
 });
 
 Route::group(['prefix' => 'owner', 'middleware' => 'auth'], function () {
-    Route::get('/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'owner'])->name('dashboard');
 });
 
 // Admin

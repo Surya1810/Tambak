@@ -7,6 +7,8 @@ use App\Models\Tambak;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -54,6 +56,7 @@ class UserController extends Controller
             'phone' => 'bail|required|regex:/^([0-9\s\-\+\(\)]*)$/',
             'role' => 'bail|required',
             'tambak' => 'bail|required',
+            'password' => 'bail|required',
         ]);
 
         $old = session()->getOldInput();
@@ -64,7 +67,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->phone = (int)$request->phone;
         $user->created_by = Auth::user()->id;
-        $user->password = bcrypt('password');
+        $user->password = Hash::make($request->password);
         $user->assignRole($request->role);
         $user->save();
         $user->tambak()->attach($request->tambak);

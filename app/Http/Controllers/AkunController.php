@@ -14,7 +14,7 @@ class AkunController extends Controller
      */
     public function index()
     {
-        $akun = Akun::all();
+        $akun = Akun::where('owner_id', Auth::user()->created_by)->get();
 
         return view('akun.index', compact('akun'));
     }

@@ -90,6 +90,19 @@
                                         @enderror
                                     </div>
                                 </div>
+                                {{-- <div class="col-12 col-lg-4">
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                            id="password" name="password" placeholder="Masukan password karyawan"
+                                            value="{{ $password }}" autocomplete="off">
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div> --}}
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
                                         <label for="role" class="mb-0 form-label col-form-label-sm">Posisi</label>

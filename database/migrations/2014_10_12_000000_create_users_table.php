@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('avatar')->default('profile.png')->nullable();
             $table->boolean('is_active')->default(true);
             $table->string('created_by')->nullable();
-            // $table->rememberToken();
+            $table->rememberToken();
             $table->timestamp('last_login')->nullable();
             $table->softDeletes();
             $table->timestamps();

@@ -1,11 +1,11 @@
 {
-    "name": "Tambak",
-    "short_name": "Tambak",
+    "name": "Vaname",
+    "short_name": "Vaname",
     "start_url": "/",
-    "background_color": "#000000",
-    "description": "Sistem Tambak",
+    "background_color": "#0275d8",
+    "description": "Sistem Tambak Udang",
     "display": "fullscreen",
-    "theme_color": "#000000",
+    "theme_color": "#0275d8",
     "icons": [
         {
             "src": "logo.png",

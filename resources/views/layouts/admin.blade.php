@@ -50,8 +50,8 @@
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="{{ asset('assets/logo/Logo_alt.png') }}" alt="AdminLTELogo"
-                height="60" width="60">
+            <img class="animation__shake" src="{{ asset('assets/logo/Icon.png') }}" alt="AdminLTELogo" height="60"
+                width="60">
         </div>
 
         <!-- Navbar -->
@@ -184,7 +184,7 @@
                                         <p>Finance</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a href="#" class="nav-link">
                                         <i class="nav-icon fa-solid fa-magnifying-glass-chart"></i>
                                         <p>
@@ -194,25 +194,25 @@
                                     </a>
                                     <ul class="nav nav-treeview">
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link">
+                                            <a href="{{ route('panen.index') }}" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
                                                 <p>Panen</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link">
+                                            <a href="{{ route('kematian.index') }}" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
                                                 <p>Kematian Udang</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link">
+                                            <a href="{{ route('harga.index') }}" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
                                                 <p>Harga</p>
                                             </a>
                                         </li>
                                     </ul>
-                                </li>
+                                </li> --}}
                             @endif
                         @endhasrole
                         @hasrole('manager|operator')
@@ -341,6 +341,12 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ route('harga.index') }}" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-tags"></i>
+                                        <p>Harga</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="#" class="nav-link">
                                         <i class="nav-icon fa-solid fa-file-pen"></i>
                                         <p>
@@ -367,17 +373,11 @@
                                                 <p>Purchase Order</p>
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a href="{{ route('harga.index') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Harga</p>
-                                            </a>
-                                        </li>
                                     </ul>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="nav-icon fa-solid fa-file-pen"></i>
+                                        <i class="nav-icon fa-regular fa-credit-card"></i>
                                         <p>
                                             Hutang
                                             <i class="right fas fa-angle-left"></i>

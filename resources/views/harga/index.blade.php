@@ -57,9 +57,9 @@
                                         <th style="width: 20%">
                                             Harga
                                         </th>
-                                        <th style="width: 30%">
+                                        {{-- <th style="width: 30%">
                                             Periode
-                                        </th>
+                                        </th> --}}
                                         <th style="width: 10%">
                                             Action
                                         </th>
@@ -70,7 +70,7 @@
                                         <tr>
                                             <td>{{ $data->size }}</td>
                                             <td>{{ formatRupiah($data->harga) }}</td>
-                                            <td></td>
+                                            {{-- <td></td> --}}
                                             <td class="text-center">
                                                 <a class="btn btn-sm btn-warning rounded-tambak" type="button"
                                                     data-toggle="modal" data-target="#editHarga{{ $data->id }}">
@@ -127,9 +127,9 @@
                             <div class="col-6 col-lg-6">
                                 <div class="form-group">
                                     <label for="harga" class="mb-0 form-label col-form-label-sm">Harga</label>
-                                    <input type="number" class="form-control @error('harga') is-invalid @enderror"
+                                    <input type="text" class="price form-control @error('harga') is-invalid @enderror"
                                         id="harga" name="harga" placeholder="Masukan harga"
-                                        value="{{ old('harga') }}" autocomplete="off" required>
+                                        value="{{ old('harga') }}" required>
                                     @error('harga')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -179,10 +179,11 @@
                                 </div>
                                 <div class="col-6 col-lg-6">
                                     <div class="form-group">
-                                        <label for="harga" class="mb-0 form-label col-form-label-sm">Harga</label>
-                                        <input type="number" class="form-control @error('harga') is-invalid @enderror"
-                                            id="harga" name="harga" placeholder="Masukan harga"
-                                            value="{{ $data->harga }}" autocomplete="off" required>
+                                        <label for="harga" class="mb-0 form-label col-form-label-sm">Harga Beli</label>
+                                        <input type="text"
+                                            class="price form-control @error('harga') is-invalid @enderror" id="harga"
+                                            name="harga" placeholder="Masukan harga beli" value="{{ $data->harga }}"
+                                            required>
                                         @error('harga')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -216,6 +217,9 @@
     <script src="{{ asset('assets/adminLTE/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('assets/adminLTE/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/adminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
+    <script src="{{ asset('assets/adminLTE/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
+
 
     <script type="text/javascript">
         $(function() {

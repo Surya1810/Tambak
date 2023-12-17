@@ -20,4 +20,9 @@ class Pakan extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function jenis_pakan(): BelongsTo
+    {
+        return $this->belongsTo(Barang::class, 'jenis_id');
+    }
 }

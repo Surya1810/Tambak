@@ -89,7 +89,20 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6">
+                                <div class="col-12 col-lg-4">
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                            id="password" name="password" placeholder="Masukan password karyawan"
+                                            value="{{ old('password') }}" autocomplete="off">
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-4">
                                     <div class="form-group">
                                         <label for="role" class="mb-0 form-label col-form-label-sm">Posisi</label>
                                         <select class="form-control role select2-primary is-invalid"
@@ -101,14 +114,14 @@
                                             <option value="akuntan" {{ old('role') == 'akuntan' ? 'selected' : '' }}>
                                                 Akuntan</option>
                                         </select>
-                                        @error('kolam')
+                                        @error('role')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6">
+                                <div class="col-12 col-lg-4">
                                     <div class="form-group">
                                         <label for="tambak" class="mb-0 form-label col-form-label-sm">Tambak</label>
                                         <select class="form-control tambak select2-primary is-invalid"

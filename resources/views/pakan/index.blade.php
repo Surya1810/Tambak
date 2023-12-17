@@ -48,19 +48,22 @@
                             </div>
                         </div>
                         <div class="card-body table-responsive">
-                            <table id="pakanTable" class="table table-bordered text-nowrap text-center">
+                            <table id="pakanTable" class="table table-bordered text-nowrap text-center text-sm">
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width: 10%">
                                             Kolam
                                         </th>
                                         <th style="width: 20%">
+                                            Jenis Pakan
+                                        </th>
+                                        <th style="width: 20%">
                                             Tanggal
                                         </th>
-                                        <th style="width: 20%">
+                                        <th style="width: 10%">
                                             Waktu
                                         </th>
-                                        <th style="width: 20%">
+                                        <th style="width: 10%">
                                             Jumlah
                                         </th>
                                         <th style="width: 20%">
@@ -74,11 +77,18 @@
                                 <tbody>
                                     @foreach ($pakan as $data)
                                         <tr>
-                                            <td>{{ $data->kolam()->name }}</td>
+                                            <td>{{ $data->kolam->name }}</td>
+                                            <td>{{ $data->jenis_pakan->name }}</td>
                                             <td>{{ $data->tanggal }}</td>
                                             <td>{{ $data->waktu }}</td>
-                                            <td>{{ $data->jenis }}</td>
                                             <td>{{ $data->jumlah }} Kg</td>
+                                            <td>
+                                                @if ($data->catatan == null)
+                                                    -
+                                                @else
+                                                    {{ $data->catatan }} Kg
+                                                @endif
+                                            </td>
                                             <td class="text-center">
                                                 {{-- <a class="btn btn-sm btn-warning rounded-tambak"
                                                     href="{{ route('pakan.edit', $data->id) }}">
@@ -155,29 +165,29 @@
                             </div>
                             <div class="col-6 col-lg-6">
                                 <div class="form-group">
-                                    <label for="Waktu" class="mb-0 form-label col-form-label-sm">Waktu</label>
-                                    <input type="time" class="form-control @error('Waktu') is-invalid @enderror"
-                                        id="Waktu" name="Waktu" placeholder="Masukan alamat tambak"
-                                        value="{{ old('Waktu') }}" autocomplete="off" required>
-                                    @error('Waktu')
+                                    <label for="waktu" class="mb-0 form-label col-form-label-sm">Waktu</label>
+                                    <input type="time" class="form-control @error('waktu') is-invalid @enderror"
+                                        id="waktu" name="waktu" placeholder="Masukan alamat tambak"
+                                        value="{{ old('waktu') }}" autocomplete="off" required>
+                                    @error('waktu')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-8 col-lg-8">
+                            <div class="col-6 col-lg-6">
                                 <div class="form-group">
                                     <label for="pakan" class="mb-0 form-label col-form-label-sm">Jenis Pakan</label>
                                     <select class="form-control pakan select2-primary is-invalid"
                                         data-dropdown-css-class="select2-primary" style="width: 100%;" id="pakan"
                                         name="pakan">
                                         <option></option>
-                                        {{-- @foreach ($kolams as $kolam)
-                                                <option value="{{ $kolam->name }}"
-                                                    {{ old('kolam') == $kolam->name ? 'selected' : '' }}>
-                                                    {{ $kolam->name }}</option>
-                                            @endforeach --}}
+                                        @foreach ($jenis as $jenis_pakan)
+                                            <option value="{{ $jenis_pakan->id }}"
+                                                {{ old('pakan') == $jenis_pakan->id ? 'selected' : '' }}>
+                                                {{ $jenis_pakan->name }}</option>
+                                        @endforeach
                                     </select>
                                     @error('pakan')
                                         <span class="invalid-feedback" role="alert">
@@ -186,7 +196,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-4 col-lg-4">
+                            <div class="col-6 col-lg-6">
                                 <div class="form-group">
                                     <label for="jumlah" class="mb-0 form-label col-form-label-sm">Jumlah (kg)</label>
                                     <input type="number" class="form-control @error('jumlah') is-invalid @enderror"

@@ -13,16 +13,6 @@ class Tambak extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public function operator(): HasMany
-    {
-        return $this->hasMany(User::class);
-    }
-
-    // public function owner(): BelongsTo
-    // {
-    //     return $this->belongsTo(User::class, 'user_id');
-    // }
-
     public function owner(): BelongsToMany
     {
         return $this->belongsToMany(User::class);

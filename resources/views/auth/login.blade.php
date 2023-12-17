@@ -16,14 +16,13 @@
                         <div class="card-body">
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
-
                                 <div class="my-3">
-                                    <label for="email"
-                                        class="form-label col-form-label-sm m-0">{{ __('Email') }}</label>
-                                    <input id="email" type="email"
-                                        class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="{{ old('email') }}" required autocomplete="email" autofocus>
-                                    @error('email')
+                                    <label for="username"
+                                        class="form-label col-form-label-sm m-0">{{ __('Username') }}</label>
+                                    <input id="username" type="text"
+                                        class="form-control @error('username') is-invalid @enderror" name="username"
+                                        value="{{ old('username') }}" required autocomplete="username" autofocus>
+                                    @error('username')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -44,9 +43,23 @@
                                     @enderror
                                 </div>
 
-                                <button type="submit" class="btn btn-light mt-3 px-3 float-end">
-                                    {{ __('LOG IN') }}
-                                </button>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="remember" id="remember"
+                                                {{ old('remember') ? 'checked' : '' }}>
+
+                                            <label class="form-check-label" for="remember">
+                                                {{ __('Remember Me') }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button type="submit" class="btn btn-light float-end">
+                                            {{ __('Login') }}
+                                        </button>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>

@@ -71,7 +71,7 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="col-4">
+                                                <div class="col-6">
                                                     <div class="form-group">
                                                         <label for="dalam"
                                                             class="mb-0 form-label col-form-label-sm">Kedalaman</label>
@@ -90,7 +90,7 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="col-4">
+                                                <div class="col-6">
                                                     <div class="form-group">
                                                         <label for="panjang"
                                                             class="mb-0 form-label col-form-label-sm">Panjang</label>
@@ -109,7 +109,7 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="col-4">
+                                                <div class="col-6">
                                                     <div class="form-group">
                                                         <label for="lebar"
                                                             class="mb-0 form-label col-form-label-sm">Lebar</label>
@@ -128,7 +128,7 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="col-12">
+                                                <div class="col-6">
                                                     <div class="form-group">
                                                         <label for="anco"
                                                             class="mb-0 form-label col-form-label-sm">Jumlah Anco</label>
@@ -170,7 +170,7 @@
                             </div>
                         @else
                             @foreach ($data->kolam->where('status', true) as $kolam)
-                                <div class="col-6 col-md-3 my-2">
+                                <div class="col-12 col-md-3 my-2">
                                     <div class="card card-outline rounded-tambak card-primary h-100">
                                         <div class="card-header">
                                             <div class="row align-items-center">
@@ -338,7 +338,7 @@
                                                                 @enderror
                                                             </div>
                                                         </div>
-                                                        <div class="col-4">
+                                                        <div class="col-6">
                                                             <div class="form-group">
                                                                 <label for="dalam"
                                                                     class="mb-0 form-label col-form-label-sm">Kedalaman</label>
@@ -358,7 +358,7 @@
                                                                 @enderror
                                                             </div>
                                                         </div>
-                                                        <div class="col-4">
+                                                        <div class="col-6">
                                                             <div class="form-group">
                                                                 <label for="panjang"
                                                                     class="mb-0 form-label col-form-label-sm">Panjang</label>
@@ -378,7 +378,7 @@
                                                                 @enderror
                                                             </div>
                                                         </div>
-                                                        <div class="col-4">
+                                                        <div class="col-6">
                                                             <div class="form-group">
                                                                 <label for="lebar"
                                                                     class="mb-0 form-label col-form-label-sm">Lebar</label>
@@ -398,7 +398,7 @@
                                                                 @enderror
                                                             </div>
                                                         </div>
-                                                        <div class="col-12">
+                                                        <div class="col-6">
                                                             <div class="form-group">
                                                                 <label for="anco"
                                                                     class="mb-0 form-label col-form-label-sm">Jumlah
@@ -428,7 +428,7 @@
                                     </div>
                                 </div>
                             @endforeach
-                            <div class="col-6 col-md-3 my-2">
+                            <div class="col-12 col-md-3 my-2">
                                 <div class="card card-outline rounded-tambak card-primary h-100">
                                     <button type="button" data-toggle="modal"
                                         data-target="#addKolam{{ $data->id }}" class="btn w-100 h-100 text-primary">
