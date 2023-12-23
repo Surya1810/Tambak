@@ -100,15 +100,15 @@
                 <nav class="mt-3">
                     <ul class="nav nav-pills nav-sidebar flex-column nav-legacy nav-child-indent nav-collapse-hide-child"
                         data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard') }}" class="nav-link">
+                                <i class="nav-icon fa-solid fa-chart-simple"></i>
+                                <p>
+                                    Dashboard
+                                </p>
+                            </a>
+                        </li>
                         @hasanyrole('super admin|admin')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.dashboard') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                                    <p>
-                                        Dashboard
-                                    </p>
-                                </a>
-                            </li>
                             <li class="nav-header mt-3">
                                 Administrasi
                             </li>
@@ -153,14 +153,6 @@
                             </li>
                         @endhasanyrole
                         @hasrole('owner')
-                            <li class="nav-item">
-                                <a href="{{ route('dashboard') }}" class="nav-link">
-                                    <i class="nav-icon fa-solid fa-chart-simple"></i>
-                                    <p>
-                                        Dashboard
-                                    </p>
-                                </a>
-                            </li>
                             @if (auth()->user()->tambak->count() != null)
                                 {{-- <li class="nav-header mt-3">
                                     Data
@@ -216,14 +208,6 @@
                             @endif
                         @endhasrole
                         @hasrole('manager|operator')
-                            <li class="nav-item">
-                                <a href="{{ route('dashboard') }}" class="nav-link">
-                                    <i class="nav-icon fa-solid fa-chart-simple"></i>
-                                    <p>
-                                        Dashboard
-                                    </p>
-                                </a>
-                            </li>
                             @if (auth()->user()->tambak->count() != null)
                                 <li class="nav-header mt-3">
                                     Operasional

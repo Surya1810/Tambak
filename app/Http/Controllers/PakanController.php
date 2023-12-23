@@ -19,7 +19,7 @@ class PakanController extends Controller
         $kolams = Auth::user()->tambak->first()->kolam->where('status', true);
         $pakan = Pakan::whereIn('kolam_id', $kolams->pluck('id'))->whereMonth('created_at', Carbon::now()->month)->get();
         $kategori = Kategori::where('name', 'Pakan')->pluck('id')->first();
-        $jenis = Barang::where('owner_id', Auth::user()->created_by)->where('kategori_id', $kategori)->get();
+        $jenis = Barang::where('tambak_id', Auth::user()->tambak->first()->id)->where('kategori_id', $kategori)->get();
 
         return view('pakan.index', compact('kolams', 'pakan', 'jenis'));
     }

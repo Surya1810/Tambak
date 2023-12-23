@@ -38,7 +38,7 @@
                         @method('PUT')
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12 col-lg-4">
+                                <div class="col-12 col-lg-6">
                                     <div class="form-group">
                                         <label for="name">Nama Tambak</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
@@ -51,7 +51,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-4">
+                                <div class="col-12 col-lg-6">
                                     <div class="form-group">
                                         <label for="address">Alamat Tambak</label>
                                         <input type="text" class="form-control @error('address') is-invalid @enderror"
@@ -64,7 +64,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-4">
+                                {{-- <div class="col-12 col-lg-4">
                                     <div class="form-group">
                                         <label for="owner">Owner</label>
                                         <div class="select2-primary">
@@ -74,7 +74,11 @@
                                                 @foreach ($users as $user)
                                                     <option
                                                         @foreach ($tambak->owner as $team)
-                                                    {{ $team->id == $user->id ? 'selected' : '' }} @endforeach
+                                                        @if ($team->getRoleNames()->first() == 'operator')
+                                                        {{ $team->id == $user->id ? 'selected' : '' }}
+                                                        @else
+                                                        {{ $team->id == $user->id ? 'selected' : '' }}
+                                                    @endif @endforeach
                                                         value="{{ $user->id }}">{{ $user->username }}</option>
                                                 @endforeach
                                             </select>
@@ -85,7 +89,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="card-footer">

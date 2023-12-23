@@ -14,7 +14,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customer = Customer::where('owner_id', Auth::user()->created_by)->where('status', '=', true)->get();
+        $customer = Customer::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', '=', true)->get();
 
         return view('customer.index', compact('customer'));
     }
@@ -43,11 +43,11 @@ class CustomerController extends Controller
         $old = session()->getOldInput();
 
         $project = new Customer();
-        $project->owner_id = Auth::user()->created_by;
+        $project->tambak_id = Auth::user()->tambak->first()->id;
         $project->code = 'GD-' . Str::random(5);
         $project->name = $request->name;
         $project->address = $request->address;
-        $project->phone = (int)$request->phone;
+        $project->phone = $request->phone;
         $project->contact = $request->contact;
         $project->tempo = $request->tempo;
         $project->save();
@@ -90,7 +90,7 @@ class CustomerController extends Controller
         $project = Customer::find($id);
         $project->name = $request->name;
         $project->address = $request->address;
-        $project->phone = (int)$request->phone;
+        $project->phone = $request->phone;
         $project->contact = $request->contact;
         $project->tempo = $request->tempo;
         $project->update();

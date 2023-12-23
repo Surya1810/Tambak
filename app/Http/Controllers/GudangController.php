@@ -15,7 +15,8 @@ class GudangController extends Controller
      */
     public function index()
     {
-        $gudang = Gudang::where('owner_id', Auth::user()->created_by)->where('status', '=', true)->get();
+        $tambak = Auth::user()->tambak->first()->id;
+        $gudang = Gudang::where('tambak_id', $tambak)->where('status', '=', true)->get();
 
         return view('gudang.index', compact('gudang'));
     }
@@ -44,7 +45,7 @@ class GudangController extends Controller
         $project->name = $request->name;
         $project->code = 'GD-' . Str::random(5);
         $project->desc = $request->desc;
-        $project->owner_id = Auth::user()->created_by;
+        $project->tambak_id = Auth::user()->tambak->first()->id;
         $project->save();
 
         return redirect()->route('gudang.index')->with(['pesan' => 'Gudang berhasil ditambahkan', 'level-alert' => 'alert-success']);

@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('hargas', function (Blueprint $table) {
             $table->increments('id');
+            $table->bigInteger('tambak_id')->constrained()->cascadeOnDelete();
+            $table->bigInteger('supplier_id')->constrained()->cascadeOnDelete();
             $table->integer('size');
             $table->bigInteger('harga');
-            $table->bigInteger('owner_id')->constrained()->cascadeOnDelete();
+            $table->date('mulai');
+            $table->date('selesai');
             $table->timestamps();
         });
     }

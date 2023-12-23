@@ -25,4 +25,8 @@ class Pakan extends Model
     {
         return $this->belongsTo(Barang::class, 'jenis_id');
     }
+
+    protected $casts = [
+        'waktu' => 'datetime'
+    ];
 }

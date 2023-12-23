@@ -14,7 +14,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $supplier = Supplier::where('owner_id', Auth::user()->created_by)->where('status', '=', true)->get();
+        $supplier = Supplier::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', '=', true)->get();
 
         return view('supplier.index', compact('supplier'));
     }
@@ -43,11 +43,11 @@ class SupplierController extends Controller
         $old = session()->getOldInput();
 
         $project = new Supplier();
-        $project->owner_id = Auth::user()->created_by;
+        $project->tambak_id = Auth::user()->tambak->first()->id;
         $project->code = 'GD-' . Str::random(5);
         $project->name = $request->name;
         $project->address = $request->address;
-        $project->phone = (int)$request->phone;
+        $project->phone = $request->phone;
         $project->contact = $request->contact;
         $project->tempo = $request->tempo;
         $project->save();
@@ -90,7 +90,7 @@ class SupplierController extends Controller
         $project = Supplier::find($id);
         $project->name = $request->name;
         $project->address = $request->address;
-        $project->phone = (int)$request->phone;
+        $project->phone = $request->phone;
         $project->contact = $request->contact;
         $project->tempo = $request->tempo;
         $project->update();

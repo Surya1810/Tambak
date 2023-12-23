@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('owner_id')->constrained()->cascadeOnDelete();
+            $table->bigInteger('tambak_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('code');
             $table->text('address');

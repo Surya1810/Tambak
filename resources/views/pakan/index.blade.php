@@ -80,7 +80,7 @@
                                             <td>{{ $data->kolam->name }}</td>
                                             <td>{{ $data->jenis_pakan->name }}</td>
                                             <td>{{ $data->tanggal }}</td>
-                                            <td>{{ $data->waktu }}</td>
+                                            <td>{{ $data->waktu->format('H:i') }}</td>
                                             <td>{{ $data->jumlah }} Kg</td>
                                             <td>
                                                 @if ($data->catatan == null)

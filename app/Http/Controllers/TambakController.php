@@ -72,7 +72,9 @@ class TambakController extends Controller
     public function edit($id)
     {
         $tambak = Tambak::find($id);
-        $users = User::role('owner')->get();
+        // $users = User::role('owner')->get();
+        $users = User::all();
+
         return view('tambak.edit', compact('users', 'tambak'));
     }
 
@@ -84,16 +86,14 @@ class TambakController extends Controller
         $request->validate([
             'name' => 'bail|required',
             'address' => 'bail|required',
-            'owner' => 'bail|required',
+            // 'owner' => 'bail|required',
         ]);
 
         $project = Tambak::find($id);
         $project->name = $request->name;
         $project->address = $request->address;
-        // $project->user_id = $request->owner;
         $project->update();
-        $project->owner()->sync($request->owner);
-
+        // $project->owner()->sync($request->owner);
 
         return redirect()->route('tambak.admin')->with(['pesan' => 'Tambak berhasil diubah', 'level-alert' => 'alert-warning']);
     }

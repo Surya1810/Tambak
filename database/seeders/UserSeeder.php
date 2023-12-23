@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             'username' => 'Admin',
             'email' => 'Admin@example.com',
             'phone' => '89512776878',
-            'password' => bcrypt('password')
+            'password' => bcrypt('123')
         ]);
         $admin->assignRole('admin');
 
@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
             'username' => 'Owner',
             'email' => 'Owner@example.com',
             'phone' => '89512776878',
-            'password' => bcrypt('password')
+            'password' => bcrypt('123')
         ]);
         $owner->assignRole('owner');
 
@@ -45,18 +45,8 @@ class UserSeeder extends Seeder
             'username' => 'Owner2',
             'email' => 'Owner2@example.com',
             'phone' => '89512776878',
-            'password' => bcrypt('password')
+            'password' => bcrypt('123')
         ]);
         $owner2->assignRole('owner');
-
-        // $operator = User::create([
-        //     'name' => 'Operator',
-        //     'username' => 'Operator',
-        //     'email' => 'Operator@example.com',
-        //     'phone' => '89512776878',
-        //     'phone' => '89512776878',
-        //     'password' => bcrypt('password')
-        // ]);
-        // $operator->assignRole('operator');
     }
 }

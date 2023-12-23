@@ -17,12 +17,12 @@ class BarangController extends Controller
      */
     public function index()
     {
-        $barang = Barang::where('owner_id', Auth::user()->created_by)->get();
+        $barang = Barang::where('tambak_id', Auth::user()->tambak->first()->id)->get();
 
         $categories = Kategori::all();
         $satuans = Satuan::all();
-        $suppliers = Supplier::where('owner_id', Auth::user()->created_by)->where('status', true)->get();
-        $gudangs = Gudang::where('owner_id', Auth::user()->created_by)->where('status', true)->get();
+        $suppliers = Supplier::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', true)->get();
+        $gudangs = Gudang::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', true)->get();
 
         return view('barang.index', compact('barang', 'satuans', 'categories', 'suppliers', 'gudangs'));
     }
@@ -51,7 +51,7 @@ class BarangController extends Controller
 
         $project = new Barang();
         $project->name = $request->name;
-        $project->owner_id = Auth::user()->created_by;
+        $project->tambak_id = Auth::user()->tambak->first()->id;
         $project->gudang_id = $request->gudang;
         $project->kategori_id = $request->kategori;
         $project->satuan_id = $request->satuan;

@@ -15,7 +15,7 @@ class BibitController extends Controller
      */
     public function index()
     {
-        $suppliers = Supplier::where('owner_id', Auth::user()->created_by)->where('status', true)->get();
+        $suppliers = Supplier::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', true)->get();
 
         $kolams = Auth::user()->tambak->first()->kolam->where('status', true);
         $bibit = Bibit::whereIn('kolam_id', $kolams->pluck('id'))->whereMonth('created_at', Carbon::now()->month)->get();

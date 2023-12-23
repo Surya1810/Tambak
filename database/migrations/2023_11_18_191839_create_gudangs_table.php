@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('gudangs', function (Blueprint $table) {
             $table->increments('id');
+            $table->bigInteger('tambak_id')->constrained()->cascadeOnDelete();
             $table->string('code');
             $table->string('name');
             $table->text('desc');
-            $table->bigInteger('owner_id')->constrained()->cascadeOnDelete();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

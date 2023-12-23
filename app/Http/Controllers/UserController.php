@@ -65,7 +65,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->username = $request->username;
         $user->email = $request->email;
-        $user->phone = (int)$request->phone;
+        $user->phone = $request->phone;
         $user->created_by = Auth::user()->id;
         $user->password = Hash::make($request->password);
         $user->assignRole($request->role);
@@ -90,7 +90,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->username = $request->username;
         $user->email = $request->email;
-        $user->phone = (int)$request->phone;
+        $user->phone = $request->phone;
         $user->created_by = Auth::user()->id;
         $user->password = bcrypt('password');
         $user->assignRole('owner');
@@ -146,7 +146,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->username = $request->username;
         $user->email = $request->email;
-        $user->phone = (int)$request->phone;
+        $user->phone = $request->phone;
         $user->syncRoles($request->role);
         $user->update();
         $user->tambak()->sync($request->tambak);
@@ -166,7 +166,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->username = $request->username;
         $user->email = $request->email;
-        $user->phone = (int)$request->phone;
+        $user->phone = $request->phone;
         $user->update();
 
         return redirect()->route('owner.index')->with(['pesan' => 'Owner berhasil diubah', 'level-alert' => 'alert-warning']);
