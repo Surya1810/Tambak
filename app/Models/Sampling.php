@@ -20,4 +20,8 @@ class Sampling extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    protected $casts = [
+        'tanggal' => 'datetime'
+    ];
 }

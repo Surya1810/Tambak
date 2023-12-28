@@ -61,7 +61,7 @@ class PanenController extends Controller
         $project->jenis_panen = $request->jenis_panen;
 
         //Menghitung Harga dan Total
-        $dataHargaUdang = Harga::where('owner_id', Auth::user()->created_by)->pluck('harga', 'size');
+        $dataHargaUdang = Harga::where('tambak_id', Auth::user()->created_by)->pluck('harga', 'size');
         $ukuranYangDicari = $request->size;
 
         if ($dataHargaUdang->has($ukuranYangDicari)) {

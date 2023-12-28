@@ -78,7 +78,7 @@
                                     @foreach ($kematian as $data)
                                         <tr>
                                             <td>{{ $data->kolam->tambak->name }} - {{ $data->kolam->name }}</td>
-                                            <td>{{ $data->tanggal }}</td>
+                                            <td>{{ $data->tanggal->isoFormat('DD-MM-YYYY') }}</td>
                                             <td>{{ $data->umur }}</td>
                                             <td>{{ $data->total }} Kg</td>
                                             <td>{{ $data->size }} ekor/Kg</td>

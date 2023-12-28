@@ -79,7 +79,7 @@
                                         <tr>
                                             <td>{{ $data->kolam->name }}</td>
                                             <td>{{ $data->jenis_pakan->name }}</td>
-                                            <td>{{ $data->tanggal }}</td>
+                                            <td>{{ $data->tanggal->isoFormat('DD-MM-YYYY') }}</td>
                                             <td>{{ $data->waktu->format('H:i') }}</td>
                                             <td>{{ $data->jumlah }} Kg</td>
                                             <td>

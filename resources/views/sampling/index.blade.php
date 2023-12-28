@@ -72,7 +72,7 @@
                                     @foreach ($sampling as $data)
                                         <tr>
                                             <td>{{ $data->kolam->tambak->name }} - {{ $data->kolam->name }}</td>
-                                            <td>{{ $data->tanggal }}</td>
+                                            <td>{{ $data->tanggal->isoFormat('DD-MM-YYYY') }}</td>
                                             <td>{{ $data->mbw }} Gr</td>
                                             <td>
                                                 @if ($data->catatan == null)
