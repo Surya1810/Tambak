@@ -84,7 +84,7 @@
                                             <td>{{ $data->kolam->tambak->name }} - {{ $data->kolam->name }}</td>
                                             <td>{{ $data->jenis_panen }}</td>
                                             <td>{{ $data->size }}</td>
-                                            <td>{{ $data->volume }} {{ $data->satuan->name }}</td>
+                                            <td>{{ $data->volume }} Kg</td>
                                             <td>{{ formatRupiah($data->harga) }}</td>
                                             <td>{{ formatRupiah($data->total) }}</td>
                                             <td class="text-center">

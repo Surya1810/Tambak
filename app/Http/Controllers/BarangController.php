@@ -85,22 +85,22 @@ class BarangController extends Controller
     {
         $request->validate([
             'name' => 'bail|required',
-            'gudang2' => 'bail|required',
-            'kategori2' => 'bail|required',
+            'gudang' => 'bail|required',
+            'kategori' => 'bail|required',
             'harga' => 'bail|required',
-            'satuan2' => 'bail|required',
+            'satuan' => 'bail|required',
         ]);
 
         $old = session()->getOldInput();
 
         $project = Barang::find($id);
         $project->name = $request->name;
-        $project->gudang_id = $request->gudang2;
-        $project->kategori_id = $request->kategori2;
-        $project->satuan_id = $request->satuan2;
+        $project->gudang_id = $request->gudang;
+        $project->kategori_id = $request->kategori;
+        $project->satuan_id = $request->satuan;
         $project->harga = $request->harga;
         // If supplier dipilih
-        $project->supplier_id = $request->supplier2;
+        $project->supplier_id = $request->supplier;
         $project->update();
 
         return redirect()->route('barang.index')->with(['pesan' => 'Barang berhasil diubah', 'level-alert' => 'alert-warning']);

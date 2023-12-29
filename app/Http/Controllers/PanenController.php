@@ -6,6 +6,7 @@ use App\Models\Harga;
 use App\Models\Kolam;
 use App\Models\Panen;
 use App\Models\Satuan;
+use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,9 +31,10 @@ class PanenController extends Controller
     public function create()
     {
         $kolams = Auth::user()->tambak->first()->kolam->where('status', true);
-        $satuans = Satuan::all();
+        $suppliers = Supplier::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', true)->get();
+        // $satuans = Satuan::all();
 
-        return view('panen.create', compact('kolams', 'satuans'));
+        return view('panen.create', compact('kolams', 'suppliers'));
     }
 
     /**
@@ -42,7 +44,8 @@ class PanenController extends Controller
     {
         $request->validate([
             'kolam' => 'bail|required',
-            'satuan' => 'bail|required',
+            'supplier' => 'bail|required',
+            // 'satuan' => 'bail|required',
             'grade' => 'bail|required',
             'jenis_panen' => 'bail|required',
             'size' => 'bail|required',
@@ -55,13 +58,15 @@ class PanenController extends Controller
         $project->owner_id = Auth::user()->created_by;
         $project->user_id = Auth::user()->id;
         $project->kolam_id = $request->kolam;
-        $project->satuan_id = $request->satuan;
         $project->grade = $request->grade;
         $project->size = $request->size;
         $project->jenis_panen = $request->jenis_panen;
+        $project->supplier_id = $request->supplier;
+
+        // $project->satuan_id = $request->satuan;
 
         //Menghitung Harga dan Total
-        $dataHargaUdang = Harga::where('tambak_id', Auth::user()->created_by)->pluck('harga', 'size');
+        $dataHargaUdang = Harga::where('tambak_id', Auth::user()->tambak->first()->id)->where('supplier_id', $request->supplier)->pluck('harga', 'size');
         $ukuranYangDicari = $request->size;
 
         if ($dataHargaUdang->has($ukuranYangDicari)) {
@@ -87,7 +92,7 @@ class PanenController extends Controller
                 $hargaUdang = (($ukuranYangDicari - $ukuranTerdekatSebelumnya) * ($hargaTerdekatSelanjutnya - $hargaTerdekatSebelumnya) / ($ukuranTerdekatSelanjutnya - $ukuranTerdekatSebelumnya)) + $hargaTerdekatSebelumnya;
             } else {
                 $old = session()->getOldInput();
-                return back()->with(['pesan' => 'Data ukuran dan harga tidak sesuai', 'level-alert' => 'alert-danger'])->withInput();
+                return back()->with(['pesan' => 'Data ukuran atau harga tidak sesuai', 'level-alert' => 'alert-danger'])->withInput();
             }
         }
 

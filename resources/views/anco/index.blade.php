@@ -72,7 +72,7 @@
                                     @foreach ($anco as $data)
                                         <tr>
                                             <td>{{ $data->kolam->tambak->name }} - {{ $data->kolam->name }}</td>
-                                            <td>{{ $data->tanggal->isoFormat('DD-MM-YYYY') }}</td>
+                                            <td>{{ $data->tanggal->format('d/m/Y') }}</td>
                                             <td>{{ $data->total }} ekor</td>
                                             <td>
                                                 @if ($data->supplier_id == null)
@@ -160,8 +160,10 @@
                                         <option></option>
                                         @foreach ($pakans as $pakan)
                                             <option value="{{ $pakan->id }}"
-                                                {{ old('pakan') == $pakan->id ? 'selected' : '' }}>{{ $pakan->waktu }}
-                                                ({{ $pakan->jumlah }} kg)
+                                                {{ old('pakan') == $pakan->id ? 'selected' : '' }}>
+                                                {{ $pakan->waktu->format('d/m/Y') }} - {{ $pakan->jumlah }}
+                                                Kg
+
                                             </option>
                                         @endforeach
                                     </select>

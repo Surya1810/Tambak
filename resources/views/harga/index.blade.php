@@ -77,8 +77,8 @@
                                             <td>{{ $data->size }}</td>
                                             <td>{{ formatRupiah($data->harga) }}</td>
                                             <td>{{ $data->supplier->name }}</td>
-                                            <td>{{ $data->mulai->isoFormat('DD-MM-YYYY') }} </td>
-                                            <td>{{ $data->selesai->isoFormat('DD-MM-YYYY') }}</td>
+                                            <td>{{ $data->mulai->format('d/m/Y') }} </td>
+                                            <td>{{ $data->selesai->format('d/m/Y') }}</td>
                                             <td class="text-center">
                                                 <a class="btn btn-sm btn-warning rounded-tambak" type="button"
                                                     data-toggle="modal" data-target="#editHarga{{ $data->id }}">
@@ -248,10 +248,11 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="supplier2" class="mb-0 form-label col-form-label-sm">Supplier</label>
-                                        <select class="form-control supplier2 select2-primary is-invalid"
-                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="supplier2"
-                                            name="supplier2">
+                                        <label for="supplier{{ $data->id }}"
+                                            class="mb-0 form-label col-form-label-sm">Supplier</label>
+                                        <select class="form-control supplier{{ $data->id }} select2-primary"
+                                            data-dropdown-css-class="select2-primary" style="width: 100%;"
+                                            id="supplier{{ $data->id }}" name="supplier">
                                             <option></option>
                                             @foreach ($suppliers as $supplier)
                                                 <option value="{{ $supplier->id }}"
@@ -259,7 +260,7 @@
                                                     {{ $supplier->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('supplier2')
+                                        @error('supplier')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -270,7 +271,8 @@
                                     <div class="form-group">
                                         <label for="mulai" class="mb-0 form-label col-form-label-sm">Mulai</label>
                                         <input type="date" class="form-control @error('mulai') is-invalid @enderror"
-                                            id="mulai" name="mulai" value="{{ $data->mulai }}"
+                                            id="mulai" name="mulai"
+                                            value="{{ \Carbon\Carbon::parse($data->mulai)->format('Y-m-d') }}"
                                             autocomplete="off" required>
                                         @error('mulai')
                                             <span class="invalid-feedback" role="alert">
@@ -283,7 +285,8 @@
                                     <div class="form-group">
                                         <label for="mulai" class="mb-0 form-label col-form-label-sm">Selesai</label>
                                         <input type="date" class="form-control @error('selesai') is-invalid @enderror"
-                                            id="selesai" name="selesai" value="{{ $data->selesai }}"
+                                            id="selesai" name="selesai"
+                                            value="{{ \Carbon\Carbon::parse($data->selesai)->format('Y-m-d') }}"
                                             autocomplete="off" required>
                                         @error('selesai')
                                             <span class="invalid-feedback" role="alert">
@@ -366,9 +369,14 @@
             })
         }
 
-        $('.kolam').select2({
-            placeholder: "Pilih kolam",
+        $('.supplier').select2({
+            placeholder: "Pilih supplier",
         })
+        @foreach ($harga as $data)
+            $('.supplier{{ $data->id }}').select2({
+                placeholder: "Pilih supplier",
+            })
+        @endforeach
 
         $(function() {
             $('.price').inputmask({
@@ -380,12 +388,6 @@
                 removeMaskOnSubmit: true,
                 rightAlign: false
             });
-        })
-        $('.supplier').select2({
-            placeholder: "Pilih supplier",
-        })
-        $('.supplier2').select2({
-            placeholder: "Pilih supplier",
         })
     </script>
 @endpush

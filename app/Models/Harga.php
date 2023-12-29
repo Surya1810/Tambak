@@ -16,7 +16,7 @@ class Harga extends Model
     }
 
     protected $casts = [
-        'mulai' => 'datetime:Y-m-d',
-        'selesai' => 'datetime:Y-m-d'
+        'mulai' => 'datetime:d/m/Y',
+        'selesai' => 'datetime:d/m/Y'
     ];
 }

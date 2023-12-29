@@ -79,7 +79,7 @@
                                         <tr>
                                             <td>{{ $data->kolam->name }}</td>
                                             <td>{{ $data->jenis_pakan->name }}</td>
-                                            <td>{{ $data->tanggal->isoFormat('DD-MM-YYYY') }}</td>
+                                            <td>{{ $data->tanggal->format('d/m/Y') }}</td>
                                             <td>{{ $data->waktu->format('H:i') }}</td>
                                             <td>{{ $data->jumlah }} Kg</td>
                                             <td>
@@ -136,11 +136,11 @@
                                         data-dropdown-css-class="select2-primary" style="width: 100%;" id="kolam"
                                         name="kolam" required>
                                         <option></option>
-                                        @foreach ($kolams as $kolam)
-                                            <option value="{{ $kolam->id }}"
-                                                {{ old('kolam') == $kolam->id ? 'selected' : '' }}>
-                                                {{ $kolam->tambak->name }} -
-                                                {{ $kolam->name }}</option>
+                                        @foreach ($bibit as $kolam)
+                                            <option value="{{ $kolam->kolam->id }}"
+                                                {{ old('kolam') == $kolam->kolam->id ? 'selected' : '' }}>
+                                                {{ $kolam->kolam->tambak->name }} -
+                                                {{ $kolam->kolam->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('kolam')

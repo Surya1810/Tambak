@@ -273,10 +273,11 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="gudang2" class="mb-0 form-label col-form-label-sm">Gudang</label>
-                                        <select class="form-control gudang2 select2-primary is-invalid"
-                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="gudang2"
-                                            name="gudang2" required>
+                                        <label for="gudang{{ $data->id }}"
+                                            class="mb-0 form-label col-form-label-sm">Gudang</label>
+                                        <select class="form-control gudang{{ $data->id }} select2-primary is-invalid"
+                                            data-dropdown-css-class="select2-primary" style="width: 100%;"
+                                            id="gudang{{ $data->id }}" name="gudang" required>
                                             <option></option>
                                             @foreach ($gudangs as $gudang)
                                                 <option value="{{ $gudang->id }}"
@@ -284,7 +285,7 @@
                                                     {{ $gudang->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('gudang2')
+                                        @error('gudang')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -293,10 +294,12 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="kategori2" class="mb-0 form-label col-form-label-sm">Kategori</label>
-                                        <select class="form-control kategori2 select2-primary is-invalid"
-                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="kategori2"
-                                            name="kategori2" required>
+                                        <label for="kategori{{ $data->id }}"
+                                            class="mb-0 form-label col-form-label-sm">Kategori</label>
+                                        <select
+                                            class="form-control kategori{{ $data->id }} select2-primary is-invalid"
+                                            data-dropdown-css-class="select2-primary" style="width: 100%;"
+                                            id="kategori{{ $data->id }}" name="kategori" required>
                                             <option></option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}"
@@ -304,7 +307,7 @@
                                                     {{ $category->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('kategori2')
+                                        @error('kategori')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -313,11 +316,13 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="supplier2" class="mb-0 form-label col-form-label-sm">Supplier
+                                        <label for="supplier{{ $data->id }}"
+                                            class="mb-0 form-label col-form-label-sm">Supplier
                                             Utama</label>
-                                        <select class="form-control supplier2 select2-primary is-invalid"
-                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="supplier2"
-                                            name="supplier2">
+                                        <select
+                                            class="form-control supplier{{ $data->id }} select2-primary is-invalid"
+                                            data-dropdown-css-class="select2-primary" style="width: 100%;"
+                                            id="supplier{{ $data->id }}" name="supplier">
                                             <option></option>
                                             @foreach ($suppliers as $supplier)
                                                 <option value="{{ $supplier->id }}"
@@ -325,7 +330,7 @@
                                                     {{ $supplier->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('supplier2')
+                                        @error('supplier')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -348,10 +353,11 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="satuan2" class="mb-0 form-label col-form-label-sm">Satuan</label>
-                                        <select class="form-control satuan2 select2-primary is-invalid"
-                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="satuan2"
-                                            name="satuan2" required>
+                                        <label for="satuan{{ $data->id }}"
+                                            class="mb-0 form-label col-form-label-sm">Satuan</label>
+                                        <select class="form-control satuan{{ $data->id }} select2-primary is-invalid"
+                                            data-dropdown-css-class="select2-primary" style="width: 100%;"
+                                            id="satuan{{ $data->id }}" name="satuan" required>
                                             <option></option>
                                             @foreach ($satuans as $satuan)
                                                 <option value="{{ $satuan->id }}"
@@ -359,7 +365,7 @@
                                                     {{ $satuan->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('satuan2')
+                                        @error('satuan')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -464,19 +470,21 @@
             minimumResultsForSearch: -1,
         })
 
-        $('.satuan2').select2({
-            placeholder: "Pilih satuan",
-            minimumResultsForSearch: -1,
-        })
-        $('.supplier2').select2({
-            placeholder: "Pilih supplier",
-        })
-        $('.gudang2').select2({
-            placeholder: "Pilih gudang",
-        })
-        $('.kategori2').select2({
-            placeholder: "Pilih kategori",
-            minimumResultsForSearch: -1,
-        })
+        @foreach ($barang as $data)
+            $('.satuan{{ $data->id }}').select2({
+                placeholder: "Pilih satuan",
+                minimumResultsForSearch: -1,
+            })
+            $('.supplier{{ $data->id }}').select2({
+                placeholder: "Pilih supplier",
+            })
+            $('.gudang{{ $data->id }}').select2({
+                placeholder: "Pilih gudang",
+            })
+            $('.kategori{{ $data->id }}').select2({
+                placeholder: "Pilih kategori",
+                minimumResultsForSearch: -1,
+            })
+        @endforeach
     </script>
 @endpush

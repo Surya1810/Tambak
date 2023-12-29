@@ -76,7 +76,7 @@
                                             <td>{{ $data->name }}</td>
                                             <td>{{ $data->address }}</td>
                                             <td>+62{{ $data->phone }} / {{ $data->contact }}</td>
-                                            <td>{{ $data->tempo }}</td>
+                                            <td>{{ $data->tempo }} hari</td>
                                             <td class="text-center">
                                                 <a class="btn btn-sm btn-warning rounded-tambak"
                                                     href="{{ route('customer.edit', $data->id) }}">

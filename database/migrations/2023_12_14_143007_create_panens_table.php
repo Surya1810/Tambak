@@ -16,7 +16,8 @@ return new class extends Migration
             $table->bigInteger('user_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('owner_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('kolam_id')->constrained()->cascadeOnDelete();
-            $table->bigInteger('satuan_id')->constrained()->cascadeOnDelete();
+            // $table->bigInteger('satuan_id')->constrained()->cascadeOnDelete();
+            $table->bigInteger('supplier_id')->constrained()->cascadeOnDelete();
             $table->string('grade');
             $table->string('size');
             $table->string('jenis_panen');
