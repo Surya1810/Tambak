@@ -89,16 +89,18 @@ Route::group(['prefix' => 'owner', 'middleware' => 'auth'], function () {
 Route::group(['prefix' => 'operator', 'middleware' => 'auth'], function () {
     // Data Pakan
     Route::resource('pakan', PakanController::class);
+
     // Data Sampling
     Route::resource('sampling', SamplingController::class);
     // Data Bibit
     Route::resource('bibit', BibitController::class);
     // Data Anco
     Route::resource('anco', AncoController::class);
+    Route::get('/anco/create/{kolam}/{tanggal}', [AncoController::class, 'pakan'])->name('get.pakan');
 
-    // Data Bibit
+    // Data Panen
     Route::resource('panen', PanenController::class);
-    // Data Anco
+    // Data Kematian
     Route::resource('kematian', KematianController::class);
 
 

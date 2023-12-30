@@ -8,6 +8,7 @@ use App\Models\Panen;
 use App\Models\Satuan;
 use App\Models\Supplier;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -66,7 +67,9 @@ class PanenController extends Controller
         // $project->satuan_id = $request->satuan;
 
         //Menghitung Harga dan Total
-        $dataHargaUdang = Harga::where('tambak_id', Auth::user()->tambak->first()->id)->where('supplier_id', $request->supplier)->pluck('harga', 'size');
+        $today = Carbon::now();
+        $dataHargaUdang = Harga::where('tambak_id', Auth::user()->tambak->first()->id)->where('supplier_id', $request->supplier)->WhereDate('mulai', '<=', $today)
+            ->whereDate('selesai', '>=', $today)->pluck('harga', 'size');
         $ukuranYangDicari = $request->size;
 
         if ($dataHargaUdang->has($ukuranYangDicari)) {
@@ -92,7 +95,7 @@ class PanenController extends Controller
                 $hargaUdang = (($ukuranYangDicari - $ukuranTerdekatSebelumnya) * ($hargaTerdekatSelanjutnya - $hargaTerdekatSebelumnya) / ($ukuranTerdekatSelanjutnya - $ukuranTerdekatSebelumnya)) + $hargaTerdekatSebelumnya;
             } else {
                 $old = session()->getOldInput();
-                return back()->with(['pesan' => 'Data ukuran atau harga tidak sesuai', 'level-alert' => 'alert-danger'])->withInput();
+                return back()->with(['pesan' => 'Data harga tidak sesuai, silahkan cek kembali', 'level-alert' => 'alert-danger'])->withInput();
             }
         }
 

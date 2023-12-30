@@ -15,9 +15,17 @@ class Anco extends Model
     {
         return $this->belongsTo(Kolam::class, 'kolam_id');
     }
+    public function pakan(): BelongsTo
+    {
+        return $this->belongsTo(Kolam::class, 'pakan_id');
+    }
 
     public function input_by(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    protected $casts = [
+        'tanggal' => 'datetime'
+    ];
 }

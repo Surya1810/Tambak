@@ -28,6 +28,22 @@
     <section class="content">
         <div class="container">
             <div class="row">
+                <div class="card bg-info w-100">
+                    <div class="card-header">
+                        Info
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                    class="fas fa-minus"></i></button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+                                    class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        Silahkan cek kembali data harga sesuai ukuran, dan periode berlakunya harga dari
+                        supplier sebelum
+                        melakukan input data panen.
+                    </div>
+                </div>
                 <div class="card rounded-tambak card-outline card-primary w-100">
                     <div class="card-header">
                         <h3 class="card-title">Tambah Data Panen</h3>

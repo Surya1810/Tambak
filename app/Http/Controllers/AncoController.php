@@ -16,10 +16,9 @@ class AncoController extends Controller
     public function index()
     {
         $kolams = Auth::user()->tambak->first()->kolam->where('status', true);
-        $pakans = Pakan::all();
         $anco = Anco::whereIn('kolam_id', $kolams->pluck('id'))->whereMonth('created_at', Carbon::now()->month)->get();
 
-        return view('anco.index', compact('kolams', 'anco', 'pakans'));
+        return view('anco.index', compact('kolams', 'anco'));
     }
 
     /**
@@ -27,7 +26,27 @@ class AncoController extends Controller
      */
     public function create()
     {
-        //
+        $kolams = Auth::user()->tambak->first()->kolam->where('status', true);
+        if (isset($tanggal)) {
+
+            $pakans = Pakan::whereDate('tanggal', $tanggal)->get();
+        } else {
+            $pakans = Pakan::all();
+        }
+
+        return view('anco.create', compact('kolams', 'pakans'));
+    }
+
+    public function pakan($kolam, $tanggal)
+    {
+        $dataPakan = Pakan::where('kolam_id', $kolam)->whereDate('tanggal', $tanggal)->get();
+
+        // Memformat waktu menggunakan Carbon
+        foreach ($dataPakan as $pakan) {
+            $pakan->formattedWaktu = Carbon::parse($pakan->waktu)->format('h:i');
+        }
+
+        return response()->json($dataPakan);
     }
 
     /**
@@ -38,21 +57,26 @@ class AncoController extends Controller
         $request->validate([
             'kolam' => 'bail|required',
             'tanggal' => 'bail|required',
-            'total' => 'bail|required',
+            'pakan' => 'bail|required',
+            'waktu' => 'bail|required',
+            'anco_1' => 'bail|required',
+            'anco_2' => 'bail|required',
         ]);
 
         $old = session()->getOldInput();
 
         $project = new Anco();
-        $project->kolam_id = $request->kolam;
         $project->user_id = Auth::user()->id;
+        $project->kolam_id = $request->kolam;
+        $project->pakan_id = $request->pakan;
         // If supplier dipilih
-        $project->supplier_id = $request->supplier;
         $project->tanggal = $request->tanggal;
-        $project->total = $request->total;
+        $project->waktu = $request->waktu;
+        $project->anco_1 = $request->anco_1;
+        $project->anco_2 = $request->anco_2;
         $project->save();
 
-        return redirect()->route('bibit.index', $request->tambak_id)->with(['pesan' => 'Data tebar bibit berhasil ditambahkan', 'level-alert' => 'alert-success']);
+        return redirect()->route('anco.index')->with(['pesan' => 'Data cek anco berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }
 
     /**

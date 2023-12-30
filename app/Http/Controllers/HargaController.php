@@ -79,7 +79,7 @@ class HargaController extends Controller
         $request->validate([
             'size' => 'bail|required',
             'harga' => 'bail|required',
-            'supplier2' => 'bail|required',
+            'supplier' => 'bail|required',
             'mulai' => 'bail|required',
             'selesai' => 'bail|required',
         ]);
@@ -87,7 +87,7 @@ class HargaController extends Controller
         $old = session()->getOldInput();
 
         $project = Harga::find($id);
-        $project->supplier_id = $request->supplier2;
+        $project->supplier_id = $request->supplier;
         $project->size = $request->size;
         $project->harga = $request->harga;
         $project->mulai = $request->mulai;
