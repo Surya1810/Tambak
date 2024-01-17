@@ -51,16 +51,22 @@
                             <table id="hargaTable" class="table table-bordered text-nowrap text-center">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width: 20%">
+                                        <th style="width: 15%">
                                             Size
                                         </th>
-                                        <th style="width: 20%">
+                                        <th style="width: 25%">
                                             Harga
                                         </th>
-                                        {{-- <th style="width: 30%">
-                                            Periode
-                                        </th> --}}
+                                        <th style="width: 25%">
+                                            Supplier
+                                        </th>
                                         <th style="width: 10%">
+                                            Dari
+                                        </th>
+                                        <th style="width: 10%">
+                                            Sampai
+                                        </th>
+                                        <th style="width: 15%">
                                             Action
                                         </th>
                                     </tr>
@@ -70,7 +76,9 @@
                                         <tr>
                                             <td>{{ $data->size }}</td>
                                             <td>{{ formatRupiah($data->harga) }}</td>
-                                            {{-- <td></td> --}}
+                                            <td>{{ $data->supplier->name }}</td>
+                                            <td>{{ $data->mulai->format('d/m/Y') }} </td>
+                                            <td>{{ $data->selesai->format('d/m/Y') }}</td>
                                             <td class="text-center">
                                                 <a class="btn btn-sm btn-warning rounded-tambak" type="button"
                                                     data-toggle="modal" data-target="#editHarga{{ $data->id }}">
@@ -111,7 +119,7 @@
                     @csrf
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-6 col-lg-6">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="size" class="mb-0 form-label col-form-label-sm">Size</label>
                                     <input type="number" class="form-control @error('size') is-invalid @enderror"
@@ -124,13 +132,60 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-6 col-lg-6">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="harga" class="mb-0 form-label col-form-label-sm">Harga</label>
                                     <input type="text" class="price form-control @error('harga') is-invalid @enderror"
                                         id="harga" name="harga" placeholder="Masukan harga"
                                         value="{{ old('harga') }}" required>
                                     @error('harga')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="supplier" class="mb-0 form-label col-form-label-sm">Supplier</label>
+                                    <select class="form-control supplier select2-primary is-invalid"
+                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="supplier"
+                                        name="supplier" required>
+                                        <option></option>
+                                        @foreach ($suppliers as $supplier)
+                                            <option value="{{ $supplier->id }}"
+                                                {{ old('supplier') == $supplier->id ? 'selected' : '' }}>
+                                                {{ $supplier->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('supplier')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="mulai" class="mb-0 form-label col-form-label-sm">Mulai</label>
+                                    <input type="date" class="form-control @error('mulai') is-invalid @enderror"
+                                        id="mulai" name="mulai" value="{{ old('mulai') }}" autocomplete="off"
+                                        required>
+                                    @error('mulai')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="mulai" class="mb-0 form-label col-form-label-sm">Selesai</label>
+                                    <input type="date" class="form-control @error('selesai') is-invalid @enderror"
+                                        id="selesai" name="selesai" value="{{ old('selesai') }}" autocomplete="off"
+                                        required>
+                                    @error('selesai')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -164,7 +219,7 @@
                         @method('PUT')
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-6 col-lg-6">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="size" class="mb-0 form-label col-form-label-sm">Size</label>
                                         <input type="number" class="form-control @error('size') is-invalid @enderror"
@@ -177,7 +232,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-6 col-lg-6">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="harga" class="mb-0 form-label col-form-label-sm">Harga Beli</label>
                                         <input type="text"
@@ -185,6 +240,55 @@
                                             name="harga" placeholder="Masukan harga beli" value="{{ $data->harga }}"
                                             required>
                                         @error('harga')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="supplier{{ $data->id }}"
+                                            class="mb-0 form-label col-form-label-sm">Supplier</label>
+                                        <select class="form-control supplier{{ $data->id }} select2-primary"
+                                            data-dropdown-css-class="select2-primary" style="width: 100%;"
+                                            id="supplier{{ $data->id }}" name="supplier">
+                                            <option></option>
+                                            @foreach ($suppliers as $supplier)
+                                                <option value="{{ $supplier->id }}"
+                                                    {{ $data->supplier_id == $supplier->id ? 'selected' : '' }}>
+                                                    {{ $supplier->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('supplier')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="mulai" class="mb-0 form-label col-form-label-sm">Mulai</label>
+                                        <input type="date" class="form-control @error('mulai') is-invalid @enderror"
+                                            id="mulai" name="mulai"
+                                            value="{{ \Carbon\Carbon::parse($data->mulai)->format('Y-m-d') }}"
+                                            autocomplete="off" required>
+                                        @error('mulai')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="mulai" class="mb-0 form-label col-form-label-sm">Selesai</label>
+                                        <input type="date" class="form-control @error('selesai') is-invalid @enderror"
+                                            id="selesai" name="selesai"
+                                            value="{{ \Carbon\Carbon::parse($data->selesai)->format('Y-m-d') }}"
+                                            autocomplete="off" required>
+                                        @error('selesai')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -265,9 +369,14 @@
             })
         }
 
-        $('.kolam').select2({
-            placeholder: "Pilih kolam",
+        $('.supplier').select2({
+            placeholder: "Pilih supplier",
         })
+        @foreach ($harga as $data)
+            $('.supplier{{ $data->id }}').select2({
+                placeholder: "Pilih supplier",
+            })
+        @endforeach
 
         $(function() {
             $('.price').inputmask({

@@ -47,7 +47,7 @@ class CustomerController extends Controller
         $project->code = 'GD-' . Str::random(5);
         $project->name = $request->name;
         $project->address = $request->address;
-        $project->phone = $request->phone;
+        $project->phone = ltrim($request->phone, "0");
         $project->contact = $request->contact;
         $project->tempo = $request->tempo;
         $project->save();
@@ -90,7 +90,7 @@ class CustomerController extends Controller
         $project = Customer::find($id);
         $project->name = $request->name;
         $project->address = $request->address;
-        $project->phone = $request->phone;
+        $project->phone = ltrim($request->phone, "0");
         $project->contact = $request->contact;
         $project->tempo = $request->tempo;
         $project->update();

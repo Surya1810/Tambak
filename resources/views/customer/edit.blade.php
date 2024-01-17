@@ -67,7 +67,7 @@
                                 <div class="col-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="phone">Nomor Hp</label>
-                                        <input type="number" class="form-control @error('phone') is-invalid @enderror"
+                                        <input type="tel" class="form-control @error('phone') is-invalid @enderror"
                                             id="phone" name="phone" placeholder="Masukan nomor customer"
                                             value="{{ $customer->phone }}" autocomplete="off">
                                         @error('phone')

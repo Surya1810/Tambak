@@ -40,10 +40,10 @@
                                     <h3 class="card-title">Data Cek Anco</h3>
                                 </div>
                                 <div class="col-6">
-                                    <button type="button" class="btn btn-sm btn-primary rounded-tambak float-right"
-                                        data-toggle="modal" data-target="#addAnco">
+                                    <a href="{{ route('anco.create') }}"
+                                        class="btn btn-sm btn-primary rounded-tambak float-right">
                                         Tambah Cek Anco
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -58,10 +58,13 @@
                                             Tanggal
                                         </th>
                                         <th style="width: 20%">
-                                            Total
+                                            Operator
+                                        </th>
+                                        <th style="width: 20%">
+                                            Anco 1
                                         </th>
                                         <th style="width: 30%">
-                                            Hatchery
+                                            Anco 2
                                         </th>
                                         <th style="width: 10%">
                                             Action
@@ -72,13 +75,24 @@
                                     @foreach ($anco as $data)
                                         <tr>
                                             <td>{{ $data->kolam->tambak->name }} - {{ $data->kolam->name }}</td>
-                                            <td>{{ $data->tanggal }}</td>
-                                            <td>{{ $data->total }} ekor</td>
+                                            <td>{{ $data->tanggal->format('d/m/Y') }}</td>
+                                            <td>{{ $data->input_by->name }}</td>
                                             <td>
-                                                @if ($data->supplier_id == null)
-                                                    -
+                                                @if ($data->anco_1 == 1)
+                                                    Habis
+                                                @elseif ($data->anco_1 == 2)
+                                                    Sisa Sedikit
                                                 @else
-                                                    {{ $data->supplier->name }}
+                                                    Sisa Banyak
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($data->anco_2 == 1)
+                                                    Habis
+                                                @elseif ($data->anco_2 == 2)
+                                                    Sisa Sedikit
+                                                @else
+                                                    Sisa Banyak
                                                 @endif
                                             </td>
                                             <td class="text-center">
@@ -102,97 +116,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Modal Add Data-->
-    <div class="modal fade" id="addAnco" tabindex="-1" aria-labelledby="addAncoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addStepModalLabel">Tambah Data Cek Anco</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{{ route('anco.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="kolam" class="mb-0 form-label col-form-label-sm">Kolam</label>
-                                    <select class="form-control kolam select2-primary is-invalid"
-                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="kolam"
-                                        name="kolam" required>
-                                        <option></option>
-                                        @foreach ($kolams as $kolam)
-                                            <option value="{{ $kolam->id }}"
-                                                {{ old('kolam') == $kolam->name ? 'selected' : '' }}>
-                                                {{ $kolam->tambak->name }} -
-                                                {{ $kolam->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('kolam')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-6 col-lg-6">
-                                <div class="form-group">
-                                    <label for="tanggal" class="mb-0 form-label col-form-label-sm">Tanggal</label>
-                                    <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
-                                        id="tanggal" name="tanggal" placeholder="Pilih Tanggal"
-                                        value="{{ old('tanggal') }}" autocomplete="off" required>
-                                    @error('tanggal')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-6 col-lg-6">
-                                <div class="form-group">
-                                    <label for="pakan" class="mb-0 form-label col-form-label-sm">Pakan</label>
-                                    <select class="form-control pakan select2-primary is-invalid"
-                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="pakan"
-                                        name="pakan" required>
-                                        <option></option>
-                                        @foreach ($pakans as $pakan)
-                                            <option value="{{ $pakan->id }}"
-                                                {{ old('pakan') == $pakan->id ? 'selected' : '' }}>{{ $pakan->waktu }}
-                                                ({{ $pakan->jumlah }} kg)
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('pakan')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="catatan" class="mb-0 form-label col-form-label-sm">Catatan</label>
-                                    <textarea class="form-control @error('catatan') is-invalid @enderror" rows="3"
-                                        placeholder="Tulis catatan bila ada..." id="catatan" name="catatan">{{ old('catatan') }}</textarea>
-                                    @error('catatan')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary rounded-tambak">Tambah</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @push('scripts')
@@ -253,12 +176,5 @@
                 }
             })
         }
-
-        $('.kolam').select2({
-            placeholder: "Pilih kolam",
-        })
-        $('.pakan').select2({
-            placeholder: "Pilih waktu pemberian pakan",
-        })
     </script>
 @endpush

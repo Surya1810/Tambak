@@ -26,4 +26,8 @@ class Panen extends Model
     {
         return $this->belongsTo(Satuan::class, 'satuan_id');
     }
+
+    protected $casts = [
+        'tanggal' => 'datetime'
+    ];
 }

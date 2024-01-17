@@ -28,6 +28,22 @@
     <section class="content">
         <div class="container">
             <div class="row">
+                <div class="card bg-info w-100">
+                    <div class="card-header">
+                        Info
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                    class="fas fa-minus"></i></button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+                                    class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        Silahkan cek kembali data harga sesuai ukuran, dan periode berlakunya harga dari
+                        supplier sebelum
+                        melakukan input data panen.
+                    </div>
+                </div>
                 <div class="card rounded-tambak card-outline card-primary w-100">
                     <div class="card-header">
                         <h3 class="card-title">Tambah Data Panen</h3>
@@ -94,10 +110,16 @@
                                 <div class="col-6 col-lg-3">
                                     <div class="form-group">
                                         <label for="size" class="mb-0 form-label col-form-label-sm">Size</label>
+                                        {{-- <div class="input-group"> --}}
                                         <input type="number" step=".1"
                                             class="form-control @error('size') is-invalid @enderror" id="size"
                                             name="size" placeholder="Masukan size" value="{{ old('size') }}"
                                             autocomplete="off">
+                                        {{-- <div class="input-group-append">
+                                                <div class="input-group-text">ekor/Kg</div>
+                                            </div>
+                                        </div> --}}
+
                                         @error('size')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -108,10 +130,15 @@
                                 <div class="col-6 col-lg-3">
                                     <div class="form-group">
                                         <label for="volume" class="mb-0 form-label col-form-label-sm">Volume</label>
-                                        <input type="number" step=".01"
-                                            class="form-control @error('volume') is-invalid @enderror" id="volume"
-                                            name="volume" placeholder="Masukan volume" value="{{ old('volume') }}"
-                                            autocomplete="off">
+                                        <div class="input-group">
+                                            <input type="number" step=".01"
+                                                class="form-control @error('volume') is-invalid @enderror" id="volume"
+                                                name="volume" placeholder="Masukan volume" value="{{ old('volume') }}"
+                                                autocomplete="off">
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">Kg</div>
+                                            </div>
+                                        </div>
                                         @error('volume')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -119,7 +146,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-6 col-lg-3">
+                                {{-- <div class="col-6 col-lg-3">
                                     <div class="form-group">
                                         <label for="satuan" class="mb-0 form-label col-form-label-sm">Satuan</label>
                                         <select class="form-control satuan select2-primary is-invalid"
@@ -133,6 +160,27 @@
                                             @endforeach
                                         </select>
                                         @error('satuan')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div> --}}
+                                <div class="col-6 col-lg-3">
+                                    <div class="form-group">
+                                        <label for="supplier" class="mb-0 form-label col-form-label-sm">Supplier
+                                            Utama</label>
+                                        <select class="form-control supplier select2-primary is-invalid"
+                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="supplier"
+                                            name="supplier">
+                                            <option></option>
+                                            @foreach ($suppliers as $supplier)
+                                                <option value="{{ $supplier->id }}"
+                                                    {{ old('supplier') == $supplier->id ? 'selected' : '' }}>
+                                                    {{ $supplier->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('supplier')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -159,8 +207,11 @@
         $('.jenis_panen').select2({
             placeholder: "Pilih jenis panen",
         })
-        $('.satuan').select2({
-            placeholder: "Pilih satuan",
+        $('.supplier').select2({
+            placeholder: "Pilih supplier",
         })
+        // $('.satuan').select2({
+        //     placeholder: "Pilih satuan",
+        // })
     </script>
 @endpush

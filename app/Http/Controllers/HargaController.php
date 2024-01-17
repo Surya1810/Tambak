@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Harga;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,8 +15,9 @@ class HargaController extends Controller
     public function index()
     {
         $harga = Harga::where('tambak_id', Auth::user()->tambak->first()->id)->get();
+        $suppliers = Supplier::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', true)->get();
 
-        return view('harga.index', compact('harga'));
+        return view('harga.index', compact('harga', 'suppliers'));
     }
 
     /**

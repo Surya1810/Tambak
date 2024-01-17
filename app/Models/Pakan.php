@@ -27,6 +27,7 @@ class Pakan extends Model
     }
 
     protected $casts = [
-        'waktu' => 'datetime'
+        'waktu' => 'datetime',
+        'tanggal' => 'datetime'
     ];
 }
