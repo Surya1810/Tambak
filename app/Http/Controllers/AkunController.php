@@ -36,6 +36,7 @@ class AkunController extends Controller
             'name' => 'bail|required',
             'aktivitas' => 'bail|required',
             'jenis' => 'bail|required',
+            'nomor' => 'bail|required',
         ]);
 
         $old = session()->getOldInput();
@@ -46,12 +47,8 @@ class AkunController extends Controller
         } else {
             $project->owner_id = Auth::user()->id;
         }
-        if ($request->aktivitas == 'kredit') {
-            $project->nomor = 'CR-' . Str::random(5);
-        } else {
-            $project->nomor = 'DB-' . Str::random(5);
-        }
         $project->nama = $request->name;
+        $project->nomor = $request->nomor;
         $project->aktivitas = $request->aktivitas;
         $project->jenis = $request->jenis;
         $project->save();

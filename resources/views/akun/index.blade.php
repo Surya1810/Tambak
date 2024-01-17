@@ -120,6 +120,16 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label for="nomor" class="mb-0 form-label col-form-label-sm">Nomor Akun</label>
+                            <input type="number" class="form-control @error('nomor') is-invalid @enderror" id="nomor"
+                                name="nomor" placeholder="Masukan nomor akun" value="{{ old('nomor') }}">
+                            @error('nomor')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label for="aktivitas" class="mb-0 form-label col-form-label-sm">Aktivitas</label>
                             <select class="form-control aktivitas select2-primary is-invalid"
                                 data-dropdown-css-class="select2-primary" style="width: 100%;" id="aktivitas"

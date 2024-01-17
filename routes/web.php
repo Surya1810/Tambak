@@ -8,6 +8,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\HargaController;
+use App\Http\Controllers\JurnalController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KematianController;
 use App\Http\Controllers\KolamController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\SamplingController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TambakController;
+use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -106,6 +108,8 @@ Route::group(['prefix' => 'operator', 'middleware' => 'auth'], function () {
     Route::resource('gudang', GudangController::class);
     // Barang
     Route::resource('barang', BarangController::class);
+    // Transaksi Barang
+    Route::resource('transaksi', TransaksiController::class);
 });
 
 // Akuntan
@@ -115,6 +119,9 @@ Route::group(['prefix' => 'akuntan', 'middleware' => 'auth'], function () {
 
     // Data Harga
     Route::resource('harga', HargaController::class);
+
+    // Jurnal Umum & Buku Besar
+    Route::resource('jurnal', JurnalController::class);
 });
 
 Route::middleware('auth')->group(function () {

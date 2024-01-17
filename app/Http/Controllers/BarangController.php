@@ -55,6 +55,7 @@ class BarangController extends Controller
         $project->gudang_id = $request->gudang;
         $project->kategori_id = $request->kategori;
         $project->satuan_id = $request->satuan;
+        $project->kuantitas = $request->kuantitas;
         $project->harga = $request->harga;
         // If supplier dipilih
         $project->supplier_id = $request->supplier;
@@ -95,7 +96,6 @@ class BarangController extends Controller
 
         $project = Barang::find($id);
         $project->name = $request->name;
-        $project->gudang_id = $request->gudang2;
         $project->kategori_id = $request->kategori2;
         $project->satuan_id = $request->satuan2;
         $project->harga = $request->harga;
