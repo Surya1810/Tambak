@@ -51,25 +51,25 @@
                             <table id="barangTable" class="table table-bordered text-nowrap text-center text-sm">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width: 5%">
+                                        <th style="width: 10%">
                                             Kategori
                                         </th>
-                                        <th style="width: 25%">
+                                        <th style="width: 15%">
                                             Nama
                                         </th>
-                                        <th style="width: 20%">
+                                        <th style="width: 15%">
                                             Gudang
                                         </th>
                                         <th style="width: 15%">
                                             Supplier
                                         </th>
-                                        <th style="width: 10%">
+                                        <th style="width: 15%">
                                             Harga beli
                                         </th>
                                         <th style="width: 10%">
-                                            Kuantitas
+                                            Satuan
                                         </th>
-                                        <th style="width: 15%">
+                                        <th style="width: 10%">
                                             Action
                                         </th>
                                     </tr>
@@ -88,11 +88,8 @@
                                                 @endif
                                             </td>
                                             <td>{{ formatRupiah($data->harga) }}</td>
-                                            <td>{{ $data->kuantitas }} {{ $data->satuan->name }}</td>
+                                            <td>{{ $data->satuan->name }}</td>
                                             <td class="text-center">
-                                                <button class="btn btn-sm btn-info rounded-tambak" type="button"
-                                                    data-toggle="modal" data-target="#pindahBarang{{ $data->id }}"><i
-                                                        class="fa-solid fa-arrow-right-arrow-left"></i></button>
                                                 <button class="btn btn-sm btn-warning rounded-tambak" type="button"
                                                     data-toggle="modal" data-target="#editBarang{{ $data->id }}"><i
                                                         class="fas fa-pen"></i></button>
@@ -202,26 +199,13 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="harga" class="mb-0 form-label col-form-label-sm">Harga Beli</label>
                                     <input type="text" class="price form-control @error('harga') is-invalid @enderror"
                                         id="harga" name="harga" placeholder="Masukan harga beli"
                                         value="{{ old('harga') }}" required>
                                     @error('harga')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="kuantitas" class="mb-0 form-label col-form-label-sm">Kuantitas</label>
-                                    <input type="number" class="form-control @error('kuantitas') is-invalid @enderror"
-                                        id="kuantitas" name="kuantitas" placeholder="0" value="{{ old('harga') }}"
-                                        required>
-                                    @error('kuantitas')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -289,10 +273,11 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="gudang2" class="mb-0 form-label col-form-label-sm">Gudang</label>
-                                        <select class="form-control gudang2 select2-primary is-invalid"
-                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="gudang2"
-                                            name="gudang2" required>
+                                        <label for="gudang{{ $data->id }}"
+                                            class="mb-0 form-label col-form-label-sm">Gudang</label>
+                                        <select class="form-control gudang{{ $data->id }} select2-primary is-invalid"
+                                            data-dropdown-css-class="select2-primary" style="width: 100%;"
+                                            id="gudang{{ $data->id }}" name="gudang" required>
                                             <option></option>
                                             @foreach ($gudangs as $gudang)
                                                 <option value="{{ $gudang->id }}"
@@ -300,7 +285,7 @@
                                                     {{ $gudang->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('gudang2')
+                                        @error('gudang')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -352,7 +337,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
                                         <label for="harga" class="mb-0 form-label col-form-label-sm">Harga Beli</label>
                                         <input type="text"
@@ -366,58 +351,21 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary rounded-tambak">Ubah</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Transaksi Data-->
-        <div class="modal fade" id="pindahBarang{{ $data->id }}" tabindex="-1"
-            aria-labelledby="transaksiBarangLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addStepModalLabel">Transaksi Barang</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form action="{{ route('transaksi.store', $data->id) }}" method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group">
-                                        <label for="name" class="mb-0 form-label col-form-label-sm">Nama
-                                            Barang</label>
-                                        <input type="text" class="form-control" value="{{ $data->name }}" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="name" class="mb-0 form-label col-form-label-sm">Lokasi
-                                            Awal</label>
-                                        <input type="text" class="form-control" value="{{ $data->gudang->name }}"
-                                            disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="satuan2" class="mb-0 form-label col-form-label-sm">Satuan</label>
-                                        <select class="form-control satuan2 select2-primary is-invalid"
-                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="satuan2"
-                                            name="satuan2" required>
+                                        <label for="satuan{{ $data->id }}"
+                                            class="mb-0 form-label col-form-label-sm">Satuan</label>
+                                        <select class="form-control satuan{{ $data->id }} select2-primary is-invalid"
+                                            data-dropdown-css-class="select2-primary" style="width: 100%;"
+                                            id="satuan{{ $data->id }}" name="satuan" required>
                                             <option></option>
-                                            @foreach ($gudangs as $gudang)
-                                                <option value="{{ $gudang->id }}"
-                                                    {{ old('gudang') == $gudang->id ? 'selected' : '' }}>
-                                                    {{ $gudang->name }}</option>
+                                            @foreach ($satuans as $satuan)
+                                                <option value="{{ $satuan->id }}"
+                                                    {{ $data->satuan_id == $satuan->id ? 'selected' : '' }}>
+                                                    {{ $satuan->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('satuan2')
+                                        @error('satuan')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -427,7 +375,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary rounded-tambak">Pindah</button>
+                            <button type="submit" class="btn btn-primary rounded-tambak">Ubah</button>
                         </div>
                     </form>
                 </div>
