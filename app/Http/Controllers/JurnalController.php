@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Akun;
 use App\Models\Jurnal;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,8 +15,13 @@ class JurnalController extends Controller
      */
     public function index()
     {
-        $jurnal = Jurnal::where()->get();
-        return view('jurnal.index', compact('jurnal'));
+        $jurnal = Jurnal::where('owner_id', Auth::user()->created_by)->whereMonth('created_at', Carbon::now()->month)->get();
+        $akuns = Akun::where('owner_id', Auth::user()->created_by)->get();
+        $month = Carbon::now();
+        $kredit = Jurnal::where('owner_id', Auth::user()->created_by)->whereMonth('created_at', Carbon::now()->month)->where('aktivitas', 'Kredit')->sum('nominal');
+        $debit = Jurnal::where('owner_id', Auth::user()->created_by)->whereMonth('created_at', Carbon::now()->month)->where('aktivitas', 'Debit')->sum('nominal');;
+
+        return view('jurnal.index', compact('jurnal', 'akuns', 'month', 'debit', 'kredit'));
     }
 
     /**
@@ -42,7 +49,7 @@ class JurnalController extends Controller
 
         $project = new Jurnal();
         $project->owner_id = Auth::user()->created_by;
-        $project->akun_id = $request->akun_id;
+        $project->akun_id = $request->akun;
         $project->input_by = Auth::user()->id;
         $project->nominal = $request->nominal;
         $project->keterangan = $request->keterangan;

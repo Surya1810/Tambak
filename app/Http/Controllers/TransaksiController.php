@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,9 +14,9 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $mutasi = Transaksi::all();
+        $barangs = Barang::where('tambak_id', Auth::user()->tambak->first()->id)->get();
 
-        return view('mutasi.index', compact('mutasi'));
+        return view('mutasi.index', compact('barangs'));
     }
 
     /**
@@ -29,27 +30,26 @@ class TransaksiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
         $request->validate([
-            'name' => 'bail|required',
-            'gudang2' => 'bail|required',
-            'kategori2' => 'bail|required',
-            'harga' => 'bail|required',
-            'satuan2' => 'bail|required',
+            'barang' => 'bail|required',
+            'status' => 'bail|required',
+            'catatan' => 'bail|required',
+            'kuantitas' => 'bail|required',
         ]);
 
         $old = session()->getOldInput();
 
         $project = new Transaksi();
-        $project->barang_id = $request->id;
+        $project->barang_id = $request->barang;
         $project->input_by = Auth::user()->id;
         $project->status = $request->status;
         $project->catatan = $request->catatan;
         $project->kuantitas = $request->kuantitas;
         $project->save();
 
-        return redirect()->route('barang.index')->with(['pesan' => 'Barang berhasil dihapus', 'level-alert' => 'alert-danger']);
+        return redirect()->route('transaksi.index')->with(['pesan' => 'Transaksi berhasil dibuat', 'level-alert' => 'alert-success']);
     }
 
     /**

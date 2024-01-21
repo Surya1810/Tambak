@@ -283,6 +283,12 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ route('transaksi.index') }}" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-file-pen"></i>
+                                        <p>Laporan Stok</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="#" class="nav-link">
                                         <i class="nav-icon fa-solid fa-warehouse"></i>
                                         <p>
@@ -303,12 +309,6 @@
                                                 <p>Data Barang</p>
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a href="{{ route('transaksi.index') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Laporan Stok</p>
-                                            </a>
-                                        </li>
                                     </ul>
                                 </li>
                             @endif
@@ -319,65 +319,73 @@
                                     Finance
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('akun.index') }}" class="nav-link">
-                                        <i class="nav-icon fa-solid fa-book"></i>
-                                        <p>Akun</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a href="{{ route('harga.index') }}" class="nav-link">
-                                        <i class="nav-icon fa-solid fa-tags"></i>
+                                        <i class="nav-icon fa-solid fa-shrimp"></i>
                                         <p>Harga</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('akun.index') }}" class="nav-link">
                                         <i class="nav-icon fa-solid fa-file-pen"></i>
-                                        <p>
-                                            Data
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
+                                        <p>Akun</p>
                                     </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Jurnal Umum</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Pembelian</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Purchase Order</p>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('jurnal.index') }}" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-book"></i>
+                                        <p>Jurnal Umum</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('hutang.index') }}" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-file-arrow-up"></i>
+                                        <p>Pembayaran Hutang</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('piutang.index') }}" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-file-arrow-down"></i>
+                                        <p>Pemberian Piutang</p>
+                                    </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="nav-icon fa-regular fa-credit-card"></i>
+                                        <i class="nav-icon fa-solid fa-cart-shopping"></i>
+                                        <p>Pembelian</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fa-regular fa-paste"></i>
+                                        <p>Purchase Order</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{ route('transaksi.index') }}" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-file-pen"></i>
+                                        <p>Laporan Stok</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-warehouse"></i>
                                         <p>
-                                            Hutang
+                                            Penyimpanan
                                             <i class="right fas fa-angle-left"></i>
                                         </p>
                                     </a>
                                     <ul class="nav nav-treeview">
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link">
+                                            <a href="{{ route('gudang.index') }}" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
-                                                <p>Pembayaran</p>
+                                                <p>Data Gudang</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link">
+                                            <a href="{{ route('barang.index') }}" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
-                                                <p>Penerimaan</p>
+                                                <p>Data Barang</p>
                                             </a>
                                         </li>
                                     </ul>

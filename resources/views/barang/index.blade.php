@@ -52,13 +52,13 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width: 10%">
+                                            Kode
+                                        </th>
+                                        <th style="width: 10%">
                                             Kategori
                                         </th>
-                                        <th style="width: 15%">
+                                        <th style="width: 20%">
                                             Nama
-                                        </th>
-                                        <th style="width: 15%">
-                                            Gudang
                                         </th>
                                         <th style="width: 15%">
                                             Supplier
@@ -77,9 +77,9 @@
                                 <tbody>
                                     @foreach ($barang as $data)
                                         <tr>
+                                            <td>{{ $data->code }}</td>
                                             <td>{{ $data->kategori->name }}</td>
                                             <td>{{ $data->name }}</td>
-                                            <td>{{ $data->gudang->name }}</td>
                                             <td>
                                                 @if ($data->supplier_id == null)
                                                     -
@@ -135,24 +135,6 @@
                                         id="name" name="name" placeholder="Masukan nama barang"
                                         value="{{ old('name') }}" required>
                                     @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="gudang" class="mb-0 form-label col-form-label-sm">Gudang</label>
-                                    <select class="form-control gudang select2-primary is-invalid"
-                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="gudang"
-                                        name="gudang" required>
-                                        <option></option>
-                                        @foreach ($gudangs as $gudang)
-                                            <option value="{{ $gudang->id }}"
-                                                {{ old('gudang') == $gudang->id ? 'selected' : '' }}>
-                                                {{ $gudang->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('gudang')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -232,6 +214,7 @@
                                     @enderror
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -267,25 +250,6 @@
                                             id="name" name="name" placeholder="Masukan nama barang"
                                             value="{{ $data->name }}" required>
                                         @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="gudang{{ $data->id }}"
-                                            class="mb-0 form-label col-form-label-sm">Gudang</label>
-                                        <select class="form-control gudang{{ $data->id }} select2-primary is-invalid"
-                                            data-dropdown-css-class="select2-primary" style="width: 100%;"
-                                            id="gudang{{ $data->id }}" name="gudang" required>
-                                            <option></option>
-                                            @foreach ($gudangs as $gudang)
-                                                <option value="{{ $gudang->id }}"
-                                                    {{ $data->gudang_id == $gudang->id ? 'selected' : '' }}>
-                                                    {{ $gudang->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('gudang')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -462,9 +426,7 @@
         $('.supplier').select2({
             placeholder: "Pilih supplier",
         })
-        $('.gudang').select2({
-            placeholder: "Pilih gudang",
-        })
+
         $('.kategori').select2({
             placeholder: "Pilih kategori",
             minimumResultsForSearch: -1,
@@ -477,9 +439,6 @@
             })
             $('.supplier{{ $data->id }}').select2({
                 placeholder: "Pilih supplier",
-            })
-            $('.gudang{{ $data->id }}').select2({
-                placeholder: "Pilih gudang",
             })
             $('.kategori{{ $data->id }}').select2({
                 placeholder: "Pilih kategori",

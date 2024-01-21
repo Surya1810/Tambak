@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Barang extends Model
+class Piutang extends Model
 {
     use HasFactory;
 
@@ -14,12 +14,12 @@ class Barang extends Model
     {
         return $this->belongsTo(supplier::class, 'supplier_id');
     }
-    public function kategori(): BelongsTo
+    public function akun(): BelongsTo
     {
-        return $this->belongsTo(kategori::class, 'kategori_id');
+        return $this->belongsTo(akun::class, 'akun_id');
     }
-    public function satuan(): BelongsTo
-    {
-        return $this->belongsTo(satuan::class, 'satuan_id');
-    }
+
+    protected $casts = [
+        'tempo' => 'datetime'
+    ];
 }

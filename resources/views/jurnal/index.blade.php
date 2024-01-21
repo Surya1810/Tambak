@@ -42,7 +42,7 @@
                                 <div class="col-6">
                                     <button type="button" class="btn btn-sm btn-primary rounded-tambak float-right"
                                         data-toggle="modal" data-target="#addJurnal">
-                                        Tambah Transaksi
+                                        Tambah Jurnal
                                     </button>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                                 <tbody>
                                     @foreach ($jurnal as $data)
                                         <tr>
-                                            <td>{{ $data->akun->name }} - {{ $data->akun->nomor }}</td>
+                                            <td>{{ $data->akun->nama }} - {{ $data->akun->nomor }}</td>
                                             <td>
                                                 @if ($data->aktivitas == 'Debit')
                                                     {{ formatRupiah($data->nominal) }}
@@ -108,6 +108,32 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-lg-3 col-12">
+                    <div class="small-box bg-primary">
+                        <div class="inner">
+                            <h4>{{ formatRupiah($debit) }}</h4>
+
+                            <p>Debit</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-12">
+                    <div class="small-box bg-primary">
+                        <div class="inner">
+                            <h4>{{ formatRupiah($kredit) }}</h4>
+
+                            <p>Kredit</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -116,7 +142,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addStepModalLabel">Tambah Transaksi</h5>
+                    <h5 class="modal-title" id="addStepModalLabel">Tambah Jurnal</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -135,7 +161,7 @@
                                         @foreach ($akuns as $akun)
                                             <option value="{{ $akun->id }}"
                                                 {{ old('akun') == $akun->id ? 'selected' : '' }}>
-                                                {{ $akun->name }} - {{ $akun->nomor }}</option>
+                                                {{ $akun->nama }} - {{ $akun->nomor }}</option>
                                         @endforeach
                                     </select>
                                     @error('akun')
@@ -147,7 +173,7 @@
                                 <div class="form-group">
                                     <label for="keterangan" class="mb-0 form-label col-form-label-sm">Keterangan</label>
                                     <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="3" placeholder="Tulis keterangan"
-                                        id="keterangan" name="keterangan">{{ old('keterangan') }}</textarea>
+                                        id="keterangan" name="keterangan" required>{{ old('keterangan') }}</textarea>
                                     @error('keterangan')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -156,8 +182,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="nominal" class="mb-0 form-label col-form-label-sm">Nominal</label>
-                                    <input type="text" class="price form-control @error('nominal') is-invalid @enderror"
-                                        id="nominal" name="nominal" placeholder="Masukan nominal transaksi"
+                                    <input type="text"
+                                        class="price form-control @error('nominal') is-invalid @enderror" id="nominal"
+                                        name="nominal" placeholder="Masukan nominal transaksi"
                                         value="{{ old('nominal') }}" required>
                                     @error('nominal')
                                         <span class="invalid-feedback" role="alert">
@@ -178,6 +205,8 @@
                                         </span>
                                     @enderror
                                 </div>
+                            </div>
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="aktivitas" class="mb-0 form-label col-form-label-sm">Aktivitas</label>
                                     <select class="form-control aktivitas select2-primary is-invalid"
@@ -280,6 +309,11 @@
 
         $('.akun').select2({
             placeholder: "Pilih Akun",
+            minimumResultsForSearch: -1,
+            allowClear: true,
+        })
+        $('.aktivitas').select2({
+            placeholder: "Pilih Jenis Transaksi",
             minimumResultsForSearch: -1,
             allowClear: true,
         })

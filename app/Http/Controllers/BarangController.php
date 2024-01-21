@@ -9,6 +9,8 @@ use App\Models\Satuan;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
 
 class BarangController extends Controller
 {
@@ -41,7 +43,6 @@ class BarangController extends Controller
     {
         $request->validate([
             'name' => 'bail|required',
-            'gudang' => 'bail|required',
             'kategori' => 'bail|required',
             'harga' => 'bail|required',
             'satuan' => 'bail|required',
@@ -50,9 +51,9 @@ class BarangController extends Controller
         $old = session()->getOldInput();
 
         $project = new Barang();
+        $project->code = 'B-' . Str::random(5);
         $project->name = $request->name;
         $project->tambak_id = Auth::user()->tambak->first()->id;
-        $project->gudang_id = $request->gudang;
         $project->kategori_id = $request->kategori;
         $project->satuan_id = $request->satuan;
         $project->harga = $request->harga;
@@ -85,7 +86,6 @@ class BarangController extends Controller
     {
         $request->validate([
             'name' => 'bail|required',
-            'gudang' => 'bail|required',
             'kategori' => 'bail|required',
             'harga' => 'bail|required',
             'satuan' => 'bail|required',
@@ -95,7 +95,6 @@ class BarangController extends Controller
 
         $project = Barang::find($id);
         $project->name = $request->name;
-        $project->gudang_id = $request->gudang;
         $project->kategori_id = $request->kategori;
         $project->satuan_id = $request->satuan;
         $project->harga = $request->harga;

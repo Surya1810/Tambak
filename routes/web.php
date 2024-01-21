@@ -8,12 +8,14 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\HargaController;
+use App\Http\Controllers\HutangController;
 use App\Http\Controllers\JurnalController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KematianController;
 use App\Http\Controllers\KolamController;
 use App\Http\Controllers\PakanController;
 use App\Http\Controllers\PanenController;
+use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SamplingController;
 use App\Http\Controllers\SatuanController;
@@ -124,6 +126,15 @@ Route::group(['prefix' => 'akuntan', 'middleware' => 'auth'], function () {
 
     // Jurnal Umum & Buku Besar
     Route::resource('jurnal', JurnalController::class);
+    // Pembayaran Hutang
+    Route::resource('hutang', HutangController::class);
+    Route::post('/hutang/bayar/{id}', [HutangController::class, 'bayar'])->name('hutang.bayar');
+    // Pemberian Piutang
+    Route::resource('piutang', PiutangController::class);
+    // // Pembelian
+    // Route::resource('jurnal', JurnalController::class);
+    // // Purchase Order
+    // Route::resource('jurnal', JurnalController::class);
 });
 
 Route::middleware('auth')->group(function () {
