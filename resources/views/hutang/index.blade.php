@@ -261,8 +261,8 @@
                                     <div class="form-group">
                                         <label for="keterangan"
                                             class="mb-0 form-label col-form-label-sm">Keterangan</label>
-                                        <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="3"
-                                            placeholder="Tulis keterangan" id="keterangan" name="keterangan" disabled>{{ $data->keterangan }}</textarea>
+                                        <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="3" id="keterangan"
+                                            name="keterangan" disabled>{{ $data->keterangan }}</textarea>
                                         @error('keterangan')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -275,8 +275,7 @@
                                         <label for="jumlah" class="mb-0 form-label col-form-label-sm">Jumlah</label>
                                         <input type="text"
                                             class="price form-control @error('jumlah') is-invalid @enderror"
-                                            id="jumlah" name="jumlah" placeholder="Masukan jumlah hutang"
-                                            value="{{ $data->jumlah }}" disabled>
+                                            id="jumlah" name="jumlah" value="{{ $data->jumlah }}" disabled>
                                         @error('jumlah')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -305,8 +304,7 @@
                                             Tempo</label>
                                         <input type="date"
                                             class="form-control @error('Jatuh Tempo') is-invalid @enderror" id="tanggal"
-                                            name="tanggal" placeholder="Pilih Tanggal" value="{{ $data->tempo }}"
-                                            autocomplete="off" disabled>
+                                            name="tanggal" value="{{ $data->tempo }}" autocomplete="off" disabled>
                                         @error('tanggal')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

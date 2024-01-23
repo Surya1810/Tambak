@@ -84,10 +84,10 @@
                                             <td>{{ $data->name }}</td>
                                             <td>{{ $data->gudang->name }}</td>
                                             <td>
-                                                @if ($data->supplier_id == null)
+                                                @if ($data->customer_id == null)
                                                     -
                                                 @else
-                                                    {{ $data->supplier->name }}
+                                                    {{ $data->customer->name }}
                                                 @endif
                                             </td>
                                             <td>{{ formatRupiah($data->harga) }}</td>
@@ -113,9 +113,8 @@
             </div>
         </div>
     </section>
-
     <!-- Modal Add Data-->
-    <div class="modal fade" id="addHutang" tabindex="-1" aria-labelledby="addHutangLabel" aria-hidden="true">
+    <div class="modal fade" id="addPiutang" tabindex="-1" aria-labelledby="addPiutangLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -124,7 +123,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('hutang.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('piutang.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -180,7 +179,7 @@
                                 <div class="form-group">
                                     <label for="jumlah" class="mb-0 form-label col-form-label-sm">Jumlah</label>
                                     <input type="text" class="price form-control @error('jumlah') is-invalid @enderror"
-                                        id="jumlah" name="jumlah" placeholder="Masukan jumlah hutang"
+                                        id="jumlah" name="jumlah" placeholder="Masukan jumlah piutang"
                                         value="{{ old('jumlah') }}" required>
                                     @error('jumlah')
                                         <span class="invalid-feedback" role="alert">
@@ -211,6 +210,196 @@
             </div>
         </div>
     </div>
+
+    @foreach ($piutang as $data)
+        <!-- Modal Bayar-->
+        <div class="modal fade" id="bayarPiutang{{ $data->id }}" tabindex="-1" aria-labelledby="bayarPiutangLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addStepModalLabel">Bayar</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ route('piutang.bayar', $data->id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="akun" class="mb-0 form-label col-form-label-sm">Akun</label>
+                                        <select class="form-control select2-primary"
+                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="akun"
+                                            name="akun" disabled>
+                                            <option>{{ $data->akun->nomor }} - {{ $data->akun->nama }}</option>
+                                        </select>
+                                        @error('akun')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="customer" class="mb-0 form-label col-form-label-sm">Customer</label>
+                                        <select class="form-control select2-primary"
+                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="customer"
+                                            name="customer" disabled>
+                                            <option>{{ $customer->name }}</option>
+                                        </select>
+                                        @error('customer')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="keterangan"
+                                            class="mb-0 form-label col-form-label-sm">Keterangan</label>
+                                        <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="3" id="keterangan"
+                                            name="keterangan" disabled>{{ $data->keterangan }}</textarea>
+                                        @error('keterangan')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="jumlah" class="mb-0 form-label col-form-label-sm">Jumlah</label>
+                                        <input type="text"
+                                            class="price form-control @error('jumlah') is-invalid @enderror"
+                                            id="jumlah" name="jumlah" value="{{ $data->jumlah }}" disabled>
+                                        @error('jumlah')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="bayar" class="mb-0 form-label col-form-label-sm">Nominal
+                                            Bayar</label>
+                                        <input type="text"
+                                            class="price form-control @error('bayar') is-invalid @enderror" id="bayar"
+                                            name="bayar" placeholder="Masukan nominal bayar"
+                                            value="{{ old('bayar') }}" required>
+                                        @error('bayar')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="tanggal" class="mb-0 form-label col-form-label-sm">Jatuh
+                                            Tempo</label>
+                                        <input type="date"
+                                            class="form-control @error('Jatuh Tempo') is-invalid @enderror" id="tanggal"
+                                            name="tanggal" value="{{ $data->tempo }}" autocomplete="off" disabled>
+                                        @error('tanggal')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary rounded-tambak">Bayar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Edit Data-->
+        <div class="modal fade" id="editPiutang{{ $data->id }}" tabindex="-1" aria-labelledby="editPiutangLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addStepModalLabel">Ubah Data</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ route('piutang.update', $data->id) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="keterangan"
+                                            class="mb-0 form-label col-form-label-sm">Keterangan</label>
+                                        <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="3"
+                                            placeholder="Tulis keterangan" id="keterangan" name="keterangan" required>{{ $data->keterangan }}</textarea>
+                                        @error('keterangan')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="jumlah" class="mb-0 form-label col-form-label-sm">Jumlah</label>
+                                        <input type="text"
+                                            class="price form-control @error('jumlah') is-invalid @enderror"
+                                            id="jumlah" name="jumlah" placeholder="Masukan jumlah piutang"
+                                            value="{{ $data->jumlah }}" required>
+                                        @error('jumlah')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="retur" class="mb-0 form-label col-form-label-sm">Retur</label>
+                                        <input type="text"
+                                            class="price form-control @error('retur') is-invalid @enderror" id="retur"
+                                            name="retur" placeholder="Masukan nominal retur"
+                                            value="{{ old('retur') }}" required>
+                                        @error('retur')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="tanggal" class="mb-0 form-label col-form-label-sm">Jatuh
+                                            Tempo</label>
+                                        <input type="date"
+                                            class="form-control @error('Jatuh Tempo') is-invalid @enderror"
+                                            id="tanggal" name="tanggal" placeholder="Pilih Tanggal"
+                                            value="{{ old('tanggal') }}" autocomplete="off" required>
+                                        @error('tanggal')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary rounded-tambak">Ubat</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
 
 @push('scripts')

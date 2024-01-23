@@ -77,22 +77,40 @@
                                             <td>{{ $data->name }}</td>
                                             <td>{{ $data->kategori->name }}</td>
                                             @php
-                                                $stok_awal = App\Models\Transaksi::where('barang_id', $data->id)
-                                                    ->where('status', 'Masuk')
-                                                    ->oldest()
-                                                    ->first()->kuantitas;
-                                                $stok_masuk = App\Models\Transaksi::where('barang_id', $data->id)
-                                                    ->where('status', 'Masuk')
-                                                    ->sum('kuantitas');
-                                                $stok_keluar = App\Models\Transaksi::where('barang_id', $data->id)
-                                                    ->where('status', 'Keluar')
-                                                    ->sum('kuantitas');
-                                                $stok_akhir = $stok_masuk - $stok_keluar;
+                                                if ($data->kuantitas != null) {
+                                                    $stok_awal = App\Models\Transaksi::where('barang_id', $data->id)
+                                                        ->where('status', 'Masuk')
+                                                        ->oldest()
+                                                        ->first()->kuantitas;
+                                                    $stok_masuk = App\Models\Transaksi::where('barang_id', $data->id)
+                                                        ->where('status', 'Masuk')
+                                                        ->sum('kuantitas');
+                                                    $stok_keluar = App\Models\Transaksi::where('barang_id', $data->id)
+                                                        ->where('status', 'Keluar')
+                                                        ->sum('kuantitas');
+                                                    $stok_akhir = $stok_masuk - $stok_keluar;
+                                                }
                                             @endphp
-                                            <td>{{ $stok_awal }} {{ $data->satuan->name }}</td>
-                                            <td>{{ $stok_masuk }} {{ $data->satuan->name }}</td>
-                                            <td>{{ $stok_keluar }} {{ $data->satuan->name }}</td>
-                                            <td>{{ $stok_akhir }} {{ $data->satuan->name }}</td>
+                                            <td>
+                                                @isset($stok_awal)
+                                                    {{ $stok_awal }} {{ $data->satuan->name }}
+                                                @endisset
+                                            </td>
+                                            <td>
+                                                @isset($stok_masuk)
+                                                    {{ $stok_masuk }} {{ $data->satuan->name }}
+                                                @endisset
+                                            </td>
+                                            <td>
+                                                @isset($stok_keluar)
+                                                    {{ $stok_keluar }} {{ $data->satuan->name }}
+                                                @endisset
+                                            </td>
+                                            <td>
+                                                @isset($stok_akhir)
+                                                    {{ $stok_akhir }} {{ $data->satuan->name }}
+                                                @endisset
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

@@ -213,10 +213,10 @@
                                         data-dropdown-css-class="select2-primary" style="width: 100%;" id="aktivitas"
                                         name="aktivitas">
                                         <option></option>
-                                        <option value="Kredit" {{ old('status') == 'Kredit' ? 'selected' : '' }}>
-                                            Kredit</option>
                                         <option value="Debit" {{ old('status') == 'Debit' ? 'selected' : '' }}>
                                             Debit</option>
+                                        <option value="Kredit" {{ old('status') == 'Kredit' ? 'selected' : '' }}>
+                                            Kredit</option>
                                     </select>
                                     @error('aktivitas')
                                         <span class="invalid-feedback" role="alert">

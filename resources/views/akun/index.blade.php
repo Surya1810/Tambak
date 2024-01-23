@@ -112,7 +112,7 @@
                         <div class="form-group">
                             <label for="name" class="mb-0 form-label col-form-label-sm">Nama Akun</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                                name="name" placeholder="Masukan nama akun" value="{{ old('name') }}">
+                                name="name" placeholder="Masukan nama akun" value="{{ old('name') }}" required>
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -122,7 +122,7 @@
                         <div class="form-group">
                             <label for="nomor" class="mb-0 form-label col-form-label-sm">Nomor Akun</label>
                             <input type="number" class="form-control @error('nomor') is-invalid @enderror" id="nomor"
-                                name="nomor" placeholder="Masukan nomor akun" value="{{ old('nomor') }}">
+                                name="nomor" placeholder="Masukan nomor akun" value="{{ old('nomor') }}" required>
                             @error('nomor')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -133,7 +133,7 @@
                             <label for="aktivitas" class="mb-0 form-label col-form-label-sm">Aktivitas</label>
                             <select class="form-control aktivitas select2-primary is-invalid"
                                 data-dropdown-css-class="select2-primary" style="width: 100%;" id="aktivitas"
-                                name="aktivitas">
+                                name="aktivitas" required>
                                 <option></option>
                                 <option value="Kredit" {{ old('status') == 'Kredit' ? 'selected' : '' }}>
                                     Kredit</option>
@@ -150,7 +150,7 @@
                             <label for="jenis" class="mb-0 form-label col-form-label-sm">Jenis</label>
                             <select class="form-control jenis select2-primary is-invalid"
                                 data-dropdown-css-class="select2-primary" style="width: 100%;" id="jenis"
-                                name="jenis">
+                                name="jenis" required>
                                 <option></option>
                                 <option value="Pendapatan" {{ old('status') == 'Pendapatan' ? 'selected' : '' }}>
                                     Pendapatan</option>

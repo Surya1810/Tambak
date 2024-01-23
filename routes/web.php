@@ -131,6 +131,8 @@ Route::group(['prefix' => 'akuntan', 'middleware' => 'auth'], function () {
     Route::post('/hutang/bayar/{id}', [HutangController::class, 'bayar'])->name('hutang.bayar');
     // Pemberian Piutang
     Route::resource('piutang', PiutangController::class);
+    Route::post('/piutang/bayar/{id}', [PiutangController::class, 'bayar'])->name('piutang.bayar');
+
     // // Pembelian
     // Route::resource('jurnal', JurnalController::class);
     // // Purchase Order
