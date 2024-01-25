@@ -10,9 +10,9 @@ class Piutang extends Model
 {
     use HasFactory;
 
-    public function supplier(): BelongsTo
+    public function customer(): BelongsTo
     {
-        return $this->belongsTo(supplier::class, 'supplier_id');
+        return $this->belongsTo(customer::class, 'customer_id');
     }
     public function akun(): BelongsTo
     {
@@ -20,6 +20,6 @@ class Piutang extends Model
     }
 
     protected $casts = [
-        'tempo' => 'datetime'
+        'tanggal' => 'datetime'
     ];
 }

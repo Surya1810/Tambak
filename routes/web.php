@@ -13,8 +13,10 @@ use App\Http\Controllers\JurnalController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KematianController;
 use App\Http\Controllers\KolamController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PakanController;
 use App\Http\Controllers\PanenController;
+use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SamplingController;
@@ -132,11 +134,10 @@ Route::group(['prefix' => 'akuntan', 'middleware' => 'auth'], function () {
     // Pemberian Piutang
     Route::resource('piutang', PiutangController::class);
     Route::post('/piutang/bayar/{id}', [PiutangController::class, 'bayar'])->name('piutang.bayar');
-
-    // // Pembelian
-    // Route::resource('jurnal', JurnalController::class);
-    // // Purchase Order
-    // Route::resource('jurnal', JurnalController::class);
+    // Pembelian
+    Route::resource('pembelian', PembelianController::class);
+    // Purchase Order
+    Route::resource('PO', OrderController::class);
 });
 
 Route::middleware('auth')->group(function () {

@@ -53,7 +53,7 @@
                                                 <div class="col-12">
                                                     <div class="progress-group">
                                                         DoC
-                                                        <span class="float-right"><b>1/400</b></span>
+                                                        <span class="float-right"><b>/100</b></span>
                                                         <div class="progress progress-sm">
                                                             <div class="progress-bar bg-vaname" style="width: 75%"></div>
                                                         </div>
@@ -69,15 +69,15 @@
                                                             </tr>
                                                             <tr>
                                                                 <td>ADG :</td>
-                                                                <td class="float-right"><b>0,01</b></td>
+                                                                <td class="float-right"><b>0,01 g</b></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>SR :</td>
-                                                                <td class="float-right"><b>0,01</b></td>
+                                                                <td class="float-right"><b>00,1 %</b></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>MBW :</td>
-                                                                <td class="float-right"><b>0,01</b></td>
+                                                                <td class="float-right"><b>0,01 G</b></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Size :</td>
@@ -85,7 +85,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td>Total Pakan :</td>
-                                                                <td class="float-right"><b>0,01</b></td>
+                                                                <td class="float-right"><b>0,01 Kg</b></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Panen Kumulatif :</td>
@@ -93,16 +93,34 @@
                                                             </tr>
                                                             <tr>
                                                                 <td>Biomassa :</td>
-                                                                <td class="float-right"><b>0,01</b></td>
+                                                                <td class="float-right"><b>0,01 Kg</b></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-footer text-center rounded-tambak">
-                                            <button class="btn btn-sm btn-secondary rounded-tambak">Konsultasi</button>
-                                        </div>
+                                        @hasrole('owner')
+                                            @php
+                                                $operators = 'test';
+                                            @endphp
+                                            <div class="card-footer text-center rounded-tambak">
+                                                <div class="btn-group">
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-secondary rounded-tambak dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Konsultasi
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        @foreach ($operators as $operator)
+                                                            <li><a class="dropdown-item"
+                                                                    href="https://wa.me/62{{ $operator->phone }}">{{ $operator->name }}</a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        @endhasrole
                                     </div>
                                 </div>
                             @endforeach

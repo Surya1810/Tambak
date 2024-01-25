@@ -86,11 +86,15 @@
                                             <td>{{ formatRupiah($data->retur) }}</td>
                                             <td>{{ formatRupiah($data->bayar) }}</td>
                                             <td>{{ formatRupiah($data->jumlah - $data->retur - $data->bayar) }}</td>
-                                            <td>{{ $data->tempo->format('d/m/Y') }}</td>
+                                            <td>{{ $data->tanggal->addDays($data->supplier->tempo)->format('d/m/Y') }}</td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-sm btn-success rounded-tambak"
-                                                    data-toggle="modal" data-target="#bayarHutang{{ $data->id }}">
+                                                    data-toggle="modal" data-target="#Hutang{{ $data->id }}">
                                                     Bayar
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-info rounded-tambak"
+                                                    data-toggle="modal" data-target="#Hutang{{ $data->id }}">
+                                                    <i class="fas fa-pen"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-sm btn-warning rounded-tambak"
                                                     data-toggle="modal" data-target="#editHutang{{ $data->id }}">
@@ -132,6 +136,17 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12">
+                                <div class="form-group">
+                                    <label for="tanggal" class="mb-0 form-label col-form-label-sm">Tanggal</label>
+                                    <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
+                                        id="tanggal" name="tanggal" value="{{ old('tanggal') }}" autocomplete="off"
+                                        required>
+                                    @error('tanggal')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                                 <div class="form-group">
                                     <label for="akun" class="mb-0 form-label col-form-label-sm">Akun</label>
                                     <select class="form-control akun select2-primary is-invalid"
@@ -178,27 +193,12 @@
                                         </span>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="jumlah" class="mb-0 form-label col-form-label-sm">Jumlah</label>
                                     <input type="text" class="price form-control @error('jumlah') is-invalid @enderror"
                                         id="jumlah" name="jumlah" placeholder="Masukan jumlah hutang"
                                         value="{{ old('jumlah') }}" required>
                                     @error('jumlah')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="tanggal" class="mb-0 form-label col-form-label-sm">Jatuh Tempo</label>
-                                    <input type="date" class="form-control @error('Jatuh Tempo') is-invalid @enderror"
-                                        id="tanggal" name="tanggal" placeholder="Pilih Tanggal"
-                                        value="{{ old('tanggal') }}" autocomplete="off" required>
-                                    @error('tanggal')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -300,11 +300,10 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="tanggal" class="mb-0 form-label col-form-label-sm">Jatuh
-                                            Tempo</label>
-                                        <input type="date"
-                                            class="form-control @error('Jatuh Tempo') is-invalid @enderror" id="tanggal"
-                                            name="tanggal" value="{{ $data->tempo }}" autocomplete="off" disabled>
+                                        <label for="tanggal" class="mb-0 form-label col-form-label-sm">Tanggal</label>
+                                        <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
+                                            id="tanggal" name="tanggal" value="{{ $data->tanggal->format('Y-m-d') }}"
+                                            autocomplete="off" disabled>
                                         @error('tanggal')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -335,8 +334,23 @@
                     </div>
                     <form action="{{ route('hutang.update', $data->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
+
                         <div class="modal-body">
                             <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="tanggal" class="mb-0 form-label col-form-label-sm">Tanggal</label>
+                                        <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
+                                            id="tanggal" name="tanggal" placeholder="Pilih Tanggal"
+                                            value="{{ $data->tanggal->format('Y-m-d') }}" autocomplete="off" required>
+                                        @error('tanggal')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="keterangan"
@@ -368,25 +382,10 @@
                                     <div class="form-group">
                                         <label for="retur" class="mb-0 form-label col-form-label-sm">Retur</label>
                                         <input type="text"
-                                            class="price form-control @error('retur') is-invalid @enderror" id="retur"
-                                            name="retur" placeholder="Masukan nominal retur"
+                                            class="price form-control @error('retur') is-invalid @enderror"
+                                            id="retur" name="retur" placeholder="Masukan nominal retur"
                                             value="{{ old('retur') }}" required>
                                         @error('retur')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="tanggal" class="mb-0 form-label col-form-label-sm">Jatuh
-                                            Tempo</label>
-                                        <input type="date"
-                                            class="form-control @error('Jatuh Tempo') is-invalid @enderror"
-                                            id="tanggal" name="tanggal" placeholder="Pilih Tanggal"
-                                            value="{{ old('tanggal') }}" autocomplete="off" required>
-                                        @error('tanggal')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

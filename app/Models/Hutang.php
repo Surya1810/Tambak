@@ -20,6 +20,6 @@ class Hutang extends Model
     }
 
     protected $casts = [
-        'tempo' => 'datetime'
+        'tanggal' => 'datetime'
     ];
 }

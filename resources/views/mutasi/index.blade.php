@@ -77,39 +77,33 @@
                                             <td>{{ $data->name }}</td>
                                             <td>{{ $data->kategori->name }}</td>
                                             @php
-                                                if ($data->kuantitas != null) {
-                                                    $stok_awal = App\Models\Transaksi::where('barang_id', $data->id)
-                                                        ->where('status', 'Masuk')
-                                                        ->oldest()
-                                                        ->first()->kuantitas;
-                                                    $stok_masuk = App\Models\Transaksi::where('barang_id', $data->id)
-                                                        ->where('status', 'Masuk')
-                                                        ->sum('kuantitas');
-                                                    $stok_keluar = App\Models\Transaksi::where('barang_id', $data->id)
-                                                        ->where('status', 'Keluar')
-                                                        ->sum('kuantitas');
-                                                    $stok_akhir = $stok_masuk - $stok_keluar;
-                                                }
+                                                $stok_awal = App\Models\Transaksi::where('barang_id', $data->id)
+                                                    ->where('status', 'Masuk')
+                                                    ->oldest()
+                                                    ->first();
+                                                $stok_masuk = App\Models\Transaksi::where('barang_id', $data->id)
+                                                    ->where('status', 'Masuk')
+                                                    ->sum('kuantitas');
+                                                $stok_keluar = App\Models\Transaksi::where('barang_id', $data->id)
+                                                    ->where('status', 'Keluar')
+                                                    ->sum('kuantitas');
+                                                $stok_akhir = $stok_masuk - $stok_keluar;
                                             @endphp
                                             <td>
-                                                @isset($stok_awal)
-                                                    {{ $stok_awal }} {{ $data->satuan->name }}
-                                                @endisset
+                                                @if ($stok_awal == null)
+                                                    0 {{ $data->satuan->name }}
+                                                @else
+                                                    {{ $stok_awal->kuantitas }}
+                                                @endif
                                             </td>
                                             <td>
-                                                @isset($stok_masuk)
-                                                    {{ $stok_masuk }} {{ $data->satuan->name }}
-                                                @endisset
+                                                {{ $stok_masuk }} {{ $data->satuan->name }}
                                             </td>
                                             <td>
-                                                @isset($stok_keluar)
-                                                    {{ $stok_keluar }} {{ $data->satuan->name }}
-                                                @endisset
+                                                {{ $stok_keluar }} {{ $data->satuan->name }}
                                             </td>
                                             <td>
-                                                @isset($stok_akhir)
-                                                    {{ $stok_akhir }} {{ $data->satuan->name }}
-                                                @endisset
+                                                {{ $stok_akhir }} {{ $data->satuan->name }}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -173,10 +167,10 @@
                                         data-dropdown-css-class="select2-primary" style="width: 100%;" id="status"
                                         name="status">
                                         <option></option>
-                                        <option value="Keluar" {{ old('status') == 'Keluar' ? 'selected' : '' }}>
-                                            Keluar</option>
                                         <option value="Masuk" {{ old('status') == 'Masuk' ? 'selected' : '' }}>
                                             Masuk</option>
+                                        <option value="Keluar" {{ old('status') == 'Keluar' ? 'selected' : '' }}>
+                                            Keluar</option>
                                     </select>
                                     @error('status')
                                         <span class="invalid-feedback" role="alert">

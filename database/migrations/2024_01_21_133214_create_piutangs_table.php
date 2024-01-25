@@ -18,7 +18,6 @@ return new class extends Migration
             $table->bigInteger('akun_id')->constrained()->cascadeOnDelete()->nullable();
             $table->string('nomor');
             $table->date('tanggal');
-            $table->date('tempo');
             $table->integer('jumlah');
             $table->integer('retur')->nullable();
             $table->integer('bayar')->nullable();

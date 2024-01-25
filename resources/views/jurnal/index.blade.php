@@ -51,13 +51,16 @@
                             <table id="jurnalTable" class="table table-bordered text-nowrap text-center text-sm">
                                 <thead class="table-dark">
                                     <tr>
+                                        <th style="width: 10%">
+                                            Tanggal
+                                        </th>
                                         <th style="width: 15%">
                                             Akun
                                         </th>
-                                        <th style="width: 25%">
+                                        <th style="width: 20%">
                                             Debit
                                         </th>
-                                        <th style="width: 25%">
+                                        <th style="width: 20%">
                                             Kredit
                                         </th>
                                         <th style="width: 25%">
@@ -71,6 +74,7 @@
                                 <tbody>
                                     @foreach ($jurnal as $data)
                                         <tr>
+                                            <td>{{ $data->tanggal->format('d/m/Y') }}</td>
                                             <td>{{ $data->akun->nama }} - {{ $data->akun->nomor }}</td>
                                             <td>
                                                 @if ($data->aktivitas == 'Debit')

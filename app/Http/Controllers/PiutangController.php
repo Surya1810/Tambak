@@ -53,7 +53,7 @@ class PiutangController extends Controller
         $project->akun_id = $request->akun;
         $project->customer_id = $request->customer;
         $project->keterangan = $request->keterangan;
-        $project->tempo = $request->tanggal;
+        $project->tanggal = $request->tanggal;
         $project->jumlah = $request->jumlah;
         $project->save();
 
@@ -92,7 +92,7 @@ class PiutangController extends Controller
         $data = Piutang::find($id);
         $data->retur = $request->retur;
         $data->keterangan = $request->keterangan;
-        $data->tempo = $request->tanggal;
+        $data->tanggal = $request->tanggal;
         $data->jumlah = $request->jumlah;
         $data->update();
 
