@@ -42,7 +42,7 @@
                                 <div class="col-6">
                                     <button type="button" class="btn btn-sm btn-primary rounded-tambak float-right"
                                         data-toggle="modal" data-target="#addPO">
-                                        Tambah Transaksi
+                                        Tambah PO
                                     </button>
                                 </div>
                             </div>
@@ -52,24 +52,27 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width: 5%">
-                                            Kategori
-                                        </th>
-                                        <th style="width: 25%">
-                                            Nama
+                                            Nomor
                                         </th>
                                         <th style="width: 20%">
-                                            Gudang
-                                        </th>
-                                        <th style="width: 15%">
                                             Supplier
                                         </th>
-                                        <th style="width: 10%">
-                                            Harga beli
+                                        <th style="width: 5%">
+                                            Termin
                                         </th>
-                                        <th style="width: 10%">
-                                            Kuantitas
+                                        <th style="width: 20%">
+                                            Barang
                                         </th>
                                         <th style="width: 15%">
+                                            Harga & Kuantitas
+                                        </th>
+                                        <th style="width: 15%">
+                                            Subtotal
+                                        </th>
+                                        <th style="width: 15%">
+                                            Keterangan
+                                        </th>
+                                        <th style="width: 5%">
                                             Action
                                         </th>
                                     </tr>
@@ -77,24 +80,20 @@
                                 <tbody>
                                     @foreach ($PO as $data)
                                         <tr>
-                                            <td>{{ $data->kategori->name }}</td>
-                                            <td>{{ $data->name }}</td>
-                                            <td>{{ $data->gudang->name }}</td>
-                                            <td>
-                                                @if ($data->supplier_id == null)
-                                                    -
-                                                @else
-                                                    {{ $data->supplier->name }}
-                                                @endif
-                                            </td>
-                                            <td>{{ formatRupiah($data->harga) }}</td>
-                                            <td>{{ $data->kuantitas }} {{ $data->satuan->name }}</td>
+                                            <td>{{ $data->nomor }}</td>
+                                            <td>{{ $data->supplier->name }}</td>
+                                            <td>{{ $data->supplier->tempo }} Hari</td>
+                                            <td>{{ $data->barang->name }}</td>
+                                            <td>{{ formatRupiah($data->harga) }} -
+                                                {{ $data->qty }}{{ $data->barang->satuan->name }}</td>
+                                            <td>{{ formatRupiah($data->harga * $data->qty) }}</td>
+                                            <td>{{ $data->keterangan }}</td>
                                             <td class="text-center">
                                                 <button class="btn btn-sm btn-danger rounded-tambak"
-                                                    onclick="deleteAkun({{ $data->id }})"><i
+                                                    onclick="deletePO({{ $data->id }})"><i
                                                         class="fas fa-trash"></i></button>
                                                 <form id="delete-form-{{ $data->id }}"
-                                                    action="{{ route('purchase.destroy', $data->id) }}" method="POST"
+                                                    action="{{ route('PO.destroy', $data->id) }}" method="POST"
                                                     style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
@@ -116,72 +115,50 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addStepModalLabel">Tambah Transaksi</h5>
+                    <h5 class="modal-title" id="addStepModalLabel">Tambah Purchase Order</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('purchase.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('PO.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="name" class="mb-0 form-label col-form-label-sm">Nama</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                        id="name" name="name" placeholder="Masukan nama"
-                                        value="{{ old('name') }}" required>
-                                    @error('name')
+                                    <label for="tanggal" class="mb-0 form-label col-form-label-sm">Tanggal</label>
+                                    <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
+                                        id="tanggal" name="tanggal" value="{{ old('tanggal') }}" autocomplete="off"
+                                        required>
+                                    @error('tanggal')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="gudang" class="mb-0 form-label col-form-label-sm">Gudang</label>
-                                    <select class="form-control gudang select2-primary is-invalid"
-                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="gudang"
-                                        name="gudang" required>
+                                    <label for="barang" class="mb-0 form-label col-form-label-sm">Barang</label>
+                                    <select class="form-control barang select2-primary is-invalid"
+                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="barang"
+                                        name="barang" required>
                                         <option></option>
-                                        @foreach ($gudangs as $gudang)
-                                            <option value="{{ $gudang->id }}"
-                                                {{ old('gudang') == $gudang->id ? 'selected' : '' }}>
-                                                {{ $gudang->name }}</option>
+                                        @foreach ($barangs as $barang)
+                                            <option value="{{ $barang->id }}"
+                                                {{ old('barang') == $barang->id ? 'selected' : '' }}>
+                                                {{ $barang->name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('gudang')
+                                    @error('supplier')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="col-6">
                                 <div class="form-group">
-                                    <label for="kategori" class="mb-0 form-label col-form-label-sm">Kategori</label>
-                                    <select class="form-control kategori select2-primary is-invalid"
-                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="kategori"
-                                        name="kategori" required>
-                                        <option></option>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}"
-                                                {{ old('kategori') == $category->id ? 'selected' : '' }}>
-                                                {{ $category->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('kategori')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="supplier" class="mb-0 form-label col-form-label-sm">Supplier Utama</label>
+                                    <label for="supplier" class="mb-0 form-label col-form-label-sm">Supplier</label>
                                     <select class="form-control supplier select2-primary is-invalid"
                                         data-dropdown-css-class="select2-primary" style="width: 100%;" id="supplier"
-                                        name="supplier">
+                                        name="supplier" required>
                                         <option></option>
                                         @foreach ($suppliers as $supplier)
                                             <option value="{{ $supplier->id }}"
@@ -195,12 +172,22 @@
                                         </span>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="col-12">
                                 <div class="form-group">
-                                    <label for="harga" class="mb-0 form-label col-form-label-sm">Harga Beli</label>
+                                    <label for="keterangan" class="mb-0 form-label col-form-label-sm">Keterangan</label>
+                                    <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="3"
+                                        placeholder="Tulis keterangan" id="keterangan" name="keterangan" required>{{ old('keterangan') }}</textarea>
+                                    @error('keterangan')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="harga" class="mb-0 form-label col-form-label-sm">Harga</label>
                                     <input type="text" class="price form-control @error('harga') is-invalid @enderror"
-                                        id="harga" name="harga" placeholder="Masukan harga beli"
+                                        id="harga" name="harga" placeholder="Masukan harga barang"
                                         value="{{ old('harga') }}" required>
                                     @error('harga')
                                         <span class="invalid-feedback" role="alert">
@@ -211,31 +198,11 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="kuantitas" class="mb-0 form-label col-form-label-sm">Kuantitas</label>
-                                    <input type="number" class="form-control @error('kuantitas') is-invalid @enderror"
-                                        id="kuantitas" name="kuantitas" placeholder="0" value="{{ old('harga') }}"
-                                        required>
-                                    @error('kuantitas')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="satuan" class="mb-0 form-label col-form-label-sm">Satuan</label>
-                                    <select class="form-control satuan select2-primary is-invalid"
-                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="satuan"
-                                        name="satuan" required>
-                                        <option></option>
-                                        @foreach ($satuans as $satuan)
-                                            <option value="{{ $satuan->id }}"
-                                                {{ old('satuan') == $satuan->id ? 'selected' : '' }}>
-                                                {{ $satuan->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('satuan')
+                                    <label for="qty" class="mb-0 form-label col-form-label-sm">Kuantitas</label>
+                                    <input type="number" class="form-control @error('qty') is-invalid @enderror"
+                                        id="qty" name="qty" placeholder="Masukan kuantitas barang"
+                                        value="{{ old('qty') }}" required>
+                                    @error('qty')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -300,5 +267,40 @@
                 rightAlign: false
             });
         });
+
+        function deletePO(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Delete'
+            }).then((result) => {
+                if (result.value) {
+                    event.preventDefault();
+                    document.getElementById('delete-form-' + id).submit();
+                } else if (
+                    result.dismiss === swal.DismissReason.cancel
+                ) {
+                    swal(
+                        'Cancelled',
+                        'Your data is safe !',
+                        'error'
+                    )
+                }
+            })
+        }
+
+        $('.barang').select2({
+            placeholder: "Pilih barang",
+            minimumResultsForSearch: -1,
+            allowClear: true,
+        })
+
+        $('.supplier').select2({
+            placeholder: "Pilih supplier",
+            minimumResultsForSearch: -1,
+            allowClear: true,
+        })
     </script>
 @endpush

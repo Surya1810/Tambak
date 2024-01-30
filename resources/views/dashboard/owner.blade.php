@@ -131,52 +131,6 @@
                     @endforeach
                 @endif
             </div>
-            {{-- <div class="row">
-                @if (auth()->user()->tambak->count() != null)
-                    <div class="col-12 col-lg-6">
-                        <div class="card card-outline rounded-tambak card-primary">
-                            <div class="card-header">
-                                <div class="row align-items-center">
-                                    <div class="col-6">
-                                        <h3 class="card-title">Daftar Karyawan</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body table-responsive">
-                                <table id="karyawanTable" class="table table-bordered text-nowrap text-center">
-                                    <thead class="table-dark">
-                                        <tr>
-                                            <th style="width: 10%">
-                                                No
-                                            </th>
-                                            <th style="width: 45%">
-                                                Nama
-                                            </th>
-                                            <th style="width: 45%">
-                                                Info
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($karyawans as $key => $karyawan)
-                                            <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td>{{ $karyawan->name }}</td>
-                                                <td>{{ $karyawan->getRoleNames()->first() }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="card-footer rounded-tambak text-center">
-                                <a href="{{ route('operator.index') }}"
-                                    class="btn btn-sm btn-secondary rounded-tambak">Lihat
-                                    Detail</a>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-            </div> --}}
         </div>
     </section>
 @endsection

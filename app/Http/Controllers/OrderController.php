@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
 use App\Models\Order;
+use App\Models\Supplier;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class OrderController extends Controller
 {
@@ -12,7 +17,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $PO = Order::all();
+        $suppliers = Supplier::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', '=', true)->get();
+        $barangs = Barang::where('tambak_id', Auth::user()->tambak->first()->id)->get();
+
+        return view('purchase.index', compact('PO', 'suppliers', 'barangs'));
     }
 
     /**
@@ -28,7 +37,32 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'qty' => 'bail|required',
+            'supplier' => 'bail|required',
+            'keterangan' => 'bail|required',
+            'harga' => 'bail|required',
+            'tanggal' => 'bail|required',
+            'barang' => 'bail|required',
+        ]);
+
+        $old = session()->getOldInput();
+
+        $now = Carbon::now();
+        $number = Order::where('owner_id', Auth::user()->created_by)->where('tanggal', Carbon::today())->count();
+        $project = new Order();
+        $project->nomor = 'PO/' . $now->format('d') . $now->format('m') . '/' . $number + 1;
+        $project->owner_id = Auth::user()->created_by;
+        $project->input_by = Auth::user()->id;
+        $project->supplier_id = $request->supplier;
+        $project->barang_id = $request->barang;
+        $project->keterangan = $request->keterangan;
+        $project->tanggal = $request->tanggal;
+        $project->harga = $request->harga;
+        $project->qty = $request->qty;
+        $project->save();
+
+        return redirect()->route('PO.index')->with(['pesan' => 'PO berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }
 
     /**
@@ -58,8 +92,11 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Order $order)
+    public function destroy($id)
     {
-        //
+        $data = Order::find($id);
+        $data->delete();
+
+        return redirect()->route('PO.index')->with(['pesan' => 'PO berhasil dihapus', 'level-alert' => 'alert-danger']);
     }
 }

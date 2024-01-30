@@ -337,6 +337,18 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ route('PO.index') }}" class="nav-link">
+                                        <i class="nav-icon fa-regular fa-paste"></i>
+                                        <p>Purchase Order</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('pembelian.index') }}" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-cart-shopping"></i>
+                                        <p>Pembelian</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{{ route('hutang.index') }}" class="nav-link">
                                         <i class="nav-icon fa-solid fa-file-arrow-up"></i>
                                         <p>Pembayaran Hutang</p>
@@ -346,18 +358,6 @@
                                     <a href="{{ route('piutang.index') }}" class="nav-link">
                                         <i class="nav-icon fa-solid fa-file-arrow-down"></i>
                                         <p>Pemberian Piutang</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fa-solid fa-cart-shopping"></i>
-                                        <p>Pembelian</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fa-regular fa-paste"></i>
-                                        <p>Purchase Order</p>
                                     </a>
                                 </li>
 
