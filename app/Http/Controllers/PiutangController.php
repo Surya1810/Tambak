@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Akun;
 use App\Models\Customer;
 use App\Models\Piutang;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -47,8 +48,10 @@ class PiutangController extends Controller
 
         $old = session()->getOldInput();
 
+        $now = Carbon::now();
+        $number = Piutang::where('owner_id', Auth::user()->created_by)->where('tanggal', Carbon::today())->count();
         $project = new Piutang();
-        $project->nomor = 'BYR-' . Str::random(5);
+        $project->nomor = 'PIU/' . $now->format('d') . $now->format('m') . '/' . $number + 1;
         $project->owner_id = Auth::user()->created_by;
         $project->akun_id = $request->akun;
         $project->customer_id = $request->customer;

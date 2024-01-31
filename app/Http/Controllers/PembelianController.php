@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Akun;
+use App\Models\Hutang;
+use App\Models\Order;
 use App\Models\Pembelian;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PembelianController extends Controller
 {
@@ -12,7 +17,10 @@ class PembelianController extends Controller
      */
     public function index()
     {
-        //
+        $pembelian = Pembelian::where('owner_id', Auth::user()->created_by)->get();
+        $orders = Order::where('owner_id', Auth::user()->created_by)->get();
+        $akuns = Akun::where('owner_id', Auth::user()->created_by)->get();
+        return view('pembelian.index', compact('pembelian', 'orders', 'akuns'));
     }
 
     /**
@@ -28,7 +36,26 @@ class PembelianController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'order' => 'bail|required',
+            'akun' => 'bail|required',
+            'tanggal' => 'bail|required',
+        ]);
+
+        $old = session()->getOldInput();
+
+        $now = Carbon::now();
+        $number = Pembelian::where('owner_id', Auth::user()->created_by)->where('tanggal', Carbon::today())->count();
+        $project = new Pembelian();
+        $project->nomor = 'LPB/' . $now->format('d') . $now->format('m') . '/' . $number + 1;
+        $project->owner_id = Auth::user()->created_by;
+        $project->input_by = Auth::user()->id;
+        $project->order_id = $request->order;
+        $project->akun_id = $request->akun;
+        $project->tanggal = $request->tanggal;
+        $project->save();
+
+        return redirect()->route('pembelian.index')->with(['pesan' => 'LPB berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }
 
     /**
@@ -58,8 +85,14 @@ class PembelianController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pembelian $pembelian)
+    public function destroy($id)
     {
-        //
+        $data2 = Pembelian::find($id);
+        $data3 = Hutang::where('pembelian_id', $data2->id)->get();
+
+        $data2->delete();
+        $data3->delete();
+
+        return redirect()->route('pembelian.index')->with(['pesan' => 'Pembelian berhasil dihapus', 'level-alert' => 'alert-danger']);
     }
 }

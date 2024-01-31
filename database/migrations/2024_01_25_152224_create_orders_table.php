@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('owner_id')->constrained()->cascadeOnDelete()->nullable();
-            $table->bigInteger('supplier_id')->constrained()->cascadeOnDelete()->nullable();
-            $table->bigInteger('barang_id')->constrained()->cascadeOnDelete()->nullable();
-            $table->bigInteger('input_by')->constrained()->cascadeOnDelete()->nullable();
+            $table->bigInteger('owner_id')->constrained()->cascadeOnDelete();
+            $table->bigInteger('supplier_id')->constrained()->cascadeOnDelete();
+            $table->bigInteger('barang_id')->constrained()->cascadeOnDelete();
+            $table->bigInteger('input_by')->constrained()->cascadeOnDelete();
             $table->string('nomor');
             $table->date('tanggal');
             $table->string('keterangan');

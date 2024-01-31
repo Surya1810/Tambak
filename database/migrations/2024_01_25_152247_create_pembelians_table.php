@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('pembelians', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('input_by')->constrained()->cascadeOnDelete()->nullable();
+            $table->bigInteger('owner_id')->constrained()->cascadeOnDelete();
+            $table->bigInteger('input_by')->constrained()->cascadeOnDelete();
+            $table->bigInteger('order_id')->constrained()->cascadeOnDelete();
+            $table->bigInteger('akun_id')->constrained()->cascadeOnDelete();
             $table->string('nomor');
             $table->date('tanggal');
-            $table->bigInteger('supplier_id')->constrained()->cascadeOnDelete()->nullable();
-            $table->bigInteger('akun_id')->constrained()->cascadeOnDelete()->nullable();
-            $table->bigInteger('po_id')->constrained()->cascadeOnDelete()->nullable();
-            $table->string('keterangan');
             $table->timestamps();
         });
     }

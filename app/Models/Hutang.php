@@ -10,13 +10,9 @@ class Hutang extends Model
 {
     use HasFactory;
 
-    public function supplier(): BelongsTo
+    public function pembelian(): BelongsTo
     {
-        return $this->belongsTo(supplier::class, 'supplier_id');
-    }
-    public function akun(): BelongsTo
-    {
-        return $this->belongsTo(akun::class, 'akun_id');
+        return $this->belongsTo(Pembelian::class, 'pembelian_id');
     }
 
     protected $casts = [

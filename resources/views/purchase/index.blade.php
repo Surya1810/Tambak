@@ -54,6 +54,9 @@
                                         <th style="width: 5%">
                                             Nomor
                                         </th>
+                                        <th style="width: 15%">
+                                            Tanggal
+                                        </th>
                                         <th style="width: 20%">
                                             Supplier
                                         </th>
@@ -69,9 +72,6 @@
                                         <th style="width: 15%">
                                             Subtotal
                                         </th>
-                                        <th style="width: 15%">
-                                            Keterangan
-                                        </th>
                                         <th style="width: 5%">
                                             Action
                                         </th>
@@ -81,13 +81,13 @@
                                     @foreach ($PO as $data)
                                         <tr>
                                             <td>{{ $data->nomor }}</td>
+                                            <td>{{ $data->tanggal->format('d/m/Y') }}</td>
                                             <td>{{ $data->supplier->name }}</td>
                                             <td>{{ $data->supplier->tempo }} Hari</td>
                                             <td>{{ $data->barang->name }}</td>
                                             <td>{{ formatRupiah($data->harga) }} -
                                                 {{ $data->qty }}{{ $data->barang->satuan->name }}</td>
                                             <td>{{ formatRupiah($data->harga * $data->qty) }}</td>
-                                            <td>{{ $data->keterangan }}</td>
                                             <td class="text-center">
                                                 <button class="btn btn-sm btn-danger rounded-tambak"
                                                     onclick="deletePO({{ $data->id }})"><i

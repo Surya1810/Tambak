@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Hutang;
 use App\Models\Order;
+use App\Models\Pembelian;
 use App\Models\Supplier;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,7 +19,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $PO = Order::all();
+        $PO = Order::where('owner_id', Auth::user()->created_by)->get();
         $suppliers = Supplier::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', '=', true)->get();
         $barangs = Barang::where('tambak_id', Auth::user()->tambak->first()->id)->get();
 
@@ -95,7 +97,12 @@ class OrderController extends Controller
     public function destroy($id)
     {
         $data = Order::find($id);
+        $data2 = Pembelian::where('order_id', $data->id)->first();
+        $data3 = Hutang::where('pembelian_id', $data2->id)->first();
+
         $data->delete();
+        $data2->delete();
+        $data3->delete();
 
         return redirect()->route('PO.index')->with(['pesan' => 'PO berhasil dihapus', 'level-alert' => 'alert-danger']);
     }

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Akun;
 use App\Models\Hutang;
+use App\Models\Pembelian;
 use App\Models\Supplier;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -17,11 +19,10 @@ class HutangController extends Controller
      */
     public function index()
     {
-        $akuns = Akun::where('owner_id', Auth::user()->created_by)->get();
-        $suppliers = Supplier::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', '=', true)->get();
         $hutang = Hutang::where('owner_id', Auth::user()->created_by)->get();
+        $pembelians = Pembelian::where('owner_id', Auth::user()->created_by)->get();
 
-        return view('hutang.index', compact('hutang', 'akuns', 'suppliers'));
+        return view('hutang.index', compact('hutang', 'pembelians'));
     }
 
     /**
@@ -38,23 +39,19 @@ class HutangController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'akun' => 'bail|required',
-            'supplier' => 'bail|required',
-            'keterangan' => 'bail|required',
-            'jumlah' => 'bail|required',
             'tanggal' => 'bail|required',
+            'pembelian' => 'bail|required',
         ]);
 
         $old = session()->getOldInput();
 
+        $now = Carbon::now();
+        $number = Hutang::where('owner_id', Auth::user()->created_by)->where('tanggal', Carbon::today())->count();
         $project = new Hutang();
-        $project->nomor = 'BYR-' . Str::random(5);
+        $project->nomor = 'BYR/' . $now->format('d') . $now->format('m') . '/' . $number + 1;
         $project->owner_id = Auth::user()->created_by;
-        $project->akun_id = $request->akun;
-        $project->supplier_id = $request->supplier;
-        $project->keterangan = $request->keterangan;
+        $project->pembelian_id = $request->pembelian;
         $project->tanggal = $request->tanggal;
-        $project->jumlah = $request->jumlah;
         $project->save();
 
         return redirect()->route('hutang.index')->with(['pesan' => 'Hutang berhasil ditambahkan', 'level-alert' => 'alert-success']);
@@ -82,18 +79,13 @@ class HutangController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'keterangan' => 'bail|required',
-            'jumlah' => 'bail|required',
-            'tanggal' => 'bail|required',
+            'retur' => 'bail|required',
         ]);
 
         $old = session()->getOldInput();
 
         $data = Hutang::find($id);
         $data->retur = $request->retur;
-        $data->keterangan = $request->keterangan;
-        $data->tanggal = $request->tanggal;
-        $data->jumlah = $request->jumlah;
         $data->update();
 
         return redirect()->route('hutang.index')->with(['pesan' => 'Hutang berhasil diubah', 'level-alert' => 'alert-warning']);

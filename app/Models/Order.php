@@ -18,4 +18,8 @@ class Order extends Model
     {
         return $this->belongsTo(barang::class, 'barang_id');
     }
+
+    protected $casts = [
+        'tanggal' => 'datetime'
+    ];
 }

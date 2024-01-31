@@ -51,8 +51,8 @@
                             <table id="piutangTable" class="table table-bordered text-nowrap text-center text-sm">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width: 20%" class="text-wrap">
-                                            Keterangan
+                                        <th style="width: 15%">
+                                            Nomor
                                         </th>
                                         <th style="width: 15%">
                                             Customer
@@ -67,10 +67,10 @@
                                             Bayar
                                         </th>
                                         <th style="width: 10%">
-                                            Kekurangan
-                                        </th>
-                                        <th style="width: 10%">
                                             Jatuh Tempo
+                                        </th>
+                                        <th style="width: 20%" class="text-wrap">
+                                            Keterangan
                                         </th>
                                         <th style="width: 15%">
                                             Action
@@ -80,13 +80,13 @@
                                 <tbody>
                                     @foreach ($piutang as $data)
                                         <tr>
-                                            <td>{{ $data->keterangan }}</td>
+                                            <td>{{ $data->nomor }}</td>
                                             <td>{{ $data->customer->name }}</td>
                                             <td>{{ formatRupiah($data->jumlah) }}</td>
                                             <td>{{ formatRupiah($data->retur) }}</td>
                                             <td>{{ formatRupiah($data->bayar) }}</td>
-                                            <td>{{ formatRupiah($data->jumlah - $data->retur - $data->bayar) }}</td>
                                             <td>{{ $data->tanggal->addDays($data->customer->tempo)->format('d/m/Y') }}</td>
+                                            <td>{{ $data->keterangan }}</td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-sm btn-success rounded-tambak"
                                                     data-toggle="modal" data-target="#bayarPiutang{{ $data->id }}">
@@ -447,6 +447,30 @@
                 rightAlign: false
             });
         });
+
+        function deletePiutang(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Delete'
+            }).then((result) => {
+                if (result.value) {
+                    event.preventDefault();
+                    document.getElementById('delete-form-' + id).submit();
+                } else if (
+                    result.dismiss === swal.DismissReason.cancel
+                ) {
+                    swal(
+                        'Cancelled',
+                        'Your data is safe !',
+                        'error'
+                    )
+                }
+            })
+        }
+
         $('.akun').select2({
             placeholder: "Pilih akun",
             minimumResultsForSearch: -1,
