@@ -12,7 +12,7 @@ class Barang extends Model
 
     public function supplier(): BelongsTo
     {
-        return $this->belongsTo(supplier::class, 'supplier_id');
+        return $this->belongsTo(Supplier::class, 'supplier_id');
     }
     public function kategori(): BelongsTo
     {
@@ -20,6 +20,6 @@ class Barang extends Model
     }
     public function satuan(): BelongsTo
     {
-        return $this->belongsTo(satuan::class, 'satuan_id');
+        return $this->belongsTo(Satuan::class, 'satuan_id');
     }
 }
