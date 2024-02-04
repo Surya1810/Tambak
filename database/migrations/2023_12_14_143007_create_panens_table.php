@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('panens', function (Blueprint $table) {
             $table->increments('id');
+            $table->bigInteger('tambak_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('user_id')->constrained()->cascadeOnDelete();
-            $table->bigInteger('owner_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('kolam_id')->constrained()->cascadeOnDelete();
             // $table->bigInteger('satuan_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('supplier_id')->constrained()->cascadeOnDelete();

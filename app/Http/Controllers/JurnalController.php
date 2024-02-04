@@ -15,11 +15,11 @@ class JurnalController extends Controller
      */
     public function index()
     {
-        $jurnal = Jurnal::where('owner_id', Auth::user()->created_by)->whereMonth('created_at', Carbon::now()->month)->get();
-        $akuns = Akun::where('owner_id', Auth::user()->created_by)->get();
+        $jurnal = Jurnal::where('tambak_id', Auth::user()->tambak->first()->id)->whereMonth('created_at', Carbon::now()->month)->get();
+        $akuns = Akun::where('tambak_id', Auth::user()->tambak->first()->id)->get();
         $month = Carbon::now();
-        $kredit = Jurnal::where('owner_id', Auth::user()->created_by)->whereMonth('created_at', Carbon::now()->month)->where('aktivitas', 'Kredit')->sum('nominal');
-        $debit = Jurnal::where('owner_id', Auth::user()->created_by)->whereMonth('created_at', Carbon::now()->month)->where('aktivitas', 'Debit')->sum('nominal');;
+        $kredit = Jurnal::where('tambak_id', Auth::user()->tambak->first()->id)->whereMonth('created_at', Carbon::now()->month)->where('aktivitas', 'Kredit')->sum('nominal');
+        $debit = Jurnal::where('tambak_id', Auth::user()->tambak->first()->id)->whereMonth('created_at', Carbon::now()->month)->where('aktivitas', 'Debit')->sum('nominal');;
 
         return view('jurnal.index', compact('jurnal', 'akuns', 'month', 'debit', 'kredit'));
     }
@@ -48,7 +48,7 @@ class JurnalController extends Controller
         $old = session()->getOldInput();
 
         $project = new Jurnal();
-        $project->owner_id = Auth::user()->created_by;
+        $project->tambak_id = Auth::user()->tambak->first()->id;
         $project->akun_id = $request->akun;
         $project->input_by = Auth::user()->id;
         $project->nominal = $request->nominal;

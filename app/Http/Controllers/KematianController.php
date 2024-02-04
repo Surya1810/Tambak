@@ -49,7 +49,7 @@ class KematianController extends Controller
         $old = session()->getOldInput();
 
         $project = new Kematian();
-        $project->owner_id = Auth::user()->created_by;
+        $project->tambak_id = Auth::user()->tambak->first()->id;
         $project->user_id = Auth::user()->id;
         $project->kolam_id = $request->kolam;
         $project->tanggal = $request->tanggal;

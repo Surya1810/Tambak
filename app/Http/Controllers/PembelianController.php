@@ -17,9 +17,9 @@ class PembelianController extends Controller
      */
     public function index()
     {
-        $pembelian = Pembelian::where('owner_id', Auth::user()->created_by)->get();
-        $orders = Order::where('owner_id', Auth::user()->created_by)->get();
-        $akuns = Akun::where('owner_id', Auth::user()->created_by)->get();
+        $pembelian = Pembelian::where('tambak_id', Auth::user()->tambak->first()->id)->get();
+        $orders = Order::where('tambak_id', Auth::user()->tambak->first()->id)->get();
+        $akuns = Akun::where('tambak_id', Auth::user()->tambak->first()->id)->get();
         return view('pembelian.index', compact('pembelian', 'orders', 'akuns'));
     }
 
@@ -45,10 +45,10 @@ class PembelianController extends Controller
         $old = session()->getOldInput();
 
         $now = Carbon::now();
-        $number = Pembelian::where('owner_id', Auth::user()->created_by)->where('tanggal', Carbon::today())->count();
+        $number = Pembelian::where('tambak_id', Auth::user()->tambak->first()->id)->where('tanggal', Carbon::today())->count();
         $project = new Pembelian();
         $project->nomor = 'LPB/' . $now->format('d') . $now->format('m') . '/' . $number + 1;
-        $project->owner_id = Auth::user()->created_by;
+        $project->tambak_id = Auth::user()->tambak->first()->id;
         $project->input_by = Auth::user()->id;
         $project->order_id = $request->order;
         $project->akun_id = $request->akun;
@@ -88,10 +88,12 @@ class PembelianController extends Controller
     public function destroy($id)
     {
         $data2 = Pembelian::find($id);
-        $data3 = Hutang::where('pembelian_id', $data2->id)->get();
+        $data3 = Hutang::where('pembelian_id', $data2->id)->first();
 
+        if (isset($data3)) {
+            $data3->delete();
+        }
         $data2->delete();
-        $data3->delete();
 
         return redirect()->route('pembelian.index')->with(['pesan' => 'Pembelian berhasil dihapus', 'level-alert' => 'alert-danger']);
     }

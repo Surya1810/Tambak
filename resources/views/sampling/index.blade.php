@@ -156,7 +156,7 @@
                                     <label for="mbw" class="mb-0 form-label col-form-label-sm">MBW (gr)</label>
                                     <input type="number" class="form-control @error('mbw') is-invalid @enderror"
                                         id="mbw" name="mbw" placeholder="Masukan berat rata-rata udang"
-                                        value="{{ old('mbw') }}" autocomplete="off" required>
+                                        value="{{ old('mbw') }}" autocomplete="off" required step='.01'>
                                     @error('mbw')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

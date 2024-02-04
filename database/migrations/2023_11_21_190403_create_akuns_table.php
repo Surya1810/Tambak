@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('aktivitas');
             // $table->string('status');
             $table->string('jenis');
-            $table->string('owner_id');
+            $table->string('tambak_id');
             $table->softDeletes();
             $table->timestamps();
         });

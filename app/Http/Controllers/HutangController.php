@@ -19,8 +19,8 @@ class HutangController extends Controller
      */
     public function index()
     {
-        $hutang = Hutang::where('owner_id', Auth::user()->created_by)->get();
-        $pembelians = Pembelian::where('owner_id', Auth::user()->created_by)->get();
+        $hutang = Hutang::where('tambak_id', Auth::user()->tambak->first()->id)->get();
+        $pembelians = Pembelian::where('tambak_id', Auth::user()->tambak->first()->id)->get();
 
         return view('hutang.index', compact('hutang', 'pembelians'));
     }
@@ -46,10 +46,10 @@ class HutangController extends Controller
         $old = session()->getOldInput();
 
         $now = Carbon::now();
-        $number = Hutang::where('owner_id', Auth::user()->created_by)->where('tanggal', Carbon::today())->count();
+        $number = Hutang::where('tambak_id', Auth::user()->tambak->first()->id)->where('tanggal', Carbon::today())->count();
         $project = new Hutang();
         $project->nomor = 'BYR/' . $now->format('d') . $now->format('m') . '/' . $number + 1;
-        $project->owner_id = Auth::user()->created_by;
+        $project->tambak_id = Auth::user()->tambak->first()->id;
         $project->pembelian_id = $request->pembelian;
         $project->tanggal = $request->tanggal;
         $project->save();

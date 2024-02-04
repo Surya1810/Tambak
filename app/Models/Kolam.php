@@ -21,6 +21,11 @@ class Kolam extends Model
         return $this->hasMany(Bibit::class);
     }
 
+    public function sampling(): HasMany
+    {
+        return $this->hasMany(Sampling::class);
+    }
+
     public function pakan(): HasMany
     {
         return $this->hasMany(Pakan::class);

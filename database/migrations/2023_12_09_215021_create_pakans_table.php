@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('jenis_id')->constrained()->cascadeOnDelete();
             $table->date('tanggal');
             $table->time('waktu');
-            $table->bigInteger('jumlah');
+            $table->float('jumlah');
             $table->text('catatan')->nullable();
             $table->softDeletes();
             $table->timestamps();

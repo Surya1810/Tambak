@@ -176,7 +176,7 @@
                                     <label for="total" class="mb-0 form-label col-form-label-sm">Total Tebar
                                         (ekor)</label>
                                     <input type="number" class="form-control @error('total') is-invalid @enderror"
-                                        id="total" name="total" placeholder="Masukan total pakan"
+                                        id="total" name="total" placeholder="Masukan total tebar"
                                         value="{{ old('total') }}" autocomplete="off" required>
                                     @error('total')
                                         <span class="invalid-feedback" role="alert">

@@ -19,7 +19,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $PO = Order::where('owner_id', Auth::user()->created_by)->get();
+        $PO = Order::where('tambak_id', Auth::user()->tambak->first()->id)->get();
         $suppliers = Supplier::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', '=', true)->get();
         $barangs = Barang::where('tambak_id', Auth::user()->tambak->first()->id)->get();
 
@@ -51,10 +51,10 @@ class OrderController extends Controller
         $old = session()->getOldInput();
 
         $now = Carbon::now();
-        $number = Order::where('owner_id', Auth::user()->created_by)->where('tanggal', Carbon::today())->count();
+        $number = Order::where('tambak_id', Auth::user()->tambak->first()->id)->where('tanggal', Carbon::today())->count();
         $project = new Order();
         $project->nomor = 'PO/' . $now->format('d') . $now->format('m') . '/' . $number + 1;
-        $project->owner_id = Auth::user()->created_by;
+        $project->tambak_id = Auth::user()->tambak->first()->id;
         $project->input_by = Auth::user()->id;
         $project->supplier_id = $request->supplier;
         $project->barang_id = $request->barang;
@@ -100,9 +100,11 @@ class OrderController extends Controller
         $data2 = Pembelian::where('order_id', $data->id)->first();
         $data3 = Hutang::where('pembelian_id', $data2->id)->first();
 
-        $data->delete();
+        if (isset($data3)) {
+            $data3->delete();
+        }
         $data2->delete();
-        $data3->delete();
+        $data->delete();
 
         return redirect()->route('PO.index')->with(['pesan' => 'PO berhasil dihapus', 'level-alert' => 'alert-danger']);
     }

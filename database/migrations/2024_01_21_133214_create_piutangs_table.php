@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('piutangs', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('owner_id')->constrained()->cascadeOnDelete()->nullable();
+            $table->bigInteger('tambak_id')->constrained()->cascadeOnDelete()->nullable();
             $table->bigInteger('customer_id')->constrained()->cascadeOnDelete()->nullable();
             $table->bigInteger('akun_id')->constrained()->cascadeOnDelete()->nullable();
             $table->string('nomor');

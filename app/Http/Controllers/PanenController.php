@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FR;
 use App\Models\Harga;
 use App\Models\Kolam;
 use App\Models\Panen;
@@ -56,7 +57,7 @@ class PanenController extends Controller
         $old = session()->getOldInput();
 
         $project = new Panen();
-        $project->owner_id = Auth::user()->created_by;
+        $project->tambak_id = Auth::user()->tambak->first()->id;
         $project->user_id = Auth::user()->id;
         $project->kolam_id = $request->kolam;
         $project->grade = $request->grade;

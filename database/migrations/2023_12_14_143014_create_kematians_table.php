@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('kematians', function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('user_id')->constrained()->cascadeOnDelete();
-            $table->bigInteger('owner_id')->constrained()->cascadeOnDelete();
+            $table->bigInteger('tambak_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('kolam_id')->constrained()->cascadeOnDelete();
             $table->date('tanggal');
             $table->string('umur');

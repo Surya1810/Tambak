@@ -112,7 +112,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-lg-3 col-12">
                     <div class="small-box bg-primary">
                         <div class="inner">
@@ -137,7 +137,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </section>
 
@@ -186,9 +186,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="nominal" class="mb-0 form-label col-form-label-sm">Nominal</label>
-                                    <input type="text"
-                                        class="price form-control @error('nominal') is-invalid @enderror" id="nominal"
-                                        name="nominal" placeholder="Masukan nominal transaksi"
+                                    <input type="text" class="price form-control @error('nominal') is-invalid @enderror"
+                                        id="nominal" name="nominal" placeholder="Masukan nominal transaksi"
                                         value="{{ old('nominal') }}" required>
                                     @error('nominal')
                                         <span class="invalid-feedback" role="alert">

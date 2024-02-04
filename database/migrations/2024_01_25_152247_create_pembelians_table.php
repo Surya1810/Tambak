@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pembelians', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('owner_id')->constrained()->cascadeOnDelete();
+            $table->bigInteger('tambak_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('input_by')->constrained()->cascadeOnDelete();
             $table->bigInteger('order_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('akun_id')->constrained()->cascadeOnDelete();

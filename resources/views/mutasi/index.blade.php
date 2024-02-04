@@ -93,7 +93,7 @@
                                                 @if ($stok_awal == null)
                                                     0 {{ $data->satuan->name }}
                                                 @else
-                                                    {{ $stok_awal->kuantitas }}
+                                                    {{ $stok_awal->kuantitas }} {{ $data->satuan->name }}
                                                 @endif
                                             </td>
                                             <td>

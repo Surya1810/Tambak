@@ -63,9 +63,9 @@
                                         <th style="width: 20%">
                                             Jenis
                                         </th>
-                                        <th style="width: 10%">
+                                        {{-- <th style="width: 10%">
                                             Action
-                                        </th>
+                                        </th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -75,7 +75,7 @@
                                             <td>{{ $data->nama }}</td>
                                             <td>{{ $data->aktivitas }}</td>
                                             <td>{{ $data->jenis }}</td>
-                                            <td class="text-center">
+                                            {{-- <td class="text-center">
                                                 <button class="btn btn-sm btn-danger rounded-tambak"
                                                     onclick="deleteAkun({{ $data->id }})"><i
                                                         class="fas fa-trash"></i></button>
@@ -85,7 +85,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -149,8 +149,8 @@
                         <div class="form-group">
                             <label for="jenis" class="mb-0 form-label col-form-label-sm">Jenis</label>
                             <select class="form-control jenis select2-primary is-invalid"
-                                data-dropdown-css-class="select2-primary" style="width: 100%;" id="jenis"
-                                name="jenis" required>
+                                data-dropdown-css-class="select2-primary" style="width: 100%;" id="jenis" name="jenis"
+                                required>
                                 <option></option>
                                 <option value="Pendapatan" {{ old('status') == 'Pendapatan' ? 'selected' : '' }}>
                                     Pendapatan</option>

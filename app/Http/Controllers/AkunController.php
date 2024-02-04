@@ -14,7 +14,7 @@ class AkunController extends Controller
      */
     public function index()
     {
-        $akun = Akun::where('owner_id', Auth::user()->created_by)->get();
+        $akun = Akun::where('tambak_id', Auth::user()->tambak->first()->id)->get();
 
         return view('akun.index', compact('akun'));
     }
@@ -42,11 +42,7 @@ class AkunController extends Controller
         $old = session()->getOldInput();
 
         $project = new Akun();
-        if (Auth::user()->created_by != null) {
-            $project->owner_id = Auth::user()->created_by;
-        } else {
-            $project->owner_id = Auth::user()->id;
-        }
+        $project->tambak_id = Auth::user()->tambak->first()->id;
         $project->nama = $request->name;
         $project->nomor = $request->nomor;
         $project->aktivitas = $request->aktivitas;

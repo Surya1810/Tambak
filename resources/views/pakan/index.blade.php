@@ -201,7 +201,7 @@
                                     <label for="jumlah" class="mb-0 form-label col-form-label-sm">Jumlah (kg)</label>
                                     <input type="number" class="form-control @error('jumlah') is-invalid @enderror"
                                         id="jumlah" name="jumlah" placeholder="Masukan jumlah pakan"
-                                        value="{{ old('jumlah') }}" autocomplete="off" required>
+                                        value="{{ old('jumlah') }}" autocomplete="off" required step=".01">
                                     @error('jumlah')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

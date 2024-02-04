@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('samplings', function (Blueprint $table) {
+        Schema::create('f_r_s', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('user_id')->constrained()->cascadeOnDelete();
-            $table->bigInteger('kolam_id')->constrained()->cascadeOnDelete();
-            $table->date('tanggal');
-            $table->float('mbw');
-            $table->text('catatan')->nullable();
-            $table->softDeletes();
+            $table->string('mbw');
+            $table->string('fr');
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('samplings');
+        Schema::dropIfExists('f_r_s');
     }
 };

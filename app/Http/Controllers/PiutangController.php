@@ -18,9 +18,9 @@ class PiutangController extends Controller
      */
     public function index()
     {
-        $akuns = Akun::where('owner_id', Auth::user()->created_by)->get();
+        $akuns = Akun::where('tambak_id', Auth::user()->tambak->first()->id)->get();
         $customers = Customer::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', '=', true)->get();
-        $piutang = Piutang::where('owner_id', Auth::user()->created_by)->get();
+        $piutang = Piutang::where('tambak_id', Auth::user()->tambak->first()->id)->get();
 
         return view('piutang.index', compact('piutang', 'akuns', 'customers'));
     }
@@ -49,10 +49,10 @@ class PiutangController extends Controller
         $old = session()->getOldInput();
 
         $now = Carbon::now();
-        $number = Piutang::where('owner_id', Auth::user()->created_by)->where('tanggal', Carbon::today())->count();
+        $number = Piutang::where('tambak_id', Auth::user()->tambak->first()->id)->where('tanggal', Carbon::today())->count();
         $project = new Piutang();
         $project->nomor = 'PIU/' . $now->format('d') . $now->format('m') . '/' . $number + 1;
-        $project->owner_id = Auth::user()->created_by;
+        $project->tambak_id = Auth::user()->tambak->first()->id;
         $project->akun_id = $request->akun;
         $project->customer_id = $request->customer;
         $project->keterangan = $request->keterangan;

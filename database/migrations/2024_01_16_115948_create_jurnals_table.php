@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('jurnals', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('owner_id');
+            $table->integer('tambak_id');
             $table->integer('akun_id');
             $table->integer('input_by');
             $table->text('keterangan');
