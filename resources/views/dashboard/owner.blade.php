@@ -128,7 +128,7 @@
                                                                 }
                                                             }
 
-                                                            if ($kolam->pakan()->whereDate('tanggal', Carbon\Carbon::yesterday()) !== null) {
+                                                            if ($kolam->pakan()->whereDate('tanggal', Carbon\Carbon::yesterday()) !== null && isset($data_fr)) {
                                                                 $biomassa =
                                                                     $kolam
                                                                         ->pakan()
