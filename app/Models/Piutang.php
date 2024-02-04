@@ -12,11 +12,11 @@ class Piutang extends Model
 
     public function customer(): BelongsTo
     {
-        return $this->belongsTo(customer::class, 'customer_id');
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
     public function akun(): BelongsTo
     {
-        return $this->belongsTo(akun::class, 'akun_id');
+        return $this->belongsTo(Akun::class, 'akun_id');
     }
 
     protected $casts = [

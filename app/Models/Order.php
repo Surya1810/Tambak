@@ -12,11 +12,11 @@ class Order extends Model
 
     public function supplier(): BelongsTo
     {
-        return $this->belongsTo(supplier::class, 'supplier_id');
+        return $this->belongsTo(Supplier::class, 'supplier_id');
     }
     public function barang(): BelongsTo
     {
-        return $this->belongsTo(barang::class, 'barang_id');
+        return $this->belongsTo(Barang::class, 'barang_id');
     }
 
     protected $casts = [
