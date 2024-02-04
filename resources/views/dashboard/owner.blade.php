@@ -182,7 +182,7 @@
                                                                                 $kolam->pakan()->whereBetween('tanggal', [
                                                                                         $kolam->bibit()->latest('tanggal')->first()->tanggal,
                                                                                         Carbon\Carbon::today(),
-                                                                                    ])->sum('jumlah') > 0)
+                                                                                    ])->sum('jumlah') > 0 && $biomassa > 0)
                                                                                 {{ number_format((float) $kolam->pakan()->whereBetween('tanggal', [$kolam->bibit()->latest('tanggal')->first()->tanggal,Carbon\Carbon::yesterday()])->sum('jumlah') / $biomassa,2,'.','') }}
                                                                                 {{-- {{ $kolam->pakan()->whereBetween('tanggal', [$kolam->bibit()->latest('tanggal')->first()->tanggal,Carbon\Carbon::yesterday()])->sum('jumlah') / $biomass }} --}}
                                                                             @else
