@@ -44,13 +44,7 @@ Route::get('/', function () {
 });
 
 // Dashboard
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-});
-
-Route::group(['prefix' => 'owner', 'middleware' => 'auth'], function () {
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-});
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 
 // Admin
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
