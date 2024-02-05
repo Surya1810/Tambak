@@ -219,7 +219,7 @@
                                                                                     $kolam->sampling()->latest('tanggal')->first()->mbw) &&
                                                                                 isset($biomassa) &&
                                                                                 $biomassa > 0)
-                                                                            {{ number_format(((float) $biomassa *(1000 /$kolam->sampling()->latest('tanggal')->first()->mbw) *1) /$kolam->bibit()->latest('tanggal')->first()->total,2,'.','') }}
+                                                                            {{ number_format(((float) $biomassa *(1000 /$kolam->sampling()->latest('tanggal')->first()->mbw) *100) /$kolam->bibit()->latest('tanggal')->first()->total,2,'.','') }}
                                                                             %
                                                                         @else
                                                                             -
