@@ -101,7 +101,7 @@
                                                                     ->first()->mbw;
 
                                                                 if ($dataFR->has($MBWYangDicari)) {
-                                                                    $hargaUdang = $dataFR[$MBWYangDicari];
+                                                                    $data_fr = $dataFR[$MBWYangDicari];
                                                                 } else {
                                                                     $mbwTerdekatSebelumnya = $dataFR
                                                                         ->filter(function ($fr, $mbw) use ($MBWYangDicari) {
@@ -256,16 +256,24 @@
                                                                 <td>Total Pakan :</td>
                                                                 <td class="float-right">
                                                                     <b>
-                                                                        @if ($kolam->pakan()->whereDate('tanggal', Carbon\Carbon::yesterday()))
-                                                                            @if ($kolam->pakan()->whereDate('tanggal', Carbon\Carbon::yesterday())->sum('jumlah') == 0)
-                                                                                -
-                                                                            @else
-                                                                                {{ $kolam->pakan()->whereDate('tanggal', Carbon\Carbon::yesterday())->sum('jumlah') }}
+
+                                                                        @isset($kolam->bibit()->latest('tanggal')->first()->tanggal)
+                                                                            @if (
+                                                                                $kolam->pakan()->whereBetween('tanggal', [
+                                                                                        $kolam->bibit()->latest('tanggal')->first()->tanggal,
+                                                                                        Carbon\Carbon::today(),
+                                                                                    ])->sum('jumlah') > 0)
+                                                                                {{ $kolam->pakan()->whereBetween('tanggal', [
+                                                                                        $kolam->bibit()->latest('tanggal')->first()->tanggal,
+                                                                                        Carbon\Carbon::today(),
+                                                                                    ])->sum('jumlah') }}
                                                                                 Kg
+                                                                            @else
+                                                                                -
                                                                             @endif
                                                                         @else
                                                                             -
-                                                                        @endif
+                                                                        @endisset
                                                                     </b>
                                                                 </td>
                                                             </tr>
