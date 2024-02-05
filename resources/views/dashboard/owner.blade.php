@@ -217,6 +217,7 @@
                                                                                 $kolam->bibit()->latest('tanggal')->first()->total) &&
                                                                                 isset(
                                                                                     $kolam->sampling()->latest('tanggal')->first()->mbw) &&
+                                                                                isset($biomassa) &&
                                                                                 $biomassa > 0)
                                                                             {{ number_format(((float) $biomassa *(1000 /$kolam->sampling()->latest('tanggal')->first()->mbw) *1) /$kolam->bibit()->latest('tanggal')->first()->total,2,'.','') }}
                                                                             %
