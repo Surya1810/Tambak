@@ -56,6 +56,7 @@ class BarangController extends Controller
         $project->tambak_id = Auth::user()->tambak->first()->id;
         $project->kategori_id = $request->kategori;
         $project->satuan_id = $request->satuan;
+        $project->gudang_id = $request->gudang;
         $project->harga = $request->harga;
         // If supplier dipilih
         $project->supplier_id = $request->supplier;
@@ -97,6 +98,7 @@ class BarangController extends Controller
         $project->name = $request->name;
         $project->kategori_id = $request->kategori;
         $project->satuan_id = $request->satuan;
+        $project->gudang_id = $request->gudang;
         $project->harga = $request->harga;
         // If supplier dipilih
         $project->supplier_id = $request->supplier;

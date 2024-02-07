@@ -201,7 +201,7 @@
                                                                 <td class="float-right">
                                                                     <b>
                                                                         @if ($kolam->sampling()->count() > 1)
-                                                                            {{ number_format((float) $kolam->sampling()->latest('tanggal')->skip(1)->first()->mbw -$kolam->sampling()->latest('tanggal')->first()->mbw /$kolam->sampling()->latest('tanggal')->skip(1)->first()->tanggal->diffInDays($kolam->sampling()->latest('tanggal')->first()->tanggal),2,'.','') }}
+                                                                            {{ number_format((float) $kolam->sampling()->latest('tanggal')->first()->mbw -$kolam->sampling()->latest('tanggal')->skip(1)->first()->mbw /$kolam->sampling()->latest('tanggal')->skip(1)->first()->tanggal->diffInDays($kolam->sampling()->latest('tanggal')->first()->tanggal),2,'.','') }}
                                                                             g
                                                                         @else
                                                                             -

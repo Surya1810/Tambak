@@ -54,6 +54,9 @@
                                         <th style="width: 5%">
                                             Kategori
                                         </th>
+                                        <th style="width: 10%">
+                                            Gudang
+                                        </th>
                                         <th style="width: 25%">
                                             Nama Barang
                                         </th>
@@ -74,8 +77,9 @@
                                 <tbody>
                                     @foreach ($barangs as $data)
                                         <tr>
-                                            <td>{{ $data->name }}</td>
                                             <td>{{ $data->kategori->name }}</td>
+                                            <td>{{ $data->gudang->name }}</td>
+                                            <td>{{ $data->name }}</td>
                                             @php
                                                 $stok_awal = App\Models\Transaksi::where('barang_id', $data->id)
                                                     ->where('status', 'Masuk')
