@@ -121,7 +121,9 @@ class OrderController extends Controller
         if (isset($data3)) {
             $data3->delete();
         }
-        $data2->delete();
+        if (isset($data2)) {
+            $data2->delete();
+        }
         $data->delete();
 
         return redirect()->route('PO.index')->with(['pesan' => 'PO berhasil dihapus', 'level-alert' => 'alert-danger']);
