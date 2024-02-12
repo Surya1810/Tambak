@@ -231,7 +231,7 @@
                                                                 <td>Biomassa :</td>
                                                                 <td class="float-right">
                                                                     <b>
-                                                                        @if (isset($biomassa) && $biomassa > 0)
+                                                                        @if (isset($kolam->pakan()->latest('tanggal')->first()->tanggal) && isset($biomassa) && $biomassa > 0)
                                                                             {{ number_format((float) $biomassa, 2, '.', '') }}
                                                                             Kg
                                                                         @else
