@@ -118,8 +118,13 @@
                                                                 }
                                                             }
 
-                                                            if ($kolam->pakan()->latest('tanggal') !== null && isset($data_fr)) {
-                                                                $biomassa = $kolam->pakan()->latest('tanggal')->sum('jumlah') / (number_format((float) $data_fr, 2, '.', '') / 100);
+                                                            if (isset($data_fr) && isset($kolam->pakan()->latest('tanggal')->first()->tanggal)) {
+                                                                $biomassa =
+                                                                    $kolam
+                                                                        ->pakan()
+                                                                        ->whereDate('tanggal', $kolam->pakan()->latest('tanggal')->first()->tanggal)
+                                                                        ->sum('jumlah') /
+                                                                    (number_format((float) $data_fr, 2, '.', '') / 100);
                                                             }
 
                                                             if (isset($biomassa) && isset($kolam->sampling()->latest('tanggal')->first()->mbw)) {
