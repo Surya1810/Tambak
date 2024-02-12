@@ -306,7 +306,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary rounded-tambak">Ubat</button>
+                            <button type="submit" class="btn btn-primary rounded-tambak">ubah</button>
                         </div>
                     </form>
                 </div>

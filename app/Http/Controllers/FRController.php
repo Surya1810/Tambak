@@ -12,7 +12,8 @@ class FRController extends Controller
      */
     public function index()
     {
-        //
+        $frs = FR::all();
+        return view('fr.index', compact('frs'));
     }
 
     /**
@@ -50,9 +51,21 @@ class FRController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, FR $fR)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'mbw' => 'bail|required',
+            'fr' => 'bail|required',
+        ]);
+
+        $old = session()->getOldInput();
+
+        $project = FR::find($id);
+        $project->mbw = $request->mbw;
+        $project->fr = $request->fr;
+        $project->update();
+
+        return redirect()->route('fr.index')->with(['pesan' => 'Data FR berhasil diubah', 'level-alert' => 'alert-warning']);
     }
 
     /**

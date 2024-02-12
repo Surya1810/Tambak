@@ -86,9 +86,25 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'harga' => 'bail|required',
+            'tanggal' => 'bail|required',
+            'keterangan' => 'bail|required',
+            'qty' => 'bail|required',
+        ]);
+
+        $old = session()->getOldInput();
+
+        $project = Order::find($id);
+        $project->tanggal = $request->tanggal;
+        $project->harga = $request->harga;
+        $project->qty = $request->qty;
+        $project->keterangan = $request->keterangan;
+        $project->update();
+
+        return redirect()->route('PO.index')->with(['pesan' => 'Data PO berhasil diubah', 'level-alert' => 'alert-warning']);
     }
 
     /**

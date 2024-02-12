@@ -89,6 +89,10 @@
                                                 {{ $data->qty }}{{ $data->barang->satuan->name }}</td>
                                             <td>{{ formatRupiah($data->harga * $data->qty) }}</td>
                                             <td class="text-center">
+                                                <button type="button" class="btn btn-sm btn-warning rounded-tambak"
+                                                    data-toggle="modal" data-target="#editPO{{ $data->id }}">
+                                                    <i class="fas fa-pen"></i>
+                                                </button>
                                                 <button class="btn btn-sm btn-danger rounded-tambak"
                                                     onclick="deletePO({{ $data->id }})"><i
                                                         class="fas fa-trash"></i></button>
@@ -218,6 +222,111 @@
             </div>
         </div>
     </div>
+
+    @foreach ($PO as $data)
+        <!-- Modal Edit Data-->
+        <div class="modal fade" id="editPO{{ $data->id }}" tabindex="-1" aria-labelledby="editPOLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addStepModalLabel">Ubah Data</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ route('PO.update', $data->id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="tanggal" class="mb-0 form-label col-form-label-sm">Tanggal</label>
+                                        <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
+                                            id="tanggal" name="tanggal" value="{{ $data->tanggal->format('Y-m-d') }}"
+                                            autocomplete="off" required>
+                                        @error('tanggal')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="barang" class="mb-0 form-label col-form-label-sm">Barang</label>
+                                        <select class="form-control barang select2-primary is-invalid"
+                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="barang"
+                                            name="barang" disabled>
+                                            <option>{{ $data->barang->name }}</option>
+                                        </select>
+                                        @error('supplier')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="supplier" class="mb-0 form-label col-form-label-sm">Supplier</label>
+                                        <select class="form-control supplier select2-primary is-invalid"
+                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="supplier"
+                                            name="supplier" disabled>
+                                            <option>{{ $data->supplier->name }}</option>
+                                        </select>
+                                        @error('supplier')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="keterangan"
+                                            class="mb-0 form-label col-form-label-sm">Keterangan</label>
+                                        <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="3"
+                                            placeholder="Tulis keterangan" id="keterangan" name="keterangan" required>{{ $data->keterangan }}</textarea>
+                                        @error('keterangan')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="harga" class="mb-0 form-label col-form-label-sm">Harga</label>
+                                        <input type="text"
+                                            class="price form-control @error('harga') is-invalid @enderror" id="harga"
+                                            name="harga" placeholder="Masukan harga barang"
+                                            value="{{ $data->harga }}" required>
+                                        @error('harga')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="qty" class="mb-0 form-label col-form-label-sm">Kuantitas</label>
+                                        <input type="number" class="form-control @error('qty') is-invalid @enderror"
+                                            id="qty" name="qty" placeholder="Masukan kuantitas barang"
+                                            value="{{ $data->qty }}" required>
+                                        @error('qty')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary rounded-tambak">Ubah</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
 
 @push('scripts')

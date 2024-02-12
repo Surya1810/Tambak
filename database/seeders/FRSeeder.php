@@ -493,5 +493,165 @@ class FRSeeder extends Seeder
             'mbw' => '32.27',
             'fr' => '2.05',
         ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
+        $FR = FR::create([
+            'mbw' => '',
+            'fr' => '',
+        ]);
     }
 }

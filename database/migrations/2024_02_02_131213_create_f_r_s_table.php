@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('f_r_s', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('mbw');
-            $table->string('fr');
+            $table->string('mbw')->nullable();
+            $table->string('fr')->nullable();
             $table->timestamps();
         });
     }

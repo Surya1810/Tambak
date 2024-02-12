@@ -391,7 +391,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary rounded-tambak">Ubat</button>
+                            <button type="submit" class="btn btn-primary rounded-tambak">Ubah</button>
                         </div>
                     </form>
                 </div>
