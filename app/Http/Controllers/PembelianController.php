@@ -87,13 +87,13 @@ class PembelianController extends Controller
      */
     public function destroy($id)
     {
-        $data2 = Pembelian::find($id);
-        $data3 = Hutang::where('pembelian_id', $data2->id)->first();
+        $data = Pembelian::find($id);
+        $data2 = Hutang::where('pembelian_id', $data->id)->first();
 
-        if (isset($data3)) {
-            $data3->delete();
+        if (isset($data2)) {
+            $data2->delete();
         }
-        $data2->delete();
+        $data->delete();
 
         return redirect()->route('pembelian.index')->with(['pesan' => 'Pembelian berhasil dihapus', 'level-alert' => 'alert-danger']);
     }

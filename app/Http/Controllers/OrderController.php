@@ -114,7 +114,9 @@ class OrderController extends Controller
     {
         $data = Order::find($id);
         $data2 = Pembelian::where('order_id', $data->id)->first();
-        $data3 = Hutang::where('pembelian_id', $data2->id)->first();
+        if (isset($data2)) {
+            $data3 = Hutang::where('pembelian_id', $data2->id)->first();
+        }
 
         if (isset($data3)) {
             $data3->delete();
