@@ -443,8 +443,11 @@
     </script>
 
     <script type="text/javascript">
-        $('#tanggal').datepicker({
-            format: 'dd/mm/yyyy'
+        $(document).ready(function() {
+            $('#tanggal').datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true
+            });
         });
     </script>
 
