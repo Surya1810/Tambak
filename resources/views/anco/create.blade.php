@@ -92,7 +92,7 @@
                                             Anco</label>
                                         <input type="time" class="form-control @error('waktu') is-invalid @enderror"
                                             id="waktu" name="waktu" placeholder="Masukan alamat tambak"
-                                            value="{{ old('waktu') }}" autocomplete="off" required>
+                                            value="{{ old('waktu') }}" autocomplete="off" step="3600" required>
                                         @error('waktu')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

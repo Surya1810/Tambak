@@ -6,6 +6,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BibitController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FRController;
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\HargaController;
 use App\Http\Controllers\HutangController;
@@ -25,6 +26,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TambakController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
+use App\Models\FR;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -65,6 +67,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('satuan', SatuanController::class);
     // Kategori
     Route::resource('kategori', KategoriController::class);
+    // FR
+    Route::resource('fr', FRController::class);
 });
 
 // Owner

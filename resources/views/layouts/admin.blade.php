@@ -129,6 +129,14 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ route('fr.index') }}" class="nav-link">
+                                    <i class="nav-icon fa-solid fa-shrimp"></i>
+                                    <p>
+                                        Data FR
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fa-solid fa-database"></i>
                                     <p>

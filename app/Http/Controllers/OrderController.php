@@ -86,9 +86,25 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'harga' => 'bail|required',
+            'tanggal' => 'bail|required',
+            'keterangan' => 'bail|required',
+            'qty' => 'bail|required',
+        ]);
+
+        $old = session()->getOldInput();
+
+        $project = Order::find($id);
+        $project->tanggal = $request->tanggal;
+        $project->harga = $request->harga;
+        $project->qty = $request->qty;
+        $project->keterangan = $request->keterangan;
+        $project->update();
+
+        return redirect()->route('PO.index')->with(['pesan' => 'Data PO berhasil diubah', 'level-alert' => 'alert-warning']);
     }
 
     /**
@@ -98,12 +114,16 @@ class OrderController extends Controller
     {
         $data = Order::find($id);
         $data2 = Pembelian::where('order_id', $data->id)->first();
-        $data3 = Hutang::where('pembelian_id', $data2->id)->first();
+        if (isset($data2)) {
+            $data3 = Hutang::where('pembelian_id', $data2->id)->first();
+        }
 
         if (isset($data3)) {
             $data3->delete();
         }
-        $data2->delete();
+        if (isset($data2)) {
+            $data2->delete();
+        }
         $data->delete();
 
         return redirect()->route('PO.index')->with(['pesan' => 'PO berhasil dihapus', 'level-alert' => 'alert-danger']);

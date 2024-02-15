@@ -75,7 +75,7 @@
                                                         <small class="float-right">
                                                             <b>
                                                                 @isset($kolam->bibit()->latest()->first()->total)
-                                                                    {{ number_format($kolam->bibit()->latest()->first()->total,0,',','.') }}
+                                                                    {{ number_format($kolam->bibit()->latest()->first()->total, 0, ',', '.') }}
                                                                 @else
                                                                     -
                                                                 @endisset
@@ -85,20 +85,10 @@
                                                     <strong>Estimasi Pertumbuhan</strong>
                                                     <table class="table table-sm table-striped table-borderless text-sm">
                                                         @php
-                                                            if (
-                                                                isset(
-                                                                    $kolam
-                                                                        ->sampling()
-                                                                        ->latest()
-                                                                        ->first()->mbw,
-                                                                )
-                                                            ) {
+                                                            if (isset($kolam->sampling()->latest()->first()->mbw)) {
                                                                 $dataFR = App\Models\FR::all()->pluck('fr', 'mbw');
 
-                                                                $MBWYangDicari = $kolam
-                                                                    ->sampling()
-                                                                    ->latest('tanggal')
-                                                                    ->first()->mbw;
+                                                                $MBWYangDicari = $kolam->sampling()->latest('tanggal')->first()->mbw;
 
                                                                 if ($dataFR->has($MBWYangDicari)) {
                                                                     $data_fr = $dataFR[$MBWYangDicari];
@@ -128,48 +118,21 @@
                                                                 }
                                                             }
 
-                                                            if ($kolam->pakan()->whereDate('tanggal', Carbon\Carbon::yesterday()) !== null && isset($data_fr)) {
+                                                            if (isset($data_fr) && isset($kolam->pakan()->latest('tanggal')->first()->tanggal)) {
                                                                 $biomassa =
                                                                     $kolam
                                                                         ->pakan()
-                                                                        ->whereDate('tanggal', Carbon\Carbon::yesterday())
+                                                                        ->whereDate('tanggal', $kolam->pakan()->latest('tanggal')->first()->tanggal)
                                                                         ->sum('jumlah') /
                                                                     (number_format((float) $data_fr, 2, '.', '') / 100);
                                                             }
 
-                                                            if (
-                                                                isset($biomassa) &&
-                                                                isset(
-                                                                    $kolam
-                                                                        ->sampling()
-                                                                        ->latest('tanggal')
-                                                                        ->first()->mbw,
-                                                                )
-                                                            ) {
-                                                                $populasi =
-                                                                    number_format((float) $biomassa, 2, '.', '') *
-                                                                    (1000 /
-                                                                        $kolam
-                                                                            ->sampling()
-                                                                            ->latest('tanggal')
-                                                                            ->first()->mbw);
+                                                            if (isset($biomassa) && isset($kolam->sampling()->latest('tanggal')->first()->mbw)) {
+                                                                $populasi = number_format((float) $biomassa, 2, '.', '') * (1000 / $kolam->sampling()->latest('tanggal')->first()->mbw);
                                                             }
 
-                                                            if (
-                                                                isset($populasi) &&
-                                                                isset(
-                                                                    $kolam
-                                                                        ->sampling()
-                                                                        ->latest('tanggal')
-                                                                        ->first()->mbw,
-                                                                )
-                                                            ) {
-                                                                $biomass =
-                                                                    $populasi *
-                                                                    $kolam
-                                                                        ->sampling()
-                                                                        ->latest('tanggal')
-                                                                        ->first()->mbw;
+                                                            if (isset($populasi) && isset($kolam->sampling()->latest('tanggal')->first()->mbw)) {
+                                                                $biomass = $populasi * $kolam->sampling()->latest('tanggal')->first()->mbw;
                                                             }
                                                         @endphp
                                                         <tbody>
@@ -179,14 +142,10 @@
                                                                     <b>
                                                                         @isset($kolam->bibit()->latest()->first()->tanggal)
                                                                             @if (
-                                                                                $kolam->pakan()->whereBetween('tanggal', [
-                                                                                        $kolam->bibit()->latest('tanggal')->first()->tanggal,
-                                                                                        Carbon\Carbon::today(),
-                                                                                    ])->sum('jumlah') > 0 &&
+                                                                                $kolam->pakan()->whereBetween('tanggal', [$kolam->bibit()->latest('tanggal')->first()->tanggal, Carbon\Carbon::today()])->sum('jumlah') > 0 &&
                                                                                     isset($biomassa) &&
                                                                                     $biomassa > 0)
-                                                                                {{ number_format((float) $kolam->pakan()->whereBetween('tanggal', [$kolam->bibit()->latest('tanggal')->first()->tanggal,Carbon\Carbon::yesterday()])->sum('jumlah') / $biomassa,2,'.','') }}
-                                                                                {{-- {{ $kolam->pakan()->whereBetween('tanggal', [$kolam->bibit()->latest('tanggal')->first()->tanggal,Carbon\Carbon::yesterday()])->sum('jumlah') / $biomass }} --}}
+                                                                                {{ number_format((float) $kolam->pakan()->whereBetween('tanggal', [$kolam->bibit()->latest('tanggal')->first()->tanggal, Carbon\Carbon::yesterday()])->sum('jumlah') / $biomassa,2,'.','') }}
                                                                             @else
                                                                                 -
                                                                             @endif
@@ -213,13 +172,11 @@
                                                                 <td>SR :</td>
                                                                 <td class="float-right">
                                                                     <b>
-                                                                        @if (isset(
-                                                                                $kolam->bibit()->latest('tanggal')->first()->total) &&
-                                                                                isset(
-                                                                                    $kolam->sampling()->latest('tanggal')->first()->mbw) &&
+                                                                        @if (isset($kolam->bibit()->latest('tanggal')->first()->total) &&
+                                                                                isset($kolam->sampling()->latest('tanggal')->first()->mbw) &&
                                                                                 isset($biomassa) &&
                                                                                 $biomassa > 0)
-                                                                            {{ number_format(((float) $biomassa *(1000 /$kolam->sampling()->latest('tanggal')->first()->mbw) *100) /$kolam->bibit()->latest('tanggal')->first()->total,2,'.','') }}
+                                                                            {{ number_format(((float) $biomassa * (1000 / $kolam->sampling()->latest('tanggal')->first()->mbw) * 100) / $kolam->bibit()->latest('tanggal')->first()->total, 2, '.', '') }}
                                                                             %
                                                                         @else
                                                                             -
@@ -245,7 +202,7 @@
                                                                 <td class="float-right">
                                                                     <b>
                                                                         @isset($kolam->sampling()->latest('tanggal')->first()->mbw)
-                                                                            {{ number_format((float) 1000 /$kolam->sampling()->latest('tanggal')->first()->mbw,2,'.','') }}
+                                                                            {{ number_format((float) 1000 / $kolam->sampling()->latest('tanggal')->first()->mbw, 2, '.', '') }}
                                                                         @else
                                                                             -
                                                                         @endisset
@@ -258,15 +215,8 @@
                                                                     <b>
 
                                                                         @isset($kolam->bibit()->latest('tanggal')->first()->tanggal)
-                                                                            @if (
-                                                                                $kolam->pakan()->whereBetween('tanggal', [
-                                                                                        $kolam->bibit()->latest('tanggal')->first()->tanggal,
-                                                                                        Carbon\Carbon::today(),
-                                                                                    ])->sum('jumlah') > 0)
-                                                                                {{ $kolam->pakan()->whereBetween('tanggal', [
-                                                                                        $kolam->bibit()->latest('tanggal')->first()->tanggal,
-                                                                                        Carbon\Carbon::today(),
-                                                                                    ])->sum('jumlah') }}
+                                                                            @if ($kolam->pakan()->whereBetween('tanggal', [$kolam->bibit()->latest('tanggal')->first()->tanggal, Carbon\Carbon::today()])->sum('jumlah') > 0)
+                                                                                {{ $kolam->pakan()->whereBetween('tanggal', [$kolam->bibit()->latest('tanggal')->first()->tanggal, Carbon\Carbon::today()])->sum('jumlah') }}
                                                                                 Kg
                                                                             @else
                                                                                 -
@@ -277,19 +227,11 @@
                                                                     </b>
                                                                 </td>
                                                             </tr>
-                                                            {{-- <tr>
-                                                                <td>Panen Kumulatif :</td>
-                                                                <td class="float-right">
-                                                                    <b>
-                                                                        0,01
-                                                                    </b>
-                                                                </td>
-                                                            </tr> --}}
                                                             <tr>
                                                                 <td>Biomassa :</td>
                                                                 <td class="float-right">
                                                                     <b>
-                                                                        @if (isset($biomassa) && $biomassa > 0)
+                                                                        @if (isset($kolam->pakan()->latest('tanggal')->first()->tanggal) && isset($biomassa) && $biomassa > 0)
                                                                             {{ number_format((float) $biomassa, 2, '.', '') }}
                                                                             Kg
                                                                         @else
@@ -303,27 +245,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- @hasrole('owner')
-                                            @php
-                                                $operators = 'test';
-                                            @endphp
-                                            <div class="card-footer text-center rounded-tambak">
-                                                <div class="btn-group">
-                                                    <button type="button"
-                                                        class="btn btn-sm btn-secondary rounded-tambak dropdown-toggle"
-                                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Konsultasi
-                                                    </button>
-                                                    <ul class="dropdown-menu">
-                                                        @foreach ($operators as $operator)
-                                                            <li><a class="dropdown-item"
-                                                                    href="https://wa.me/62{{ $operator->phone }}">{{ $operator->name }}</a>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        @endhasrole --}}
                                     </div>
                                 </div>
                             @endforeach
