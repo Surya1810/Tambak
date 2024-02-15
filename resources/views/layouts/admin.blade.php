@@ -375,7 +375,7 @@
     <!-- jQuery -->
     <script src="{{ asset('assets/adminLTE/plugins/jquery/jquery.min.js') }}"></script>
     <!-- jQuery UI 1.11.4 -->
-    <script src="{{ asset('assets/adminLTE/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/adminLTE/plugins/jquery-ui/jquery-ui.min.js') }}"></script> --}}
     <!-- Bootstrap 4 -->
     <script src="{{ asset('assets/adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- Select2 -->
@@ -442,14 +442,14 @@
         }
     </script>
 
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         $(document).ready(function() {
             $('#tanggal').datepicker({
                 format: 'dd/mm/yyyy',
                 autoclose: true
             });
         });
-    </script>
+    </script> --}}
 
     <script>
         /*** add active class and stay opened when selected ***/
