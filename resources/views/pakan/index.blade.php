@@ -154,7 +154,7 @@
                                 <div class="form-group">
                                     <label for="tanggal" class="mb-0 form-label col-form-label-sm">Tanggal</label>
                                     <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
-                                        id="tanggal" name="tanggal" placeholder="Pilih Tanggal"
+                                        placeholder="dd/mm/yyyy" id="tanggal" name="tanggal" placeholder="Pilih Tanggal"
                                         value="{{ old('tanggal') }}" autocomplete="off" required>
                                     @error('tanggal')
                                         <span class="invalid-feedback" role="alert">
