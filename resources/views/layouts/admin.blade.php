@@ -374,6 +374,8 @@
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
     <script src="{{ asset('assets/adminLTE/plugins/jquery/jquery.min.js') }}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="{{ asset('assets/adminLTE/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('assets/adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- Select2 -->
@@ -438,6 +440,12 @@
             installPrompt = null;
             installButton.setAttribute("hidden", "");
         }
+    </script>
+
+    <script type="text/javascript">
+        $('#tanggal').datepicker({
+            format: 'dd/mm/yyyy'
+        });
     </script>
 
     <script>
