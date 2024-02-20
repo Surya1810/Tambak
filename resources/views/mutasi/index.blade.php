@@ -104,10 +104,10 @@
                                                 {{ $stok_masuk }} {{ $data->satuan->name }}
                                             </td>
                                             <td>
-                                                {{ $stok_keluar }} {{ $data->satuan->name }}
+                                                {{ $stok_keluar + $data->pakan->sum('jumlah') }} {{ $data->satuan->name }}
                                             </td>
                                             <td>
-                                                {{ $stok_akhir }} {{ $data->satuan->name }}
+                                                {{ $stok_akhir - $data->pakan->sum('jumlah') }} {{ $data->satuan->name }}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -171,10 +171,15 @@
                                         data-dropdown-css-class="select2-primary" style="width: 100%;" id="status"
                                         name="status">
                                         <option></option>
-                                        <option value="Masuk" {{ old('status') == 'Masuk' ? 'selected' : '' }}>
+                                        <option value="Masuk" {{ old('status') == 'Masuk' ? 'selected' : '' }}
+                                            onclick="hideGudang();">
                                             Masuk</option>
-                                        <option value="Keluar" {{ old('status') == 'Keluar' ? 'selected' : '' }}>
+                                        <option value="Keluar" {{ old('status') == 'Keluar' ? 'selected' : '' }}
+                                            onclick="hideGudang();">
                                             Keluar</option>
+                                        <option value="Pindah" {{ old('status') == 'Pindah' ? 'selected' : '' }}
+                                            onclick="showGudang();">
+                                            Pindah</option>
                                     </select>
                                     @error('status')
                                         <span class="invalid-feedback" role="alert">
@@ -190,6 +195,26 @@
                                         id="kuantitas" name="kuantitas" placeholder="Masukan kuantitas"
                                         value="{{ old('kuantitas') }}" required>
                                     @error('kuantitas')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-12 d-none" id="gudangs">
+                                <div class="form-group">
+                                    <label for="gudang" class="mb-0 form-label col-form-label-sm">Gudang</label>
+                                    <select class="form-control gudang select2-primary is-invalid"
+                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="gudang"
+                                        name="gudang">
+                                        <option></option>
+                                        @foreach ($gudangs as $gudang)
+                                            <option value="{{ $gudang->id }}"
+                                                {{ old('gudang') == $gudang->id ? 'selected' : '' }}>
+                                                {{ $gudang->code }} - {{ $gudang->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('gudang')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -249,10 +274,29 @@
         $('.barang').select2({
             placeholder: "Pilih barang",
         })
+        $('.gudang').select2({
+            placeholder: "Pilih gudang",
+        })
         $('.status').select2({
             placeholder: "Pilih status",
             minimumResultsForSearch: -1,
             allowClear: true,
         })
+
+        $(function() {
+            $("#status").change(function() {
+                var val = $(this).val();
+                if (val === "Pindah") {
+                    $('#gudangs').removeClass("d-none").show();
+                    $('#gudangs').prop('required', true);
+                } else if (val === "Masuk") {
+                    $('#gudangs').addClass("d-none").hide();
+                    $('#gudangs').prop('required', false);
+                } else if (val === "Keluar") {
+                    $('#gudangs').addClass("d-none").hide();
+                    $('#gudangs').prop('required', false);
+                }
+            });
+        });
     </script>
 @endpush
