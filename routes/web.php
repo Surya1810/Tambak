@@ -114,6 +114,7 @@ Route::group(['prefix' => 'operator', 'middleware' => 'auth'], function () {
     Route::resource('barang', BarangController::class);
     // Transaksi Barang
     Route::resource('transaksi', TransaksiController::class);
+    Route::get('/transaksi/history', [TransaksiController::class, 'history'])->name('transaksi.history');
 });
 
 // Akuntan

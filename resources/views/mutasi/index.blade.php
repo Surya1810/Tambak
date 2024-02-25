@@ -72,6 +72,9 @@
                                         <th style="width: 5%">
                                             Sisa Stok
                                         </th>
+                                        <th style="width: 5%">
+                                            Aksi
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -109,6 +112,9 @@
                                             <td>
                                                 {{ $stok_akhir - $data->pakan->sum('jumlah') }} {{ $data->satuan->name }}
                                             </td>
+                                            <td>
+
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -144,7 +150,7 @@
                                         @foreach ($barangs as $barang)
                                             <option value="{{ $barang->id }}"
                                                 {{ old('barang') == $barang->id ? 'selected' : '' }}>
-                                                {{ $barang->code }} - {{ $barang->name }}</option>
+                                                {{ $barang->gudang->name }} - {{ $barang->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('barang')
