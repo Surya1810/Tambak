@@ -72,9 +72,9 @@
                                         <th style="width: 5%">
                                             Sisa Stok
                                         </th>
-                                        <th style="width: 5%">
+                                        {{-- <th style="width: 5%">
                                             Aksi
-                                        </th>
+                                        </th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -209,7 +209,7 @@
                             </div>
                             <div class="col-12 d-none" id="gudangs">
                                 <div class="form-group">
-                                    <label for="gudang" class="mb-0 form-label col-form-label-sm">Gudang</label>
+                                    <label for="gudang" class="mb-0 form-label col-form-label-sm">Gudang Tujuan</label>
                                     <select class="form-control gudang select2-primary is-invalid"
                                         data-dropdown-css-class="select2-primary" style="width: 100%;" id="gudang"
                                         name="gudang">

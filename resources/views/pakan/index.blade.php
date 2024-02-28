@@ -186,7 +186,7 @@
                                         @foreach ($jenis as $jenis_pakan)
                                             <option value="{{ $jenis_pakan->id }}"
                                                 {{ old('pakan') == $jenis_pakan->id ? 'selected' : '' }}>
-                                                {{ $jenis_pakan->name }}</option>
+                                                {{ $jenis_pakan->name }} - {{ $jenis_pakan->gudang->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('pakan')
