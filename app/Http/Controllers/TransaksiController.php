@@ -24,12 +24,11 @@ class TransaksiController extends Controller
         return view('mutasi.index', compact('barangs', 'gudangs'));
     }
 
-    public function history()
+    public function history($id)
     {
-        $barangs = Barang::where('tambak_id', Auth::user()->tambak->first()->id)->get();
-        $history = Transaksi::whereIn('barang_id', [$barangs])->get();
+        $history = Transaksi::where('barang_id', $id)->get();
 
-        return view('mutasi.index', compact('history'));
+        return view('mutasi.history', compact('history'));
     }
 
     /**
@@ -48,77 +47,87 @@ class TransaksiController extends Controller
         $request->validate([
             'barang' => 'bail|required',
             'status' => 'bail|required',
-            'catatan' => 'bail|required',
             'kuantitas' => 'bail|required',
         ]);
 
         $old = session()->getOldInput();
 
+        // $project = new Transaksi();
+        // if ($request->status == 'Pindah') {
+        //     // Cari barang serupa di gudang tujuan
+        //     $barang_lama = Barang::find($request->barang);
+        //     $barangs = Barang::where('gudang_id', $request->gudang)->where('name', $barang_lama->name)->first();
+        //     if (isset($barangs) == null) {
+        //         $barang = new Barang();
+        //         $barang->code = 'B-' . Str::random(5);
+        //         $barang->name = $barang_lama->name;
+        //         $barang->tambak_id = $barang_lama->tambak_id;
+        //         $barang->kategori_id = $barang_lama->kategori_id;
+        //         $barang->satuan_id = $barang_lama->satuan_id;
+        //         $barang->gudang_id = $request->gudang;
+        //         $barang->harga = $barang_lama->harga;
+        //         $barang->supplier_id = $barang_lama->supplier_id;
+        //         $barang->save();
+
+        //         Transaksi::insert([
+        //             [
+        //                 //Masuk
+        //                 'barang_id' => $barang->id,
+        //                 'input_by' => Auth::user()->id,
+        //                 'status' => 'Masuk',
+        //                 'catatan' => $request->catatan,
+        //                 'kuantitas' => $request->kuantitas,
+        //             ],
+        //             [
+        //                 //Keluar
+        //                 'barang_id' => $barang_lama->id,
+        //                 'input_by' => Auth::user()->id,
+        //                 'status' => 'Keluar',
+        //                 'catatan' => $request->catatan,
+        //                 'kuantitas' => $request->kuantitas,
+        //             ]
+
+        //         ]);
+        //     } else {
+        //         Transaksi::insert([
+        //             [
+        //                 //Masuk
+        //                 'barang_id' => $barangs->id,
+        //                 'input_by' => Auth::user()->id,
+        //                 'status' => 'Masuk',
+        //                 'catatan' => $request->catatan,
+        //                 'kuantitas' => $request->kuantitas,
+        //             ],
+        //             [
+        //                 //Keluar
+        //                 'barang_id' => $barang_lama->id,
+        //                 'input_by' => Auth::user()->id,
+        //                 'status' => 'Keluar',
+        //                 'catatan' => $request->catatan,
+        //                 'kuantitas' => $request->kuantitas,
+        //             ]
+
+        //         ]);
+        //     }
+        // } else {
+        //     $project->barang_id = $request->barang;
+        //     $project->input_by = Auth::user()->id;
+        //     $project->status = $request->status;
+        //     $project->catatan = $request->catatan;
+        //     $project->kuantitas = $request->kuantitas;
+        //     $project->save();
+        // }
+
         $project = new Transaksi();
-        if ($request->status == 'Pindah') {
-            // Cari barang serupa di gudang tujuan
-            $barang_lama = Barang::find($request->barang);
-            $barangs = Barang::where('gudang_id', $request->gudang)->where('name', $barang_lama->name)->first();
-            if (isset($barangs) == null) {
-                $barang = new Barang();
-                $barang->code = 'B-' . Str::random(5);
-                $barang->name = $barang_lama->name;
-                $barang->tambak_id = $barang_lama->tambak_id;
-                $barang->kategori_id = $barang_lama->kategori_id;
-                $barang->satuan_id = $barang_lama->satuan_id;
-                $barang->gudang_id = $request->gudang;
-                $barang->harga = $barang_lama->harga;
-                $barang->supplier_id = $barang_lama->supplier_id;
-                $barang->save();
+        $project->barang_id = $request->barang;
+        $project->input_by = Auth::user()->id;
+        $project->status = $request->status;
+        $project->gudang_awal = $request->gudang_awal;
+        $project->gudang_tujuan = $request->gudang;
+        $project->catatan = $request->catatan;
+        $project->kuantitas = $request->kuantitas;
+        $project->save();
 
-                Transaksi::insert([
-                    [
-                        //Masuk
-                        'barang_id' => $barang->id,
-                        'input_by' => Auth::user()->id,
-                        'status' => 'Masuk',
-                        'catatan' => $request->catatan,
-                        'kuantitas' => $request->kuantitas,
-                    ],
-                    [
-                        //Keluar
-                        'barang_id' => $barang_lama->id,
-                        'input_by' => Auth::user()->id,
-                        'status' => 'Keluar',
-                        'catatan' => $request->catatan,
-                        'kuantitas' => $request->kuantitas,
-                    ]
-
-                ]);
-            } else {
-                Transaksi::insert([
-                    [
-                        //Masuk
-                        'barang_id' => $barangs->id,
-                        'input_by' => Auth::user()->id,
-                        'status' => 'Masuk',
-                        'catatan' => $request->catatan,
-                        'kuantitas' => $request->kuantitas,
-                    ],
-                    [
-                        //Keluar
-                        'barang_id' => $barang_lama->id,
-                        'input_by' => Auth::user()->id,
-                        'status' => 'Keluar',
-                        'catatan' => $request->catatan,
-                        'kuantitas' => $request->kuantitas,
-                    ]
-
-                ]);
-            }
-        } else {
-            $project->barang_id = $request->barang;
-            $project->input_by = Auth::user()->id;
-            $project->status = $request->status;
-            $project->catatan = $request->catatan;
-            $project->kuantitas = $request->kuantitas;
-            $project->save();
-        }
 
         return redirect()->route('transaksi.index')->with(['pesan' => 'Transaksi berhasil dibuat', 'level-alert' => 'alert-success']);
     }

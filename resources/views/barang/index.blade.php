@@ -67,9 +67,6 @@
                                             Harga beli
                                         </th>
                                         <th style="width: 10%">
-                                            Gudang
-                                        </th>
-                                        <th style="width: 10%">
                                             Action
                                         </th>
                                     </tr>
@@ -88,7 +85,6 @@
                                                 @endif
                                             </td>
                                             <td>{{ formatRupiah($data->harga) }}/{{ $data->satuan->name }}</td>
-                                            <td>{{ $data->gudang->name }}</td>
                                             <td class="text-center">
                                                 <button class="btn btn-sm btn-warning rounded-tambak" type="button"
                                                     data-toggle="modal" data-target="#editBarang{{ $data->id }}"><i
@@ -135,26 +131,6 @@
                                         id="name" name="name" placeholder="Masukan nama barang"
                                         value="{{ old('name') }}" required>
                                     @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="gudang" class="mb-0 form-label col-form-label-sm">Gudang</label>
-                                    <select class="form-control gudang select2-primary is-invalid"
-                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="gudang"
-                                        name="gudang" required>
-                                        <option></option>
-                                        @foreach ($gudangs as $gudang)
-                                            <option value="{{ $gudang->id }}"
-                                                {{ old('gudang') == $gudang->id ? 'selected' : '' }}>
-                                                {{ $gudang->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('gudang')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -270,27 +246,6 @@
                                             id="name" name="name" placeholder="Masukan nama barang"
                                             value="{{ $data->name }}" required>
                                         @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="gudang{{ $data->id }}"
-                                            class="mb-0 form-label col-form-label-sm">Gudang</label>
-                                        <select class="form-control gudang{{ $data->id }} select2-primary is-invalid"
-                                            data-dropdown-css-class="select2-primary" style="width: 100%;"
-                                            id="gudang{{ $data->id }}" name="gudang" required>
-                                            <option></option>
-                                            @foreach ($gudangs as $gudang)
-                                                <option value="{{ $gudang->id }}"
-                                                    {{ old('gudang') == $gudang->id ? 'selected' : '' }}>
-                                                    {{ $gudang->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('gudang')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -464,10 +419,6 @@
             placeholder: "Pilih satuan",
             minimumResultsForSearch: -1,
         })
-        $('.gudang').select2({
-            placeholder: "Pilih gudang",
-            minimumResultsForSearch: -1,
-        })
         $('.supplier').select2({
             placeholder: "Pilih supplier",
         })
@@ -478,10 +429,6 @@
         })
 
         @foreach ($barang as $data)
-            $('.gudang{{ $data->id }}').select2({
-                placeholder: "Pilih gudang",
-                minimumResultsForSearch: -1,
-            })
             $('.satuan{{ $data->id }}').select2({
                 placeholder: "Pilih satuan",
                 minimumResultsForSearch: -1,

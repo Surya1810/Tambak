@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
-use App\Models\Gudang;
 use App\Models\Kategori;
 use App\Models\Satuan;
 use App\Models\Supplier;
@@ -24,9 +23,8 @@ class BarangController extends Controller
         $categories = Kategori::all();
         $satuans = Satuan::all();
         $suppliers = Supplier::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', true)->get();
-        $gudangs = Gudang::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', true)->get();
 
-        return view('barang.index', compact('barang', 'satuans', 'categories', 'suppliers', 'gudangs'));
+        return view('barang.index', compact('barang', 'satuans', 'categories', 'suppliers'));
     }
 
     /**
@@ -56,7 +54,6 @@ class BarangController extends Controller
         $project->tambak_id = Auth::user()->tambak->first()->id;
         $project->kategori_id = $request->kategori;
         $project->satuan_id = $request->satuan;
-        $project->gudang_id = $request->gudang;
         $project->harga = $request->harga;
         // If supplier dipilih
         $project->supplier_id = $request->supplier;
@@ -98,7 +95,6 @@ class BarangController extends Controller
         $project->name = $request->name;
         $project->kategori_id = $request->kategori;
         $project->satuan_id = $request->satuan;
-        $project->gudang_id = $request->gudang;
         $project->harga = $request->harga;
         // If supplier dipilih
         $project->supplier_id = $request->supplier;

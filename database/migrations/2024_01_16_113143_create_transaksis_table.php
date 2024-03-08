@@ -16,8 +16,11 @@ return new class extends Migration
             $table->integer('barang_id');
             $table->string('input_by');
             $table->string('status');
+            $table->integer('gudang_awal')->nullable();
+            $table->integer('gudang_tujuan');
             $table->integer('kuantitas');
-            $table->text('catatan');
+            $table->text('catatan')->nullable();
+            // $table->date('tanggal');
             $table->timestamps();
         });
     }

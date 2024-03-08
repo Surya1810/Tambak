@@ -54,34 +54,21 @@
                                         <th style="width: 5%">
                                             Kategori
                                         </th>
-                                        <th style="width: 10%">
-                                            Gudang
-                                        </th>
                                         <th style="width: 25%">
                                             Nama Barang
                                         </th>
                                         <th style="width: 5%">
-                                            Stok Awal
+                                            Kuantitas
                                         </th>
                                         <th style="width: 5%">
-                                            Masuk
-                                        </th>
-                                        <th style="width: 5%">
-                                            Keluar
-                                        </th>
-                                        <th style="width: 5%">
-                                            Sisa Stok
-                                        </th>
-                                        {{-- <th style="width: 5%">
                                             Aksi
-                                        </th> --}}
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($barangs as $data)
                                         <tr>
                                             <td>{{ $data->kategori->name }}</td>
-                                            <td>{{ $data->gudang->name }}</td>
                                             <td>{{ $data->name }}</td>
                                             @php
                                                 $stok_awal = App\Models\Transaksi::where('barang_id', $data->id)
@@ -96,7 +83,7 @@
                                                     ->sum('kuantitas');
                                                 $stok_akhir = $stok_masuk - $stok_keluar;
                                             @endphp
-                                            <td>
+                                            {{-- <td>
                                                 @if ($stok_awal == null)
                                                     0 {{ $data->satuan->name }}
                                                 @else
@@ -108,12 +95,19 @@
                                             </td>
                                             <td>
                                                 {{ $stok_keluar + $data->pakan->sum('jumlah') }} {{ $data->satuan->name }}
-                                            </td>
+                                            </td> --}}
                                             <td>
                                                 {{ $stok_akhir - $data->pakan->sum('jumlah') }} {{ $data->satuan->name }}
                                             </td>
                                             <td>
-
+                                                <button type="button" class="btn btn-sm btn-primary rounded-tambak"
+                                                    data-toggle="modal" data-target="#detailStok">
+                                                    Detail Stok
+                                                </button>
+                                                <a class="btn btn-sm btn-secondary rounded-tambak"
+                                                    href="{{ route('transaksi.history', $data->id) }}">
+                                                    <i class="fa-regular fa-clipboard"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -125,6 +119,23 @@
             </div>
         </div>
     </section>
+
+
+    <!-- Modal Data-->
+    <div class="modal fade" id="detailStok" tabindex="-1" aria-labelledby="detailStokLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addStepModalLabel">Detail Stok</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal Add Data-->
     <div class="modal fade" id="addMutasi" tabindex="-1" aria-labelledby="addMutasiLabel" aria-hidden="true">
@@ -149,21 +160,11 @@
                                         <option></option>
                                         @foreach ($barangs as $barang)
                                             <option value="{{ $barang->id }}"
-                                                {{ old('barang') == $barang->id ? 'selected' : '' }}>
-                                                {{ $barang->gudang->name }} - {{ $barang->name }}</option>
+                                                {{ old('barang') == $barang->id ? 'selected' : '' }}> {{ $barang->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     @error('barang')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="catatan" class="mb-0 form-label col-form-label-sm">Keterangan</label>
-                                    <textarea class="form-control @error('catatan') is-invalid @enderror" rows="3" placeholder="Tulis catatan"
-                                        id="catatan" name="catatan">{{ old('catatan') }}</textarea>
-                                    @error('catatan')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -209,6 +210,26 @@
                             </div>
                             <div class="col-12 d-none" id="gudangs">
                                 <div class="form-group">
+                                    <label for="gudang_awal" class="mb-0 form-label col-form-label-sm">Gudang Awal</label>
+                                    <select class="form-control gudang_awal select2-primary is-invalid"
+                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="gudang_awal"
+                                        name="gudang_awal">
+                                        <option></option>
+                                        @foreach ($gudangs as $gudang)
+                                            <option value="{{ $gudang->id }}"
+                                                {{ old('gudang') == $gudang->id ? 'selected' : '' }}>{{ $gudang->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('gudang_awal')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
                                     <label for="gudang" class="mb-0 form-label col-form-label-sm">Gudang Tujuan</label>
                                     <select class="form-control gudang select2-primary is-invalid"
                                         data-dropdown-css-class="select2-primary" style="width: 100%;" id="gudang"
@@ -216,11 +237,21 @@
                                         <option></option>
                                         @foreach ($gudangs as $gudang)
                                             <option value="{{ $gudang->id }}"
-                                                {{ old('gudang') == $gudang->id ? 'selected' : '' }}>
-                                                {{ $gudang->code }} - {{ $gudang->name }}</option>
+                                                {{ old('gudang') == $gudang->id ? 'selected' : '' }}>{{ $gudang->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     @error('gudang')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="catatan" class="mb-0 form-label col-form-label-sm">Catatan</label>
+                                    <textarea class="form-control @error('catatan') is-invalid @enderror" rows="3" placeholder="Tulis catatan"
+                                        id="catatan" name="catatan">{{ old('catatan') }}</textarea>
+                                    @error('catatan')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -279,6 +310,9 @@
 
         $('.barang').select2({
             placeholder: "Pilih barang",
+        })
+        $('.gudang_awal').select2({
+            placeholder: "Pilih gudang",
         })
         $('.gudang').select2({
             placeholder: "Pilih gudang",

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->bigInteger('supplier_id')->constrained()->cascadeOnDelete()->nullable();
             $table->bigInteger('kategori_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('satuan_id')->constrained()->cascadeOnDelete();
-            $table->bigInteger('gudang_id')->constrained()->cascadeOnDelete();
             $table->string('code');
             $table->string('name');
             $table->string('harga');
