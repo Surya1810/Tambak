@@ -168,7 +168,7 @@
                                     <label for="waktu" class="mb-0 form-label col-form-label-sm">Waktu</label>
                                     <input type="time" class="form-control @error('waktu') is-invalid @enderror"
                                         id="waktu" name="waktu" placeholder="Masukan alamat tambak"
-                                        value="{{ old('waktu') }}" autocomplete="off" step="3600" required>
+                                        value="{{ old('waktu') }}" autocomplete="off" required>
                                     @error('waktu')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -186,7 +186,8 @@
                                         @foreach ($jenis as $jenis_pakan)
                                             <option value="{{ $jenis_pakan->id }}"
                                                 {{ old('pakan') == $jenis_pakan->id ? 'selected' : '' }}>
-                                                {{ $jenis_pakan->name }} - {{ $jenis_pakan->gudang->name }}</option>
+                                                {{-- {{ $jenis_pakan->name }} - {{ $jenis_pakan->gudang->name }}</option> --}}
+                                                {{ $jenis_pakan->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('pakan')

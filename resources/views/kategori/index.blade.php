@@ -60,9 +60,11 @@
                                         <th style="width: 20%">
                                             Status
                                         </th>
-                                        <th style="width: 20%">
-                                            Action
-                                        </th>
+                                        @hasanyrole('super admin|admin')
+                                            <th style="width: 20%">
+                                                Action
+                                            </th>
+                                        @endhasanyrole
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,21 +79,23 @@
                                                     Disabled
                                                 @endif
                                             </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-sm btn-warning rounded-tambak"
-                                                    data-toggle="modal" data-target="#editKategori{{ $data->id }}">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-danger rounded-tambak"
-                                                    onclick="deleteKategori({{ $data->id }})"><i
-                                                        class="fas fa-trash"></i></button>
-                                                <form id="delete-form-{{ $data->id }}"
-                                                    action="{{ route('kategori.destroy', $data->id) }}" method="POST"
-                                                    style="display: none;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                </form>
-                                            </td>
+                                            @hasanyrole('super admin|admin')
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-sm btn-warning rounded-tambak"
+                                                        data-toggle="modal" data-target="#editKategori{{ $data->id }}">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-danger rounded-tambak"
+                                                        onclick="deleteKategori({{ $data->id }})"><i
+                                                            class="fas fa-trash"></i></button>
+                                                    <form id="delete-form-{{ $data->id }}"
+                                                        action="{{ route('kategori.destroy', $data->id) }}" method="POST"
+                                                        style="display: none;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                </td>
+                                            @endhasanyrole
                                         </tr>
                                     @endforeach
                                 </tbody>

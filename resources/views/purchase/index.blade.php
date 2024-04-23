@@ -40,10 +40,10 @@
                                     <h3 class="card-title">Purchase Order</h3>
                                 </div>
                                 <div class="col-6">
-                                    <button type="button" class="btn btn-sm btn-primary rounded-tambak float-right"
-                                        data-toggle="modal" data-target="#addPO">
-                                        Tambah PO
-                                    </button>
+                                    <a href="{{ route('PO.create') }}"
+                                        class="btn btn-sm btn-primary rounded-tambak float-right">
+                                        Tambah Nota
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -51,28 +51,25 @@
                             <table id="poTable" class="table table-bordered text-nowrap text-center text-sm">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width: 5%">
+                                        <th style="width: 10%">
                                             Nomor
                                         </th>
-                                        <th style="width: 15%">
+                                        <th style="width: 20%">
                                             Tanggal
                                         </th>
                                         <th style="width: 20%">
                                             Supplier
                                         </th>
-                                        <th style="width: 5%">
+                                        {{-- <th style="width: 5%">
                                             Termin
-                                        </th>
-                                        <th style="width: 20%">
-                                            Barang
-                                        </th>
-                                        <th style="width: 15%">
-                                            Harga & Kuantitas
-                                        </th>
-                                        <th style="width: 15%">
+                                        </th> --}}
+                                        {{-- <th style="width: 20%">
                                             Subtotal
+                                        </th> --}}
+                                        <th style="width: 15%">
+                                            Status
                                         </th>
-                                        <th style="width: 5%">
+                                        <th style="width: 15%">
                                             Action
                                         </th>
                                     </tr>
@@ -83,25 +80,36 @@
                                             <td>{{ $data->nomor }}</td>
                                             <td>{{ $data->tanggal->format('d/m/Y') }}</td>
                                             <td>{{ $data->supplier->name }}</td>
-                                            <td>{{ $data->supplier->tempo }} Hari</td>
-                                            <td>{{ $data->barang->name }}</td>
-                                            <td>{{ formatRupiah($data->harga) }} -
-                                                {{ $data->qty }}{{ $data->barang->satuan->name }}</td>
-                                            <td>{{ formatRupiah($data->harga * $data->qty) }}</td>
+                                            {{-- <td>{{ $data->items->price }}</td> --}}
+                                            {{-- <td>{{ $data->supplier->tempo }} Hari</td> --}}
+                                            {{-- <td>{{ formatRupiah($data->harga * $data->qty) }}</td> --}}
+                                            <td>
+                                                @if ($data->status == 'Draft')
+                                                    <span class="badge badge-secondary">Draft</span>
+                                                @else
+                                                    <span class="badge badge-success">Purchased</span>
+                                                @endif
+                                            </td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-sm btn-warning rounded-tambak"
-                                                    data-toggle="modal" data-target="#editPO{{ $data->id }}">
+                                                <a href="{{ route('PO.edit', $data->id) }}"
+                                                    class="btn btn-sm btn-warning rounded-tambak">
                                                     <i class="fas fa-pen"></i>
+                                                </a>
+                                                <button type="button" class="btn btn-sm btn-info rounded-tambak"
+                                                    data-toggle="modal" data-target="#detail{{ $data->id }}">
+                                                    <i class="fas fa-eye"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-danger rounded-tambak"
-                                                    onclick="deletePO({{ $data->id }})"><i
-                                                        class="fas fa-trash"></i></button>
-                                                <form id="delete-form-{{ $data->id }}"
-                                                    action="{{ route('PO.destroy', $data->id) }}" method="POST"
-                                                    style="display: none;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                </form>
+                                                @if ($data->status == 'Draft')
+                                                    <button class="btn btn-sm btn-danger rounded-tambak"
+                                                        onclick="deletePO({{ $data->id }})"><i
+                                                            class="fas fa-trash"></i></button>
+                                                    <form id="delete-form-{{ $data->id }}"
+                                                        action="{{ route('PO.destroy', $data->id) }}" method="POST"
+                                                        style="display: none;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -115,214 +123,44 @@
     </section>
 
     <!-- Modal Add Data-->
-    <div class="modal fade" id="addPO" tabindex="-1" aria-labelledby="addPOLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addStepModalLabel">Tambah Purchase Order</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{{ route('PO.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
+    @foreach ($PO as $data)
+        <div class="modal fade" id="detail{{ $data->id }}" tabindex="-1" aria-labelledby="detailLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addStepModalLabel">Detail Purchase Order</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="tanggal" class="mb-0 form-label col-form-label-sm">Tanggal</label>
-                                    <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
-                                        id="tanggal" name="tanggal" value="{{ old('tanggal') }}" autocomplete="off"
-                                        required>
-                                    @error('tanggal')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="barang" class="mb-0 form-label col-form-label-sm">Barang</label>
-                                    <select class="form-control barang select2-primary is-invalid"
-                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="barang"
-                                        name="barang" required>
-                                        <option></option>
-                                        @foreach ($barangs as $barang)
-                                            <option value="{{ $barang->id }}"
-                                                {{ old('barang') == $barang->id ? 'selected' : '' }}>
-                                                {{ $barang->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('supplier')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="supplier" class="mb-0 form-label col-form-label-sm">Supplier</label>
-                                    <select class="form-control supplier select2-primary is-invalid"
-                                        data-dropdown-css-class="select2-primary" style="width: 100%;" id="supplier"
-                                        name="supplier" required>
-                                        <option></option>
-                                        @foreach ($suppliers as $supplier)
-                                            <option value="{{ $supplier->id }}"
-                                                {{ old('supplier') == $supplier->id ? 'selected' : '' }}>
-                                                {{ $supplier->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('supplier')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="keterangan" class="mb-0 form-label col-form-label-sm">Keterangan</label>
-                                    <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="3"
-                                        placeholder="Tulis keterangan" id="keterangan" name="keterangan" required>{{ old('keterangan') }}</textarea>
-                                    @error('keterangan')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="harga" class="mb-0 form-label col-form-label-sm">Harga</label>
-                                    <input type="text" class="price form-control @error('harga') is-invalid @enderror"
-                                        id="harga" name="harga" placeholder="Masukan harga barang"
-                                        value="{{ old('harga') }}" required>
-                                    @error('harga')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="qty" class="mb-0 form-label col-form-label-sm">Kuantitas</label>
-                                    <input type="number" class="form-control @error('qty') is-invalid @enderror"
-                                        id="qty" name="qty" placeholder="Masukan kuantitas barang"
-                                        value="{{ old('qty') }}" required>
-                                    @error('qty')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
+                            <table class="w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Kuantitas</th>
+                                        <th>Harga</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data->items as $item)
+                                        <tr>
+                                            <td>{{ $item->barang->name }}</td>
+                                            <td>{{ $item->qty }} {{ $item->barang->satuan->name }}</td>
+                                            <td>{{ formatRupiah($item->price) }}</td>
+                                            <td>{{ formatRupiah($item->price * $item->qty) }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary rounded-tambak">Tambah</button>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    @foreach ($PO as $data)
-        <!-- Modal Edit Data-->
-        <div class="modal fade" id="editPO{{ $data->id }}" tabindex="-1" aria-labelledby="editPOLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addStepModalLabel">Ubah Data</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form action="{{ route('PO.update', $data->id) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="tanggal" class="mb-0 form-label col-form-label-sm">Tanggal</label>
-                                        <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
-                                            id="tanggal" name="tanggal" value="{{ $data->tanggal->format('Y-m-d') }}"
-                                            autocomplete="off" required>
-                                        @error('tanggal')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="barang" class="mb-0 form-label col-form-label-sm">Barang</label>
-                                        <select class="form-control barang select2-primary is-invalid"
-                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="barang"
-                                            name="barang" disabled>
-                                            <option>{{ $data->barang->name }}</option>
-                                        </select>
-                                        @error('supplier')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="supplier" class="mb-0 form-label col-form-label-sm">Supplier</label>
-                                        <select class="form-control supplier select2-primary is-invalid"
-                                            data-dropdown-css-class="select2-primary" style="width: 100%;" id="supplier"
-                                            name="supplier" disabled>
-                                            <option>{{ $data->supplier->name }}</option>
-                                        </select>
-                                        @error('supplier')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="keterangan"
-                                            class="mb-0 form-label col-form-label-sm">Keterangan</label>
-                                        <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="3"
-                                            placeholder="Tulis keterangan" id="keterangan" name="keterangan" required>{{ $data->keterangan }}</textarea>
-                                        @error('keterangan')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="harga" class="mb-0 form-label col-form-label-sm">Harga</label>
-                                        <input type="text"
-                                            class="price form-control @error('harga') is-invalid @enderror" id="harga"
-                                            name="harga" placeholder="Masukan harga barang"
-                                            value="{{ $data->harga }}" required>
-                                        @error('harga')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="qty" class="mb-0 form-label col-form-label-sm">Kuantitas</label>
-                                        <input type="number" class="form-control @error('qty') is-invalid @enderror"
-                                            id="qty" name="qty" placeholder="Masukan kuantitas barang"
-                                            value="{{ $data->qty }}" required>
-                                        @error('qty')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary rounded-tambak">Ubah</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -365,16 +203,6 @@
                 //     targets: -8
                 // }]
             });
-
-            $('.price').inputmask({
-                alias: 'numeric',
-                prefix: 'Rp',
-                digits: 0,
-                groupSeparator: '.',
-                autoGroup: true,
-                removeMaskOnSubmit: true,
-                rightAlign: false
-            });
         });
 
         function deletePO(id) {
@@ -399,17 +227,5 @@
                 }
             })
         }
-
-        $('.barang').select2({
-            placeholder: "Pilih barang",
-            minimumResultsForSearch: -1,
-            allowClear: true,
-        })
-
-        $('.supplier').select2({
-            placeholder: "Pilih supplier",
-            minimumResultsForSearch: -1,
-            allowClear: true,
-        })
     </script>
 @endpush

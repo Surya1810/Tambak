@@ -18,8 +18,7 @@ return new class extends Migration
             $table->bigInteger('pakan_id')->constrained()->cascadeOnDelete();
             $table->date('tanggal');
             $table->time('waktu');
-            $table->integer('anco_1');
-            $table->integer('anco_2');
+            $table->string('anco');
             $table->text('catatan')->nullable();
             $table->softDeletes();
             $table->timestamps();

@@ -92,9 +92,14 @@
                                 <div class="col-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="tempo">Tempo Pembayaran</label>
-                                        <input type="number" class="form-control @error('tempo') is-invalid @enderror"
-                                            id="tempo" name="tempo" placeholder="Masukan tempo pembayaran customer"
-                                            value="{{ old('tempo') }}" autocomplete="off">
+                                        <div class="input-group">
+                                            <input type="number" class="form-control @error('tempo') is-invalid @enderror"
+                                                id="tempo" name="tempo" placeholder="Masukan tempo pembayaran"
+                                                value="{{ old('tempo') }}" autocomplete="off" min="0">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="tempo">hari</span>
+                                            </div>
+                                        </div>
                                         @error('tempo')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

@@ -101,6 +101,7 @@ Route::group(['prefix' => 'operator', 'middleware' => 'auth'], function () {
     // Data Anco
     Route::resource('anco', AncoController::class);
     Route::get('/anco/create/{kolam}/{tanggal}', [AncoController::class, 'pakan'])->name('get.pakan');
+    Route::get('/anco/create/{kolam}', [AncoController::class, 'anco'])->name('get.anco');
 
     // Data Panen
     Route::resource('panen', PanenController::class);
@@ -137,6 +138,8 @@ Route::group(['prefix' => 'akuntan', 'middleware' => 'auth'], function () {
     Route::resource('pembelian', PembelianController::class);
     // Purchase Order
     Route::resource('PO', OrderController::class);
+    Route::get('/PO/create/{supplier}', [OrderController::class, 'supplier'])->name('get.supplier');
+    Route::get('/PO/create/{barang}', [OrderController::class, 'barang'])->name('get.barang');
 });
 
 Route::middleware('auth')->group(function () {

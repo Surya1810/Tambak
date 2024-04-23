@@ -92,7 +92,7 @@
                                             Anco</label>
                                         <input type="time" class="form-control @error('waktu') is-invalid @enderror"
                                             id="waktu" name="waktu" placeholder="Masukan alamat tambak"
-                                            value="{{ old('waktu') }}" autocomplete="off" step="3600" required>
+                                            value="{{ old('waktu') }}" autocomplete="off" required>
                                         @error('waktu')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -100,55 +100,8 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <legend class="col-form-label-sm"><strong>Anco 1</strong></legend>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="anco_1" id="inlineRadio1"
-                                                value="1" required>
-                                            <label class="form-check-label" for="inlineRadio1">Habis</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="anco_1" id="inlineRadio2"
-                                                value="2" required>
-                                            <label class="form-check-label" for="inlineRadio2">Sisa Sedikit</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="anco_1" id="inlineRadio3"
-                                                value="3" required>
-                                            <label class="form-check-label" for="inlineRadio3">Sisa Banyak</label>
-                                        </div>
-                                        @error('anco_1')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <legend class="col-form-label-sm"><strong>Anco 2</strong></legend>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="anco_2"
-                                                id="inlineRadio1" value="1" required>
-                                            <label class="form-check-label" for="inlineRadio1">Habis</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="anco_2"
-                                                id="inlineRadio2" value="2" required>
-                                            <label class="form-check-label" for="inlineRadio2">Sisa Sedikit</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="anco_2"
-                                                id="inlineRadio3" value="3" required>
-                                            <label class="form-check-label" for="inlineRadio3">Sisa Banyak</label>
-                                        </div>
-                                        @error('anco_2')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
+                                <div id="ancos_container">
+
                                 </div>
                                 <div class="col-12">
                                     <div class="card bg-info">
@@ -216,6 +169,7 @@
             kolamSelect.on('change', function() {
                 // Memanggil fungsi untuk refresh data pakan saat kolam berubah
                 refreshDataPakan();
+                Anco();
             });
 
             tanggalSelect.on('change', function() {
@@ -249,6 +203,38 @@
                                     value.formattedWaktu + ' (' +
                                     value.jumlah + ' Kg)</option>');
                             });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
+            }
+
+            function Anco() {
+                var kolam_id = kolamSelect.val();
+
+                if (kolam_id) {
+                    $.ajax({
+                        url: '/operator/anco/create/' + kolam_id,
+                        type: 'GET',
+                        success: function(response) {
+                            var anco_count = response.anco_count;
+                            $('#ancos_container').empty();
+                            for (var i = 1; i <= anco_count; i++) {
+
+                                var input =
+                                    '<div class="col-12"><div class="form-group"><legend class="col-form-label-sm"><strong>Anco ' +
+                                    i +
+                                    '</strong></legend><div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="anco[' +
+                                    i +
+                                    ']" id="inlineRadio1" value="1" required><label class="form-check-label" for="inlineRadio1">Habis</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="anco[' +
+                                    i +
+                                    ']" id="inlineRadio2" value="2" required><label class="form-check-label" for="inlineRadio2">Sisa Sedikit</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="anco[' +
+                                    i +
+                                    ']" id="inlineRadio3" value="3" required><label class="form-check-label" for="inlineRadio3">Sisa Banyak</label></div>@error("anco'+ i +'")<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror</div></div>';
+                                $('#ancos_container').append(input);
+                            }
                         },
                         error: function(xhr, status, error) {
                             console.error(xhr.responseText);

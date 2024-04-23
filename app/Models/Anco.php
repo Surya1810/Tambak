@@ -26,6 +26,7 @@ class Anco extends Model
     }
 
     protected $casts = [
-        'tanggal' => 'datetime'
+        'tanggal' => 'datetime',
+        'waktu' => 'datetime'
     ];
 }

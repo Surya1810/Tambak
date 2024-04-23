@@ -15,13 +15,11 @@ return new class extends Migration
             $table->increments('id');
             $table->bigInteger('tambak_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('supplier_id')->constrained()->cascadeOnDelete();
-            $table->bigInteger('barang_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('input_by')->constrained()->cascadeOnDelete();
             $table->string('nomor');
+            $table->string('status');
             $table->date('tanggal');
-            $table->string('keterangan');
-            $table->string('harga');
-            $table->string('qty');
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }

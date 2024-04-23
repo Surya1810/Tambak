@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anco;
+use App\Models\Kolam;
 use App\Models\Pakan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -43,10 +44,18 @@ class AncoController extends Controller
 
         // Memformat waktu menggunakan Carbon
         foreach ($dataPakan as $pakan) {
-            $pakan->formattedWaktu = Carbon::parse($pakan->waktu)->format('h:i');
+            $pakan->formattedWaktu = Carbon::parse($pakan->waktu)->format('H:i');
         }
 
         return response()->json($dataPakan);
+    }
+    public function anco($kolam)
+    {
+        $dataKolam = Kolam::find($kolam);
+        $anco_count = $dataKolam->anco;
+
+
+        return response()->json(['anco_count' => $anco_count]);
     }
 
     /**
@@ -54,13 +63,13 @@ class AncoController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
             'kolam' => 'bail|required',
             'tanggal' => 'bail|required',
             'pakan' => 'bail|required',
             'waktu' => 'bail|required',
-            'anco_1' => 'bail|required',
-            'anco_2' => 'bail|required',
+            'anco' => 'bail|required',
         ]);
 
         $old = session()->getOldInput();
@@ -72,8 +81,7 @@ class AncoController extends Controller
         // If supplier dipilih
         $project->tanggal = $request->tanggal;
         $project->waktu = $request->waktu;
-        $project->anco_1 = $request->anco_1;
-        $project->anco_2 = $request->anco_2;
+        $project->anco = implode(", ", $request->anco);;
         $project->save();
 
         return redirect()->route('anco.index')->with(['pesan' => 'Data cek anco berhasil ditambahkan', 'level-alert' => 'alert-success']);

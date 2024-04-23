@@ -14,9 +14,9 @@ class Order extends Model
     {
         return $this->belongsTo(Supplier::class, 'supplier_id');
     }
-    public function barang(): BelongsTo
+    public function items()
     {
-        return $this->belongsTo(Barang::class, 'barang_id');
+        return $this->hasMany(PurchaseOrderItem::class);
     }
 
     protected $casts = [

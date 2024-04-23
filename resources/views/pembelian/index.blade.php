@@ -51,29 +51,25 @@
                             <table id="pembelianTable" class="table table-bordered text-nowrap text-center text-sm">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width: 5%">
+                                        <th style="width: 15%">
                                             No. LPB
                                         </th>
                                         <th style="width: 10%">
                                             Tanggal
                                         </th>
-                                        <th style="width: 25%">
-                                            Nama Barang
-                                        </th>
-                                        <th style="width: 10%">
-                                            Kuantitas
-                                        </th>
                                         <th style="width: 20%">
-                                            PO
+                                            No. PO
                                         </th>
                                         <th style="width: 15%">
                                             Supplier
                                         </th>
-                                        <th style="width: 10%">
+                                        <th style="width: 15%">
                                             Akun
                                         </th>
-
-                                        <th style="width: 5%">
+                                        <th style="width: 15%">
+                                            Status
+                                        </th>
+                                        <th style="width: 10%">
                                             Action
                                         </th>
                                     </tr>
@@ -83,11 +79,15 @@
                                         <tr>
                                             <td>{{ $data->nomor }}</td>
                                             <td>{{ $data->tanggal->format('d/m/Y') }}</td>
-                                            <td>{{ $data->order->barang->name }}</td>
-                                            <td>{{ $data->order->qty }} {{ $data->order->barang->satuan->name }}</td>
                                             <td>{{ $data->order->nomor }}</td>
                                             <td>{{ $data->order->supplier->name }}</td>
                                             <td>{{ $data->akun->nama }} - {{ $data->akun->nomor }}</td>
+                                            <td>
+                                                @if ($data->status == 'Purchased')
+                                                @elseif ($data->status == 'Paid')
+                                                @else
+                                                @endif
+                                            </td>
                                             <td class="text-center">
                                                 <button class="btn btn-sm btn-danger rounded-tambak"
                                                     onclick="deletePembelian({{ $data->id }})"><i

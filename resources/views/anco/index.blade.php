@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div class="card-body table-responsive">
-                            <table id="ancoTable" class="table table-bordered text-nowrap text-center">
+                            <table id="ancoTable" class="table table-bordered text-nowrap text-center text-sm">
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width: 20%">
@@ -60,13 +60,13 @@
                                         <th style="width: 20%">
                                             Operator
                                         </th>
-                                        <th style="width: 20%">
-                                            Anco 1
-                                        </th>
-                                        <th style="width: 30%">
-                                            Anco 2
+                                        <th style="width: 10%">
+                                            Waktu
                                         </th>
                                         <th style="width: 10%">
+                                            Anco
+                                        </th>
+                                        <th style="width: 20%">
                                             Action
                                         </th>
                                     </tr>
@@ -77,23 +77,17 @@
                                             <td>{{ $data->kolam->tambak->name }} - {{ $data->kolam->name }}</td>
                                             <td>{{ $data->tanggal->format('d/m/Y') }}</td>
                                             <td>{{ $data->input_by->name }}</td>
+                                            <td>{{ $data->waktu->format('H:i') }}</td>
                                             <td>
-                                                @if ($data->anco_1 == 1)
-                                                    Habis
-                                                @elseif ($data->anco_1 == 2)
-                                                    Sisa Sedikit
-                                                @else
-                                                    Sisa Banyak
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($data->anco_2 == 1)
-                                                    Habis
-                                                @elseif ($data->anco_2 == 2)
-                                                    Sisa Sedikit
-                                                @else
-                                                    Sisa Banyak
-                                                @endif
+                                                @foreach (explode(', ', $data->anco) as $anco)
+                                                    @if ($anco == 1)
+                                                        Anco : Habis
+                                                    @elseif ($anco == 2)
+                                                        Anco : Sisa Sedikit
+                                                    @else
+                                                        Anco : Sisa Banyak
+                                                    @endif
+                                                @endforeach
                                             </td>
                                             <td class="text-center">
                                                 <button class="btn btn-sm btn-danger rounded-tambak"

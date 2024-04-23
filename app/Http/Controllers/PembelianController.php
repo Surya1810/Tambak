@@ -18,8 +18,9 @@ class PembelianController extends Controller
     public function index()
     {
         $pembelian = Pembelian::where('tambak_id', Auth::user()->tambak->first()->id)->get();
-        $orders = Order::where('tambak_id', Auth::user()->tambak->first()->id)->get();
+        $orders = Order::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', 'Draft')->get();
         $akuns = Akun::where('tambak_id', Auth::user()->tambak->first()->id)->get();
+
         return view('pembelian.index', compact('pembelian', 'orders', 'akuns'));
     }
 
@@ -53,6 +54,7 @@ class PembelianController extends Controller
         $project->order_id = $request->order;
         $project->akun_id = $request->akun;
         $project->tanggal = $request->tanggal;
+        $project->tanggal = 'Purchased';
         $project->save();
 
         return redirect()->route('pembelian.index')->with(['pesan' => 'LPB berhasil ditambahkan', 'level-alert' => 'alert-success']);

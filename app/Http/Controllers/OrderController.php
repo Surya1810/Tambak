@@ -20,10 +20,8 @@ class OrderController extends Controller
     public function index()
     {
         $PO = Order::where('tambak_id', Auth::user()->tambak->first()->id)->get();
-        $suppliers = Supplier::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', '=', true)->get();
-        $barangs = Barang::where('tambak_id', Auth::user()->tambak->first()->id)->get();
 
-        return view('purchase.index', compact('PO', 'suppliers', 'barangs'));
+        return view('purchase.index', compact('PO'));
     }
 
     /**
@@ -31,7 +29,23 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $suppliers = Supplier::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', '=', true)->get();
+        $barangs = Barang::where('tambak_id', Auth::user()->tambak->first()->id)->get();
+
+        return view('purchase.create', compact('suppliers', 'barangs'));
+    }
+
+    public function supplier($supplier)
+    {
+        $dataBarang = Barang::where('supplier_id', $supplier)->get();
+
+        return response()->json($dataBarang);
+    }
+    public function barang($barang)
+    {
+        $Barang = Barang::find($barang);
+
+        return response()->json($Barang);
     }
 
     /**
@@ -40,16 +54,16 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'qty' => 'bail|required',
             'supplier' => 'bail|required',
-            'keterangan' => 'bail|required',
-            'harga' => 'bail|required',
             'tanggal' => 'bail|required',
-            'barang' => 'bail|required',
+            'items.*.barang_id' => 'required|exists:barangs,id',
+            'items.*.qty' => 'required|numeric|min:1',
+            'items.*.price' => 'required|numeric|min:0',
         ]);
 
         $old = session()->getOldInput();
 
+        //Nota PO
         $now = Carbon::now();
         $number = Order::where('tambak_id', Auth::user()->tambak->first()->id)->where('tanggal', Carbon::today())->count();
         $project = new Order();
@@ -57,12 +71,13 @@ class OrderController extends Controller
         $project->tambak_id = Auth::user()->tambak->first()->id;
         $project->input_by = Auth::user()->id;
         $project->supplier_id = $request->supplier;
-        $project->barang_id = $request->barang;
         $project->keterangan = $request->keterangan;
         $project->tanggal = $request->tanggal;
-        $project->harga = $request->harga;
-        $project->qty = $request->qty;
+        $project->status = 'Draft';
         $project->save();
+
+        //Item Po
+        $project->items()->createMany($request->items);
 
         return redirect()->route('PO.index')->with(['pesan' => 'PO berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }

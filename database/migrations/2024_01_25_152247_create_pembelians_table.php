@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('order_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('akun_id')->constrained()->cascadeOnDelete();
             $table->string('nomor');
+            $table->string('status');
             $table->date('tanggal');
             $table->timestamps();
         });

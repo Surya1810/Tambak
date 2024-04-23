@@ -175,6 +175,12 @@
                                         <p>Tambak</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('kategori.index') }}" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-list"></i>
+                                        <p>Kategori</p>
+                                    </a>
+                                </li>
                             @endif
                         @endhasrole
                         @hasrole('manager|operator')
