@@ -136,11 +136,11 @@
                                         data-dropdown-css-class="select2-primary" style="width: 100%;" id="kolam"
                                         name="kolam" required>
                                         <option></option>
-                                        @foreach ($bibit as $kolam)
-                                            <option value="{{ $kolam->kolam->id }}"
-                                                {{ old('kolam') == $kolam->kolam->id ? 'selected' : '' }}>
-                                                {{ $kolam->kolam->tambak->name }} -
-                                                {{ $kolam->kolam->name }}</option>
+                                        @foreach ($kolams as $kolam)
+                                            <option value="{{ $kolam->id }}"
+                                                {{ old('kolam') == $kolam->id ? 'selected' : '' }}>
+                                                {{ $kolam->tambak->name }} -
+                                                {{ $kolam->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('kolam')

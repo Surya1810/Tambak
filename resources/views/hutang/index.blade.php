@@ -82,10 +82,20 @@
                                         <tr>
                                             <td>{{ $data->nomor }}</td>
                                             <td>{{ $data->pembelian->nomor }}</td>
-                                            <td>{{ $data->pembelian->akun->nama }}</td>
+                                            <td>{{ $data->pembelian->akun->nama }} - {{ $data->pembelian->akun->nomor }}
+                                            </td>
                                             <td>{{ $data->tanggal->addDays($data->pembelian->order->supplier->tempo)->format('d/m/Y') }}
                                             </td>
-                                            <td>{{ formatRupiah($data->pembelian->order->qty * $data->pembelian->order->harga) }}
+
+                                            @php
+                                                foreach ($data->pembelian->order->items as $item) {
+                                                    $item->subtotal = $item->qty * $item->price;
+                                                }
+
+                                                // Calculate total amount of the Purchase Order
+                                                $totalAmount = $data->pembelian->order->items->sum('subtotal');
+                                            @endphp
+                                            <td>{{ formatRupiah($totalAmount) }}
                                             </td>
                                             <td>{{ formatRupiah($data->retur) }}</td>
                                             <td>{{ formatRupiah($data->bayar) }}</td>

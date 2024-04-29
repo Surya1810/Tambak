@@ -6,6 +6,7 @@ use App\Models\Barang;
 use App\Models\Hutang;
 use App\Models\Order;
 use App\Models\Pembelian;
+use App\Models\Satuan;
 use App\Models\Supplier;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,8 +32,9 @@ class OrderController extends Controller
     {
         $suppliers = Supplier::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', '=', true)->get();
         $barangs = Barang::where('tambak_id', Auth::user()->tambak->first()->id)->get();
+        $satuans = Satuan::all();
 
-        return view('purchase.create', compact('suppliers', 'barangs'));
+        return view('purchase.create', compact('suppliers', 'barangs', 'satuans'));
     }
 
     public function supplier($supplier)
@@ -57,6 +59,7 @@ class OrderController extends Controller
             'supplier' => 'bail|required',
             'tanggal' => 'bail|required',
             'items.*.barang_id' => 'required|exists:barangs,id',
+            'items.*.satuan' => 'required',
             'items.*.qty' => 'required|numeric|min:1',
             'items.*.price' => 'required|numeric|min:0',
         ]);

@@ -313,6 +313,12 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ route('barang.index') }}" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-box"></i>
+                                        <p>Data Barang</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{{ route('PO.index') }}" class="nav-link">
                                         <i class="nav-icon fa-regular fa-paste"></i>
                                         <p>Purchase Order</p>

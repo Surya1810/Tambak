@@ -54,8 +54,12 @@ class PembelianController extends Controller
         $project->order_id = $request->order;
         $project->akun_id = $request->akun;
         $project->tanggal = $request->tanggal;
-        $project->tanggal = 'Purchased';
+        $project->status = 'Purchased';
         $project->save();
+
+        $order = Order::find($request->order);
+        $order->status = 'Purchased';
+        $order->update();
 
         return redirect()->route('pembelian.index')->with(['pesan' => 'LPB berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }
@@ -90,12 +94,13 @@ class PembelianController extends Controller
     public function destroy($id)
     {
         $data = Pembelian::find($id);
-        $data2 = Hutang::where('pembelian_id', $data->id)->first();
 
-        if (isset($data2)) {
-            $data2->delete();
-        }
+        $order = Order::find($data->order_id);
+        $order->status = 'Draft';
+        $order->update();
+
         $data->delete();
+
 
         return redirect()->route('pembelian.index')->with(['pesan' => 'Pembelian berhasil dihapus', 'level-alert' => 'alert-danger']);
     }

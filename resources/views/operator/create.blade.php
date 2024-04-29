@@ -52,11 +52,11 @@
                                 </div>
                                 <div class="col-12 col-lg-3">
                                     <div class="form-group">
-                                        <label for="username">Username</label>
-                                        <input type="text" class="form-control @error('username') is-invalid @enderror"
-                                            id="username" name="username" placeholder="Masukan username karyawan"
-                                            value="{{ old('username') }}" autocomplete="off">
-                                        @error('username')
+                                        <label for="user">Username</label>
+                                        <input type="text" class="form-control @error('user') is-invalid @enderror"
+                                            id="user" name="user" placeholder="Masukan username karyawan"
+                                            value="{{ old('user') }}" autocomplete="off">
+                                        @error('user')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -91,11 +91,11 @@
                                 </div>
                                 <div class="col-12 col-lg-4">
                                     <div class="form-group">
-                                        <label for="password">Password</label>
-                                        <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                            id="password" name="password" placeholder="Masukan password karyawan"
-                                            value="{{ old('password') }}" autocomplete="off">
-                                        @error('password')
+                                        <label for="pass">Password</label>
+                                        <input type="pass" class="form-control @error('pass') is-invalid @enderror"
+                                            id="pass" name="pass" placeholder="Masukan password karyawan"
+                                            value="{{ old('pass') }}" autocomplete="off">
+                                        @error('pass')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

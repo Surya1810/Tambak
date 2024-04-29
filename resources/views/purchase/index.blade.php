@@ -63,9 +63,9 @@
                                         {{-- <th style="width: 5%">
                                             Termin
                                         </th> --}}
-                                        {{-- <th style="width: 20%">
+                                        <th style="width: 20%">
                                             Subtotal
-                                        </th> --}}
+                                        </th>
                                         <th style="width: 15%">
                                             Status
                                         </th>
@@ -83,6 +83,15 @@
                                             {{-- <td>{{ $data->items->price }}</td> --}}
                                             {{-- <td>{{ $data->supplier->tempo }} Hari</td> --}}
                                             {{-- <td>{{ formatRupiah($data->harga * $data->qty) }}</td> --}}
+                                            @php
+                                                foreach ($data->items as $item) {
+                                                    $item->subtotal = $item->qty * $item->price;
+                                                }
+
+                                                // Calculate total amount of the Purchase Order
+                                                $totalAmount = $data->items->sum('subtotal');
+                                            @endphp
+                                            <td>{{ formatRupiah($totalAmount) }}</td>
                                             <td>
                                                 @if ($data->status == 'Draft')
                                                     <span class="badge badge-secondary">Draft</span>
@@ -149,7 +158,7 @@
                                     @foreach ($data->items as $item)
                                         <tr>
                                             <td>{{ $item->barang->name }}</td>
-                                            <td>{{ $item->qty }} {{ $item->barang->satuan->name }}</td>
+                                            <td>{{ $item->qty }} {{ $item->satuan }}</td>
                                             <td>{{ formatRupiah($item->price) }}</td>
                                             <td>{{ formatRupiah($item->price * $item->qty) }}</td>
                                         </tr>

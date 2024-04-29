@@ -20,7 +20,7 @@ class HutangController extends Controller
     public function index()
     {
         $hutang = Hutang::where('tambak_id', Auth::user()->tambak->first()->id)->get();
-        $pembelians = Pembelian::where('tambak_id', Auth::user()->tambak->first()->id)->get();
+        $pembelians = Pembelian::where('tambak_id', Auth::user()->tambak->first()->id)->where('status', 'Purchased')->get();
 
         return view('hutang.index', compact('hutang', 'pembelians'));
     }
@@ -53,6 +53,10 @@ class HutangController extends Controller
         $project->pembelian_id = $request->pembelian;
         $project->tanggal = $request->tanggal;
         $project->save();
+
+        $pembelian = Pembelian::find($request->pembelian);
+        $pembelian->status = 'Paid';
+        $pembelian->update();
 
         return redirect()->route('hutang.index')->with(['pesan' => 'Hutang berhasil ditambahkan', 'level-alert' => 'alert-success']);
     }
@@ -97,6 +101,11 @@ class HutangController extends Controller
     public function destroy($id)
     {
         $data = Hutang::find($id);
+
+        $pembelian = Pembelian::find($data->pembelian_id);
+        $pembelian->status = 'Purchased';
+        $pembelian->update();
+
         $data->delete();
 
         return redirect()->route('hutang.index')->with(['pesan' => 'Hutang berhasil dihapus', 'level-alert' => 'alert-danger']);

@@ -51,23 +51,23 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'bail|required',
-            'username' => 'bail|required|unique:users,username',
+            'user' => 'bail|required|unique:users,username',
             'email' => 'bail|required|unique:users,email',
             'phone' => 'bail|required|regex:/^([0-9\s\-\+\(\)]*)$/',
             'role' => 'bail|required',
             'tambak' => 'bail|required',
-            'password' => 'bail|required',
+            'pass' => 'bail|required',
         ]);
 
         $old = session()->getOldInput();
 
         $user = new User();
         $user->name = $request->name;
-        $user->username = $request->username;
+        $user->username = $request->user;
         $user->email = $request->email;
         $user->phone = ltrim($request->phone, "0");
         $user->created_by = Auth::user()->id;
-        $user->password = Hash::make($request->password);
+        $user->password = Hash::make($request->pass);
         $user->assignRole($request->role);
         $user->save();
         $user->tambak()->attach($request->tambak);

@@ -72,7 +72,7 @@
                                 <div class="col-12">
                                     <div id="items">
                                         <div class="form-row item-row">
-                                            <div class="col-12 col-lg-4">
+                                            <div class="col-12 col-lg-3">
                                                 <div class="form-group">
                                                     <label for="barang"
                                                         class="mb-0 form-label col-form-label-sm">Barang</label>
@@ -92,7 +92,7 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-lg-4">
+                                            <div class="col-12 col-lg-3">
                                                 <div class="form-group">
                                                     <label for="qty">Kuantitas</label>
                                                     <div class="input-group">
@@ -113,9 +113,29 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-lg-4">
+                                            <div class="col-12 col-lg-3">
                                                 <div class="form-group">
-                                                    <label for="price">Harga</label>
+                                                    <label for="satuan"
+                                                        class="mb-0 form-label col-form-label-sm">Satuan</label>
+                                                    <select class="form-control" style="width: 100%;" id="satuan"
+                                                        name="items[0][satuan]" required>
+                                                        <option disabled selected hidden>Pilih satuan</option>
+                                                        @foreach ($satuans as $satuan)
+                                                            <option value="{{ $satuan->name }}"
+                                                                {{ old('satuan') == $satuan->name ? 'selected' : '' }}>
+                                                                {{ $satuan->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('satuan')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="price">Harga per Satuan</label>
                                                     <div class="input-group">
                                                         <input type="text"
                                                             class="price form-control @error('price') is-invalid @enderror"
@@ -136,9 +156,10 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="keterangan" class="mb-0 form-label col-form-label-sm">Keterangan</label>
-                                        <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="3" placeholder="Tulis keterangan"
-                                            id="keterangan" name="keterangan">{{ old('keterangan') }}</textarea>
+                                        <label for="keterangan"
+                                            class="mb-0 form-label col-form-label-sm">Keterangan</label>
+                                        <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="3"
+                                            placeholder="Tulis keterangan" id="keterangan" name="keterangan">{{ old('keterangan') }}</textarea>
                                         @error('keterangan')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -191,7 +212,7 @@
             $('#add-item').click(function() {
                 $('#items').append(
                     `          <div class="form-row mt-3 item-row">
-                                            <div class="col-12 col-lg-4">
+                                            <div class="col-12 col-lg-3">
                                                 <div class="form-group">
                                                     <label for="barang"
                                                         class="mb-0 form-label col-form-label-sm">Barang</label>
@@ -211,7 +232,7 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-lg-4">
+                                            <div class="col-12 col-lg-3">
                                                 <div class="form-group">
                                                     <label for="qty">Kuantitas</label>
                                                     <div class="input-group">
@@ -232,7 +253,27 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-lg-4">
+                                             <div class="col-12 col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="satuan"
+                                                        class="mb-0 form-label col-form-label-sm">Satuan</label>
+                                                    <select class="form-control" style="width: 100%;" id="satuan"
+                                                        name="items[${itemId}][satuan]" required>
+                                                        <option disabled selected hidden>Pilih satuan</option>
+                                                        @foreach ($satuans as $satuan)
+                                                            <option value="{{ $satuan->name }}"
+                                                                {{ old('satuan') == $satuan->name ? 'selected' : '' }}>
+                                                                {{ $satuan->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('satuan')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-3">
                                                 <div class="form-group">
                                                     <label for="price">Harga</label>
                                                     <div class="input-group">

@@ -61,10 +61,10 @@
                                             No. PO
                                         </th>
                                         <th style="width: 15%">
-                                            Supplier
+                                            Akun
                                         </th>
                                         <th style="width: 15%">
-                                            Akun
+                                            Supplier
                                         </th>
                                         <th style="width: 15%">
                                             Status
@@ -80,24 +80,29 @@
                                             <td>{{ $data->nomor }}</td>
                                             <td>{{ $data->tanggal->format('d/m/Y') }}</td>
                                             <td>{{ $data->order->nomor }}</td>
-                                            <td>{{ $data->order->supplier->name }}</td>
                                             <td>{{ $data->akun->nama }} - {{ $data->akun->nomor }}</td>
+                                            <td>{{ $data->order->supplier->name }}</td>
                                             <td>
                                                 @if ($data->status == 'Purchased')
+                                                    <span class="badge badge-secondary">Purchased</span>
                                                 @elseif ($data->status == 'Paid')
+                                                    <span class="badge badge-warning">Paid</span>
                                                 @else
+                                                    <span class="badge badge-success">Delivered</span>
                                                 @endif
                                             </td>
                                             <td class="text-center">
-                                                <button class="btn btn-sm btn-danger rounded-tambak"
-                                                    onclick="deletePembelian({{ $data->id }})"><i
-                                                        class="fas fa-trash"></i></button>
-                                                <form id="delete-form-{{ $data->id }}"
-                                                    action="{{ route('pembelian.destroy', $data->id) }}" method="POST"
-                                                    style="display: none;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                </form>
+                                                @if ($data->status == 'Purchased')
+                                                    <button class="btn btn-sm btn-danger rounded-tambak"
+                                                        onclick="deletePembelian({{ $data->id }})"><i
+                                                            class="fas fa-trash"></i></button>
+                                                    <form id="delete-form-{{ $data->id }}"
+                                                        action="{{ route('pembelian.destroy', $data->id) }}" method="POST"
+                                                        style="display: none;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

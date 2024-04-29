@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\Bibit;
 use App\Models\Kategori;
+use App\Models\Kolam;
 use App\Models\Pakan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,12 +19,13 @@ class PakanController extends Controller
     public function index()
     {
         $kolams = Auth::user()->tambak->first()->kolam->where('status', true);
-        $bibit = Bibit::whereIn('kolam_id', $kolams->pluck('id'))->get();
+        $bibit = Bibit::whereIn('kolam_id', $kolams->pluck('id')->toArray())->get();
+        $kolams = Kolam::whereIn('id', $bibit->pluck('kolam_id'))->get();
         $pakan = Pakan::whereIn('kolam_id', $kolams->pluck('id'))->whereMonth('created_at', Carbon::now()->month)->get();
         $kategori = Kategori::where('name', 'Pakan')->pluck('id')->first();
         $jenis = Barang::where('tambak_id', Auth::user()->tambak->first()->id)->where('kategori_id', $kategori)->get();
 
-        return view('pakan.index', compact('bibit', 'pakan', 'jenis'));
+        return view('pakan.index', compact('kolams', 'pakan', 'jenis'));
     }
 
     /**

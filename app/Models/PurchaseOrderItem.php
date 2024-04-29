@@ -10,7 +10,7 @@ class PurchaseOrderItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['barang_id', 'qty', 'price'];
+    protected $fillable = ['barang_id', 'qty', 'price', 'satuan'];
 
     public function barang(): BelongsTo
     {
